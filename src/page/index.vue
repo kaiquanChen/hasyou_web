@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-import davidheader from '../components/header.vue'
-import davidfooter from '../components/footer.vue'
+import davidheader from '../components/Header.vue'
+import davidfooter from '../components/Footer.vue'
 export default {
   components: { davidheader: davidheader, davidfooter: davidfooter },
   data () {
