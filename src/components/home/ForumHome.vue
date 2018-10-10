@@ -1,7 +1,7 @@
 <template>
   <div class="col-sm-12" id="forum_home">
     <a style="color: #8B4513;" href="#" target="_blank">
-      <img class="img-circle" style="height: 30px;" src="/static/icon/read.jpeg">&nbsp
+      <img class="img-circle" style="height: 30px;" src="/static/icon/forum.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．论坛</strong>
     </a>
     <br/><br/>
@@ -46,7 +46,7 @@
 
 <style scoped>
   #forum_home {
-    margin: 5px 0 5px 30px;
+    margin: 15px 0 5px 30px;
   }
 
   #forum_body {

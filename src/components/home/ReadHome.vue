@@ -40,7 +40,7 @@
 
 <style scoped>
   #read_home {
-    margin: 30px 0 5px 30px;
+    margin: 15px 0 5px 30px;
   }
 
   #read_body {

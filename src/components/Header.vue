@@ -3,21 +3,21 @@
     <div class="row">
       <nav class="navbar navbar-light bg-light justify-content-between">
         <div class="col-sm-6">
-          <a class="navbar-brand" href="#">
-            <img src="../../static/image/header.png" width="30" height="30" class="d-inline-block align-top" alt="有你LOGO">
-          </a>
-          <a class="navbar-brand" href="#">电影</a>
-          <a class="navbar-brand" href="#">书库</a>
-          <a class="navbar-brand" href="#">阅读</a>
-          <a class="navbar-brand" href="#">音乐</a>
-          <a class="navbar-brand" href="#">同城</a>
-          <a class="navbar-brand" href="#">论坛</a>
+          <router-link class="navbar-brand" to="/">
+            <img src="../../static/image/header.png" width="30" height="30" class="d-inline-block align-top img-rounded" alt="有你LOGO">
+          </router-link>
+          <router-link class="navbar-brand" to="/movie">电影</router-link>
+          <router-link class="navbar-brand" to="/book">书库</router-link>
+          <router-link class="navbar-brand" to="/read">阅读</router-link>
+          <router-link class="navbar-brand" to="/music">音乐</router-link>
+          <router-link class="navbar-brand" to="/event">同城</router-link>
+          <router-link class="navbar-brand" to="/forum">论坛</router-link>
         </div>
         <div class="col-sm-2" style="">
 
         </div>
         <div class="col-sm-4">
-          <form class="form-inline">
+          <form class="form-inline ml-auto">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
@@ -48,4 +48,5 @@
   form {
     margin: 7px 0 5px 25px;
   }
+
 </style>

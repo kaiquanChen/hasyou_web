@@ -1,7 +1,7 @@
 <template>
   <div class="col-sm-12" id="book_home">
     <a style="color: #8B4513;" href="#" target="_blank">
-      <img class="img-circle" style="height: 30px;" src="/static/icon/read.jpeg">&nbsp
+      <img class="img-circle" style="height: 30px;" src="/static/icon/book.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．书库</strong>
     </a>
     <br/><br/>
@@ -47,7 +47,7 @@
 
 <style scoped>
   #book_home {
-    margin: 30px 0 5px 30px;
+    margin: 5px 0 5px 30px;
   }
 
   #book_body {
