@@ -27,6 +27,31 @@
   </header>
 </template>
 
+<script>
+  // import global_ from "./config/Global"
+  // var base_group_url = global_.URLS.GROUP + "subjects";
+  //
+  // export default {
+  //   name: "",
+  //   data() {
+  //     return {
+  //       data: []
+  //     }
+  //   },
+  //   created() {
+  //     this.$http.get(base_group_url).then((data) => {
+  //       if (data.status !== 200) {
+  //         console.log(data);
+  //         alert("数据获取失败!");
+  //         return;
+  //       }
+  //       this.data = data.body.data;
+  //       console.log(data.body.data)
+  //     });
+  //   }
+  // }
+</script>
+
 <style scoped>
   .row {
     margin: 0;

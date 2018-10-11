@@ -16,8 +16,8 @@
 
 <script>
     import global_ from "../config/Global"
-    var base_book_url = global_.URLS.SHORT_BOOK_URL;
-    var shortbook_list_url = base_book_url + "/books";
+    const base_book_url = global_.URLS.SHORT_BOOK_URL;
+    const shortbook_list_url = base_book_url + "/books";
     export default {
         name: "ReadHome",
         data() {

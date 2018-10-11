@@ -19,9 +19,9 @@
 
 <script>
     import global_ from "../config/Global"
-    var base_book_url = global_.URLS.BOOK_URL;
-    var tag_id = "f9427f176f8547c3882f77c49605ccab";
-    var book_list_url = base_book_url + "/subjects/" + tag_id + "?p=1&count=5";
+    const base_book_url = global_.URLS.BOOK_URL;
+    const tag_id = "f9427f176f8547c3882f77c49605ccab";
+    const book_list_url = base_book_url + "/subjects/" + tag_id + "?p=1&count=5";
     export default {
         name: "BookHome",
         data(){
