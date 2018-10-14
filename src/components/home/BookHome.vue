@@ -50,7 +50,7 @@
     margin: 5px 0 5px 30px;
   }
 
-  #book_body {
+  #book-body {
     margin: 5px 5px 5px 0;
     border: white;
   }

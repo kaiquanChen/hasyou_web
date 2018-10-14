@@ -1,5 +1,5 @@
 <template>
-    <h1>电影</h1>
+    <div><h1>电影首页(敬请期待......)</h1></div>
 </template>
 
 <script>
@@ -9,5 +9,7 @@
 </script>
 
 <style scoped>
-
+div {
+  text-align: center;
+}
 </style>

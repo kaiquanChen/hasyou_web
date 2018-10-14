@@ -3,29 +3,23 @@
     <h1>图书列表</h1>
     <div class="col-sm-12">
       <div class="col-sm-12 list-group-item" v-for="item in data">
-        <div class="list-group" id="list_group" :id="item.id">
-          <div class="col-sm-2 img_div">
-            <router-link :to="getRoutes(item.id)"><img :src="item.image_url" /></router-link>
+        <div class="col-sm-2 img_div">
+          <router-link :to="getRoutes(item.id)"><img :src="item.image_url" /></router-link>
+        </div>
+        <div class="col-sm-10 book-list-info">
+          <div><router-link :to="getRoutes(item.id)">{{item.name}}</router-link></div>
+          <div>
+            <span class="text-info">{{getBookInfo(item)}}</span>&nbsp;&nbsp;&nbsp;
+            <el-rate
+              class="book-list-rate"
+              v-model="item.stars / 2"
+              disabled
+              show-score
+              text-color="#ff9900"
+              :score-template="item.stars">
+            </el-rate>
           </div>
-          <div class="col-sm-10">
-            <div><router-link :to="getRoutes(item.id)">{{item.name}}</router-link></div>
-            <div style="height: 5px;"></div>
-            <div>
-              <span>{{getBookInfo(item)}}</span>
-            </div>
-            <div style="height: 7px;"></div>
-            <div class="book_rate">
-              <el-rate
-                v-model="item.stars / 2"
-                disabled
-                show-score
-                text-color="#ff9900"
-                :score-template="item.stars">
-              </el-rate>
-            </div>
-            <div style="height: 7px;"></div>
-            <div class="book_intro"><span>{{item.intro}}</span></div>
-          </div>
+          <div class="book-intro"><span class="text-info">{{getBookIntro(item.intro)}}</span></div>
         </div>
       </div>
     </div>
@@ -52,12 +46,13 @@
         this.getBookList();
       },
       getRoutes(id) {
-        return "/book/" + id;
+        return "/book/subject/" + id;
       },
       getStarsText(item) {
         return item.stars + "   (" + item.comments_count + item.reviews_count + " 人评价)";
       },
       getBookInfo(item) {
+        console.log(item);
         let info = "";
         let authors = item.authors;
         let translators = item.translators;
@@ -77,13 +72,13 @@
           info += pubdate + " / ";
         }
         if (price !== "") {
-          if (!price.endsWith("元")) {
-            price += " 元";
-          }
           info += price;
         }
 
         return info;
+      },
+      getBookIntro(intros) {
+        return intros.join("");
       },
       getBookList() {
         let tag_id = this.$route.params.tag_id;
@@ -128,11 +123,11 @@
     width: 90px;
   }
 
-  .book_intro {
-    margin: 5px 0 15px 0;
-  }
+  /*.book-intro {*/
+    /*margin: 5px 0 15px 0;*/
+  /*}*/
 
-  .book_intro span {
+  .book-intro span {
     overflow: hidden;
     -webkit-line-clamp: 2;
     text-overflow: ellipsis;
@@ -144,4 +139,22 @@
     margin: 20px 0 30px 10px;
   }
 
+  .book-list-info div {
+    margin: 7px 0 7px 0;
+  }
+
+  .book-list-rate {
+    display: inline-block;
+  }
+
+  .text-info {
+    color: grey;
+  }
+
+  .list-group-item {
+    border-left: white;
+    border-right: white;
+    border-top: dashed 1px grey;
+    border-bottom: dashed 1px grey;
+  }
 </style>

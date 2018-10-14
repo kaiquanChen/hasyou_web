@@ -9,7 +9,7 @@
     <div class="list-group-item col-sm-12" id="forum_body">
       <ol class="list-group"  v-for="item in data">
         <li :id='item.id' class="list-group-item">【{{item.node.title}}】
-          <a target="_blank" href="#">{{item.title}}</a>
+          <router-link :to="getRoutes(item.id)">{{item.title}}</router-link>
           <span class="badge">{{item.create_time}}</span>
         </li>
       </ol>
@@ -29,7 +29,9 @@
         }
       },
       methods:{
-
+        getRoutes(id) {
+          return "/forum/" + id;
+        }
       },
       created() {
         this.$http.get(post_url).then((data) => {

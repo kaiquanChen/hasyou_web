@@ -18,6 +18,8 @@
   // douban short comment
   const SHORT_COMMENT_URL = COMMON_URL + DOUBAN_BOOK + 'comment'
 
+  const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "review"
+
   // group
   const GROUP = COMMON_URL + 'group/'
 
@@ -27,11 +29,14 @@
   // movie
   const DOUBAN_MOVIE = COMMON_URL + 'movie/'
 
-  // post
+  // v2 post
   const POST_URL = COMMON_URL + 'v2/'
 
-  // node
+  // v2 node
   const NODE_URL = COMMON_URL + 'node/'
+
+  // v2 comment
+  const COMMENT_URL = POST_URL + "comment/";
 
   // event
   const EVENT_URL = COMMON_URL + 'event/'
@@ -43,16 +48,25 @@
     TEST_URL,
     FLY_URL,
     COMMON_URL,
-    SHORT_BOOK_URL,
+
+    /* dou ban */
     BOOK_URL,
     SHORT_COMMENT_URL,
-    GROUP,
     DOUBAN_BOOK_TAG_URL,
     DOUBAN_MOVIE,
+    EVENT_URL,
+    DOUBAN_MUSIC_URL,
+    BOOK_REVIEW_URL,
+
+    /* v2 */
+    COMMENT_URL,
     POST_URL,
     NODE_URL,
-    EVENT_URL,
-    DOUBAN_MUSIC_URL
+
+    /* short book */
+    SHORT_BOOK_URL,
+    /* other */
+    GROUP,
   }
 
   export default {
