@@ -18,12 +18,14 @@
                 </div>
                 <!-- post info-->
                 <div class="col-sm-11 item-post">
-                  <span class="item-post-title"><router-link :to="getPostRoutes(post.id)">{{post.title}}</router-link></span>
+                  <span class="item-post-title">
+                    <router-link target="_blank" :to="getPostRoutes(post.id)">{{post.title}}</router-link>
+                  </span>
                   <span class="badge">{{post.comment_count}}</span>
                   <div class="item-post-node">
-                    <a class="item-node" href="#">
+                    <router-link class="item-node" :to="getNodeRoutes(post.node.id)">
                       <span>{{post.node.title}}</span>
-                    </a>&nbsp;&nbsp;•&nbsp;&nbsp;
+                    </router-link>&nbsp;&nbsp;•&nbsp;&nbsp;
                     <strong><a class="item-member">{{post.member.username}}</a></strong>
                     &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;{{post.create_time}}
                   </div>

@@ -12,10 +12,10 @@ nothing!
           <!-- nav -->
           <div class="nav">
             <router-link to="/forum"><b>论坛首页</b></router-link>&nbsp;&nbsp;>&nbsp;
-            <router-link to="#"><b>{{node.title}}</b></router-link>
+            <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}</b></router-link>
           </div>
           <span class="post-title">{{post.title}}</span><br>
-          <span class="post-author"><a href="#"><b>{{post.member.username}}</b></a>&nbsp;<b> ·    {{post.create_time}}</b></span>
+          <span class="post-author"><a href="#"><b>{{member.username}}</b></a>&nbsp;<b> ·    {{post.create_time}}</b></span>
         </div>
         <div class="col-sm-2 img-div">
           <!-- member avatar-->
@@ -38,7 +38,7 @@ nothing!
             {{post.comment_count}}&nbsp;&nbsp;回复&nbsp;&nbsp;<strong>|</strong>&nbsp;&nbsp;直到&nbsp;&nbsp;{{post.active_time}}
           </span>
           <span class="post-comment-node">
-            <router-link to="#"><b>{{node.title}}</b></router-link>
+            <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}</b></router-link>
           </span>
         </div>
         <div class="col-sm-12" id="pagination-top">
@@ -140,6 +140,8 @@ nothing!
           this.comment.page.count = data.body.data.count;
           this.comment.page.total = data.body.data.total;
         });
+      },getNodeRoutes(id) {
+        return "/forum/node/" + id;
       },
       handleCurrentChange(val) {
         this.comment.page.page = val;

@@ -1,9 +1,9 @@
 <template>
   <div class="col-sm-12" id="forum_home">
-    <a style="color: #8B4513;" href="#" target="_blank">
+    <router-link to="/forum">
       <img class="img-circle" style="height: 30px;" src="/static/icon/forum.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．论坛</strong>
-    </a>
+    </router-link>
     <br/><br/>
     <span style="color: green;">今日推荐  · · · · · · </span><a href="#" style="color: chocolate">(更多)</a>
     <div class="list-group-item col-sm-12" id="forum_body">
@@ -54,5 +54,9 @@
   #forum_body {
     margin: 5px 5px 5px 0;
     border: white;
+  }
+
+  strong {
+    color: #8B4513;
   }
 </style>
