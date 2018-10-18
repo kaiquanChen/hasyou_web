@@ -11,11 +11,11 @@
         <div class="list-group-item row" :id="post.id">
           <!-- image -->
           <div class="item-post-left col-sm-1 item-img">
-            <a :href="getPostRoutes(post.id)"><img class="img-rounded" :src="post.member.avatar_large"/></a>
+            <router-link target="_blank" :to="getPostRoutes(post.id)"><img class="img-rounded" :src="post.member.avatar_large"/></router-link>
           </div>
           <!-- post info-->
           <div class="col-sm-11 item-post">
-            <span class="item-post-title"><router-link :to="getPostRoutes(post.id)">{{post.title}}</router-link></span>
+            <span class="item-post-title"><router-link target="_blank" :to="getPostRoutes(post.id)">{{post.title}}</router-link></span>
             <span class="badge">{{post.comment_count}}</span>
             <div class="item-post-node">
               <a class="item-node" href="#">

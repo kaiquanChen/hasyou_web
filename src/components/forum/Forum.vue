@@ -125,7 +125,8 @@
           }
 
           this.home_nodes = data.body.data;
-          if (this.home_nodes.leng !== 0) {
+          console.log(this.home_nodes);
+          if (this.home_nodes.length !== 0) {
             this.activeName = this.home_nodes[0].name;
           }
         });

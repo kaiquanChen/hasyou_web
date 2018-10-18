@@ -4,7 +4,8 @@
 
 <script>
   const TEST_URL = 'http://localhost:8028/'
-  const FLY_URL = 'http://www.hasyou.cn:8028/'
+  // const FLY_URL = 'http://www.hasyou.cn:8028/'
+  const FLY_URL = 'http://118.25.37.27:8028/'
 
   const COMMON_URL = TEST_URL
 

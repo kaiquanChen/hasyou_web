@@ -15,7 +15,10 @@ nothing!
             <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}</b></router-link>
           </div>
           <span class="post-title">{{post.title}}</span><br>
-          <span class="post-author"><a href="#"><b>{{member.username}}</b></a>&nbsp;<b> ·    {{post.create_time}}</b></span>
+          <span class="post-author">
+            <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{post.create_time}}&nbsp; · &nbsp;
+            <a target="_blank" :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
+          </b></span>
         </div>
         <div class="col-sm-2 img-div">
           <!-- member avatar-->
@@ -68,6 +71,10 @@ nothing!
           </div>
         </div>
       </div>
+      <div class="col-sm-12 post-comment-bottom">
+        <a href="#"><strong>↑</strong>&nbsp;回到顶部</a>
+      </div>
+
       <div class="col-sm-12" id="pagination-bottom">
         <el-pagination background
                        @current-change="handleCurrentChange"
@@ -142,6 +149,8 @@ nothing!
         });
       },getNodeRoutes(id) {
         return "/forum/node/" + id;
+      },getOriginRoutes(id) {
+        return "https://www.v2ex.com/t/" + id;
       },
       handleCurrentChange(val) {
         this.comment.page.page = val;
@@ -220,7 +229,7 @@ nothing!
   }
 
   .post-comment {
-    margin: 30px 0;
+    margin-top: 30px;
     background: white;
     border-radius: 3px;
   }
@@ -231,6 +240,18 @@ nothing!
 
   .post-comment-header {
     padding: 10px 0 10px 0;
+  }
+
+  .post-comment-bottom {
+    margin-bottom: 30px;
+    height: 30px;
+    background: #e2e2e2;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .post-comment-bottom a {
+    margin: 0 50px 0 0;
+    color: black;
   }
 
   .post-comment-node {
