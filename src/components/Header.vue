@@ -2,7 +2,7 @@
   <header class="header">
     <div class="row">
       <nav class="navbar navbar-light bg-light justify-content-between">
-        <div class="col-sm-6">
+        <div class="col-6 col-xs-6 col-sm-6">
           <router-link class="navbar-brand" to="/">
             <img src="../../static/image/header.png" width="30" height="30" class="d-inline-block align-top img-rounded" alt="有你LOGO">
           </router-link>
@@ -13,10 +13,10 @@
           <router-link class="navbar-brand" to="/event">同城</router-link>
           <router-link class="navbar-brand" to="/forum">论坛</router-link>
         </div>
-        <div class="col-sm-2" style="">
+        <div class="col-2 col-xs-2 col-sm-2" style="">
 
         </div>
-        <div class="col-sm-4">
+        <div class="col-4 col-xs-4 col-sm-4">
           <form class="form-inline ml-auto">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -71,7 +71,8 @@
   }
 
   form {
-    margin: 7px 0 5px 25px;
+    /*margin: 7px 0 5px 25px;*/
+    padding: 7px 0 5px 25px;
   }
 
 </style>

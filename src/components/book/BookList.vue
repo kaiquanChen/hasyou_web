@@ -52,7 +52,6 @@
         return item.stars + "   (" + item.comments_count + item.reviews_count + " 人评价)";
       },
       getBookInfo(item) {
-        console.log(item);
         let info = "";
         let authors = item.authors;
         let translators = item.translators;
@@ -83,7 +82,6 @@
       getBookList() {
         let tag_id = this.$route.params.tag_id;
         let book_list_url = book_url + "subjects/" + tag_id + "?p=" + this.page + "&count=" + this.count;
-        console.log(book_list_url);
         this.$http.get(book_list_url).then((data) => {
           if (data.status !== 200) {
             console.log(data);

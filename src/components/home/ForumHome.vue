@@ -9,7 +9,7 @@
     <div class="list-group-item col-sm-12" id="forum_body">
       <ol class="list-group"  v-for="item in data">
         <li :id='item.id' class="list-group-item">【{{item.node.title}}】
-          <router-link :to="getRoutes(item.id)">{{item.title}}</router-link>
+          <router-link target="_blank" :to="getRoutes(item.id)">{{item.title}}</router-link>
           <span class="badge">{{item.create_time}}</span>
         </li>
       </ol>

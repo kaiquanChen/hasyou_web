@@ -19,7 +19,7 @@
 
 <script>
   import global_ from "../config/Global"
-  var base_post_url = global_.URLS.DOUBAN_MOVIE
+  var base_post_url = global_.URLS.DOUBAN_MOVIE;
   var post_url = base_post_url + "/subjects?type=movie&p=1&count=5";
   export default {
     name: "MovieHome",

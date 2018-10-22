@@ -33,7 +33,6 @@
           return;
         }
         this.data = data.body.data;
-        console.log(data.body.data);
       });
     }
   }

@@ -2,85 +2,98 @@
   <el-row>
     <el-col :span="24">
       <el-col :span="4" style="width: 16.7%;height:100%;background-color: white"></el-col>
-      <el-col :span="16" id="book-body">
+      <el-col :span="16" id="movie-body">
         <el-col :span="24">
-          <h3><b>{{data.name}}</b></h3>
+          <h3><b>{{data.title}}</b></h3>
           <el-col :span="6">
-            <a id="book-image" target="_blank" :href="data.image_url"><img :src="data.image_url" /></a>
+            <a id="movie-image" target="_blank" :href="data.image_url"><img :src="image.large" /></a>
           </el-col>
-          <el-col :span="12" id="book-info">
-            <div class="info" v-if="isEmpty(data.authors)">
-              作者:
-              <span v-for="author in data.authors">
-              <a>{{ author }}</a>&nbsp;
+          <el-col :span="12" id="movie-info">
+            <div class="info" v-if="isEmpty(data.directors)">
+              导演:
+              <span v-for="director in data.directors">
+              <a>{{ director.name }}</a>&nbsp;
             </span><br/>
             </div>
-            <div class="info" v-if="isEmpty(data.translators)">
-              译者:
-              <span v-for="translator in data.translators"><a>{{ translator }}</a>&nbsp;</span><br/>
+            <div class="info" v-if="isEmpty(data.writers)">
+              编剧:
+              <span v-for="writer in data.writers"><a>{{ writer.name }}</a>&nbsp;</span><br/>
             </div>
-            <div class="info" v-if="data.publisher">
-              <span>出版社: </span>{{ data.publisher }}<br/>
+            <div class="info" v-if="isEmpty(data.casts)">
+              主演:
+              <span v-for="cast in data.casts"><a>{{ cast.name }}</a>&nbsp;</span><br/>
             </div>
-            <div class="info" v-if="data.publish_time">
-              <span>出版时间: </span>{{ data.publish_time }}<br/>
+            <div class="info" v-if="isEmpty(data.genres)">
+              类型:
+              <span v-for="genre in data.genres"
+                    v-if="genre.level === 1 || genre.level === 2 || genre.level === 3">
+                <span>{{ genre.name }}</span>&nbsp;
+              </span><br/>
             </div>
-            <div class="info" v-if="data.page_count">
-              <span>总页数: </span>{{ data.page_count }}<br/>
+            <div class="info" v-if="isEmpty(data.countries)">
+              制片国家/地区:
+              <span v-for="country in data.countries">
+                <span>{{ country }}</span>&nbsp;
+              </span><br/>
             </div>
-            <div class="info" v-if="data.price">
-              <span>价格: </span>{{ data.price }}<br/>
+            <div class="info" v-if="isEmpty(data.pubdate)">
+              <span>上映时间: </span>{{ data.pubdate }}<br/>
             </div>
-            <div class="info" v-if="data.origin_work_name">
-              <span>原名: </span>{{ data.origin_work_name }}<br/>
+            <div class="info" v-if="isEmpty(data.aka)">
+              又名:
+              <span v-for="name in data.aka">
+                <span>{{ name }}</span>&nbsp;
+              </span><br/>
             </div>
-            <div class="info" v-if="data.binding">
-              <span>装帧: </span>{{ data.binding }}<br/>
+            <div class="info" v-if="isEmpty(data.durations)">
+              单片集长:
+              <span v-for="duration in data.durations">
+                <span>{{ duration }}</span>&nbsp;
+              </span><br/>
+            </div>
+            <div class="info" v-if="isEmpty(data.year)">
+              年份:
+              <span>{{ data.year }}&nbsp;</span><br/>
             </div>
           </el-col>
           <el-col :span="6">
-            <div id="book-rate">
+            <div id="movie-rate">
               <span>豆瓣评分: </span><br/>
-              <strong><b>{{ data.stars }}</b></strong>
+              <strong><b>{{ data.average }}</b></strong>
               <el-rate
-                v-model="data.stars / 2"
+                v-model="data.average / 2"
                 disabled
               >
               </el-rate>
               <span style="color: #006030">{{data.comments_count + data.reviews_count}} 人评价</span>
             </div>
           </el-col>
-          <el-col :span="24" class="book-label" id="book-intro">
+          <el-col :span="24" class="movie-label" id="movie-intro">
             <h4 style="color: green">内容简介  · · · · · ·</h4>
-            <div v-for="p_item in data.intro">
-              <p>{{p_item}}</p>
+            <div v-for="summary in data.summaries">
+              <p>{{summary}}</p>
             </div>
           </el-col>
-          <el-col :span="24" class="book-label" id="book-category">
-            <h4 style="color: green">目录  · · · · · ·</h4>
-            <div v-for="category in data.category"><span>{{category}}</span></div>
-          </el-col>
-          <el-col :span="24" class="book-label">
-            <h4 style="color: green">书评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
-            <el-col :span="24" id="book-review" class="list-group-item" v-for="item in reviews.body" :key="item.id">
+          <el-col :span="24" class="movie-label">
+            <h4 style="color: green">影评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
+            <el-col :span="24" id="movie-review" class="list-group-item" v-for="item in reviews.body" :key="item.id">
               <el-col >
                 <span style="float: left">{{item.title}}&nbsp;&nbsp;<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;{{item.published}}</span>
-                <span class="badge">{{item.useless}}无用</span>
                 <span class="badge">{{item.votes}}有用</span>
               </el-col>
               <p>{{item.summary}}</p>
             </el-col>
           </el-col>
-          <el-col :span="24" class="book-label">
+          <el-col :span="24" class="movie-label">
             <h4 style="color: green">短评  · · · · · ·<span>(共{{data.comments_count}}条)</span></h4>
-            <el-col :span="24" id="book-comment" class="list-group-item" v-for="item in comments.body" :key="item.id">
-              <a>{{item.creator_name}}</a>&nbsp;
+            <el-col :span="24" id="movie-comment" class="list-group-item" v-for="item in comments.body" :key="item.id">
+              <a>{{item.author}}</a>&nbsp;
               <b style="color: orange;">
                 <el-rate
-                v-model="item.stars / 2"
-                disabled class="comment-rate">
-              </el-rate></b>&nbsp;&nbsp;&nbsp;{{item.create_time}}
-              <a><span class="badge">{{item.votes}}有用</span></a>
+                  v-model="item.stars / 2"
+                  disabled class="comment-rate">
+                </el-rate></b>&nbsp;&nbsp;&nbsp;{{item.created_at}}
+              <a><span class="badge">{{item.useful_count}}有用</span></a>
               <p>{{item.content}}</p>
             </el-col>
             <el-col :span="24">
@@ -103,20 +116,20 @@
 
 <script>
   import global_ from "../config/Global"
-  const book_url = global_.URLS.BOOK_URL;
-  const comment_url = global_.URLS.BOOK_SHORT_COMMENT_URL;
-  const review_url = global_.URLS.BOOK_REVIEW_URL;
+  const movie_url = global_.URLS.DOUBAN_MOVIE;
+  const comment_url = global_.URLS.MOVIE_SHORT_COMMENT_URL;
+  const review_url = global_.URLS.MOVIE_REVIEW_URL;
   export default {
-    name: "BookList",
+    name: "MovieDetail",
     methods: {
       handleCurrentChange(val) {
         this.page = val;
-        this.getBookComment();
+        this.getMovieComment();
       },
-      getBook() {
-        let book_id = this.$route.params.id;
-        const book_detail_url = book_url + "subject/" + book_id;
-        this.$http.get(book_detail_url).then((data) => {
+      getMovie() {
+        let movie_id = this.$route.params.id;
+        const movie_detail_url = movie_url + "subject/" + movie_id;
+        this.$http.get(movie_detail_url).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -124,11 +137,17 @@
           }
 
           this.data = data.body.data;
+          this.image = this.data.image;
+          this.comments.page.total = this.data.comments_count;
+          this.reviews.page.total = this.data.reviews_count;
         });
       },
-      getBookComment() {
-        let book_id = this.$route.params.id;
-        const url = comment_url + "/" + book_id + "?p=" + this.comments.page.page + "&count=" + this.comments.page.count;
+      getMovieComment() {
+        let movie_id = this.$route.params.id;
+        const url = comment_url + "/" + movie_id + "?p="
+          + this.comments.page.page + "&count="
+          + this.comments.page.count
+          + "&popular=" + this.popular_comment;
         this.$http.get(url).then((data) => {
           if (data.status !== 200) {
             console.log(data);
@@ -142,9 +161,12 @@
           this.comments.page.count = data.body.data.count;
         });
       },
-      getBookReview() {
-        let book_id = this.$route.params.id;
-        const url = review_url + "/" + book_id + "?p=" + this.reviews.page.page + "&count=" + this.reviews.page.count;
+      getMovieReview() {
+        let movie_id = this.$route.params.id;
+        const url = review_url + "/" + movie_id
+          + "?p=" + this.reviews.page.page
+          + "&count=" + this.reviews.page.count
+          + "&popular=" + this.popular_review;
         this.$http.get(url).then((data) => {
           if (data.status !== 200) {
             console.log(data);
@@ -156,6 +178,8 @@
           this.reviews.page.total = data.body.data.total;
           this.reviews.page.page = data.body.data.page;
           this.reviews.page.count = data.body.data.count;
+          console.log(this.reviews.body);
+          console.log(data.body.data.body);
         });
       },
       isEmpty(array) {
@@ -167,7 +191,10 @@
     },
     data() {
       return {
+        popular_comment: 0,
+        popular_review: 1,
         data: {},
+        image: {},
         comments: {
           body:[],
           page:{
@@ -187,31 +214,35 @@
       }
     },
     created() {
-      this.getBook();
-      this.getBookReview();
-      this.getBookComment();
+      this.getMovie();
+      this.getMovieReview();
+      this.getMovieComment();
     }
   }
 </script>
 
 <style scoped>
+  #movie_left {
+    background-color: white;
+  }
+
   .intro h4 {
     color: green;
   }
 
-  #book-image img {
+  #movie-image img {
     width: 120px;
   }
 
-  #book-image {
+  #movie-image {
     width: 120px;
   }
 
-  #book-body {
+  #movie-body {
     margin: 30px 0 30px 60px;
   }
 
-  #book-info {
+  #movie-info {
     margin-top: -7px;
     margin-left: -50px;
   }
@@ -225,32 +256,36 @@
     margin: 3px;
   }
 
-  #book-rate {
+  div.info span {
+    color: black;
+  }
+
+  #movie-rate {
     border-left: solid 1px grey;
     height: 150px;
   }
 
-  #book-rate {
+  #movie-rate {
     padding-left: 10px;
   }
 
-  #book-rate b {
+  #movie-rate b {
     font-size: 45px;
   }
 
-  .book-label {
+  .movie-label {
     margin: 10px 0 10px 0;
   }
 
-  #book-intro {
+  #movie-intro {
     margin-top: 50px;
   }
 
-  #book-intro p {
+  #movie-intro p {
     text-indent: 2em;
   }
 
-  .book-label h4 span {
+  .movie-label h4 span {
     color: #3377aa;
     font-size: 17px;
   }
@@ -267,16 +302,16 @@
     display: inline-block;
   }
 
-  #book-review {
+  #movie-review {
     color: #3377aa;
   }
 
-  #book-review p {
+  #movie-review p {
     color: black;
     margin: 13px 0 13px 0;
   }
 
-  #book-review div {
+  #movie-review div {
     padding-bottom: 10px;
   }
 
@@ -284,11 +319,10 @@
     margin-top: 20px;
   }
 
-  #book-review,#book-comment {
+  #movie-review, #movie-comment {
     border-left: white;
     border-right: white;
     border-top: solid 1px gainsboro;
     border-bottom: solid 1px gainsboro;
   }
-
 </style>

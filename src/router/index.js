@@ -11,17 +11,24 @@ import BookDetail from '@/components/book/BookDetail'
 import Post from '@/components/forum/Post'
 import GoNode from '@/components/forum/GoNode'
 import Node from '@/components/forum/Node'
+import MovieDetail from '@/components/movie/MovieDetail'
+import MovieList from '@/components/movie/MovieList'
 
 export const routes = [
   {path: '/', component: Home},
   {path: '/read', component: Read},
   {path: '/music', component: Music},
-  {path: '/book', component: Book},
   {path: '/event', component: Event},
+  /* movie */
   {path: '/movie', component: Movie},
+  {path: '/movie/tag', component: MovieList},
+  {path: '/movie/:id', component: MovieDetail},
+  /* book */
+  {path: '/book', component: Book},
   {path: '/book/tag', component: BookTag},
   {path: '/book/tag/:tag_id', component: BookList},
   {path: '/book/subject/:id', component: BookDetail},
+  /* forum */
   {path: '/forum', component: Forum},
   {path: '/forum/:id', component: Post},
   {path: '/forum/node/:id', component: GoNode},
