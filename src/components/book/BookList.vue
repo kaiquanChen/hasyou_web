@@ -121,11 +121,7 @@
     width: 90px;
   }
 
-  /*.book-intro {*/
-    /*margin: 5px 0 15px 0;*/
-  /*}*/
-
-  .book-intro span {
+  .text-info {
     overflow: hidden;
     -webkit-line-clamp: 2;
     text-overflow: ellipsis;

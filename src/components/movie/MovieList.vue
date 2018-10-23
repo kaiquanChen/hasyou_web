@@ -8,33 +8,23 @@
     <el-col :span="15">
       <h2><b>选影视</b></h2>
       <div class="col-xs-12 genres-header">
-        <el-tag
-          color="#258dcd" class="genres-tag"
-        >全部形式</el-tag>&nbsp;&nbsp;&nbsp;
+        <span class="genre-index">全部形式</span>&nbsp;&nbsp;&nbsp;
         <router-link tag="span" to="#" v-for="level in level1" :key="level.id">{{ level.name }}&nbsp;&nbsp;&nbsp;</router-link>
       </div>
       <div class="col-xs-12 genres-header">
-        <el-tag
-          color="#258dcd" class="genres-tag"
-        >全部类型</el-tag>&nbsp;&nbsp;&nbsp;
+        <span class="genre-index">全部类型</span>&nbsp;&nbsp;&nbsp;
         <router-link tag="span" to="#" v-for="level in level2" :key="level.id">&nbsp;&nbsp;&nbsp;{{ level.name }}&nbsp;&nbsp;&nbsp;</router-link>
       </div>
       <div class="col-xs-12 genres-header">
-        <el-tag
-          color="#258dcd" class="genres-tag"
-        >全部地区</el-tag>&nbsp;&nbsp;&nbsp;
+        <span class="genre-index">全部地区</span>&nbsp;&nbsp;&nbsp;
         <router-link tag="span" to="#" v-for="level in level3" :key="level.id">{{ level.name }}&nbsp;&nbsp;&nbsp;</router-link>
       </div>
       <div class="col-xs-12 genres-header">
-        <el-tag
-          color="#258dcd" class="genres-tag"
-        >全部年代</el-tag>&nbsp;&nbsp;&nbsp;
+        <span class="genre-index">全部年代</span>&nbsp;&nbsp;&nbsp;
         <router-link tag="span" to="#" v-for="level in level4" :key="level.id">{{ level.name }}&nbsp;&nbsp;&nbsp;</router-link>
       </div>
       <div class="col-xs-12 genres-header">
-        <el-tag
-          color="#258dcd" class="genres-tag"
-        >全部特色</el-tag>&nbsp;&nbsp;&nbsp;
+        <span class="genre-index">全部特色</span>&nbsp;&nbsp;&nbsp;
         <router-link tag="span" to="#" v-for="level in level5" :key="level.id">{{ level.name }}&nbsp;&nbsp;&nbsp;</router-link>
       </div>
     </el-col>
@@ -60,7 +50,6 @@
           }
 
           let genres = data.body.data;
-          console.log(genres);
           this.level1 = genres["1"];
           this.level2 = genres["2"];
           this.level3 = genres["3"];
@@ -111,5 +100,9 @@
   div span:hover {
     cursor: pointer;
     color: #72ACE3;
+  }
+
+  .genre-index {
+
   }
 </style>
