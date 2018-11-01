@@ -1,14 +1,12 @@
 <template>
-  <el-row id="post-index">
-    <el-col>
+  <div class="row" id="post-index">
+    <div class="col-xs-12 col-lg-12">
       <h1 style="text-align: center">有你论坛</h1>
-    </el-col>
-    <el-col :span="3" id="post-left">
-nothing!
-    </el-col>
-    <el-col :span="18" id="post-body">
-      <div class="col-sm-12 post-header">
-        <div class="col-sm-10">
+    </div>
+    <div class="col-lg-2" id="post-left"></div>
+    <div class="col-xs-12 col-lg-8" id="post-body">
+      <div class="col-lg-12 col-xs-12 post-header">
+        <div class="col-lg-10 col-xs-9 post-header-title">
           <!-- nav -->
           <div class="nav">
             <router-link to="/forum"><b>论坛首页</b></router-link>&nbsp;&nbsp;>&nbsp;
@@ -16,27 +14,27 @@ nothing!
           </div>
           <span class="post-title">{{post.title}}</span><br>
           <span class="post-author">
-            <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{post.create_time}}&nbsp; · &nbsp;
+            <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{getTime(post.created)}}&nbsp; · &nbsp;
             <a target="_blank" :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
           </b></span>
         </div>
-        <div class="col-sm-2 img-div">
+        <div class="col-lg-2 col-xs-3 img-div">
           <!-- member avatar-->
           <a href="#"><img class="img-rounded" :src="member.avatar_large"></a>
         </div>
       </div>
-      <div class="col-sm-12 post-content">
-        <div class="col-sm-12">
+      <div class="col-lg-12 col-xs-12 post-content">
+        <div class="col-lg-12 col-xs-12">
           <div class="markdown" v-html="content"></div>
         </div>
-        <div class="col-sm-12 post-content-bottom">
+        <div class="col-lg-12 col-xs-12 post-content-bottom">
           <a>加入收藏</a>
           <a>忽略主题</a>
         </div>
       </div>
 
-      <div class="col-sm-12 post-comment">
-        <div class="col-sm-12 post-comment-header">
+      <div class="col-lg-12 col-xs-12 post-comment">
+        <div class="col-lg-12 col-xs-12 post-comment-header">
           <span>
             {{post.comment_count}}&nbsp;&nbsp;回复&nbsp;&nbsp;<strong>|</strong>&nbsp;&nbsp;直到&nbsp;&nbsp;{{post.active_time}}
           </span>
@@ -44,23 +42,24 @@ nothing!
             <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}</b></router-link>
           </span>
         </div>
-        <div class="col-sm-12" id="pagination-top">
+        <div class="col-lg-12 col-xs-12" id="pagination-top">
           <el-pagination background
                          @current-change="handleCurrentChange"
                          :current-page.sync="comment.page.page"
                          :page-size="comment.page.count"
+                         :small="checkMedia()"
                          layout="prev, pager, next"
                          :total="comment.page.total">
           </el-pagination>
         </div>
-        <div class="col-sm-12 list-group-item post-comment-body" v-for="comment in comment.body">
-          <div class="col-sm-1 post-comment-body-img" v-if="comment.member">
+        <div class="col-lg-12 col-xs-12 list-group-item post-comment-body" v-for="comment in comment.body">
+          <div class="col-lg-1 col-xs-1 post-comment-body-img" v-if="comment.member">
             <a><img class="img-rounded" :src="comment.member.avatar_large" :id="comment.member.id"></a>
           </div>
-          <div class="col-sm-1 post-comment-body-img" v-else>
+          <div class="col-lg-1 col-xs-1 col-xs-1 post-comment-body-img" v-else>
             <a><img class="img-rounded" src="/static/image/user_anon.jpeg"></a>
           </div>
-          <div class="col-sm-11 post-comment-body-info">
+          <div class="col-lg-11 col-xs-11 post-comment-body-info">
             <span class="comment-foor-number badge">{{comment.floor_number}}</span>
             <strong class="comment-username">{{comment.author}}</strong>&nbsp;&nbsp;
             <span class="comment-time">{{comment.create_time}}</span>&nbsp;&nbsp;
@@ -71,23 +70,23 @@ nothing!
           </div>
         </div>
       </div>
-      <div class="col-sm-12 post-comment-bottom">
+      <div class="col-lg-12 col-xs-12 post-comment-bottom">
         <a href="#"><strong>↑</strong>&nbsp;回到顶部</a>
       </div>
 
-      <div class="col-sm-12" id="pagination-bottom">
+      <div class="col-lg-12 col-xs-12" id="pagination-bottom">
         <el-pagination background
                        @current-change="handleCurrentChange"
                        :current-page.sync="comment.page.page"
                        :page-size="comment.page.count"
+                       :small="checkMedia()"
                        layout="total, prev, pager, next"
                        :total="comment.page.total">
         </el-pagination>
       </div>
-    </el-col>
-    <el-col :span="3" id="post-right">
-    </el-col>
-  </el-row>
+    </div>
+    <div class="col-lg-2" id="post-right"></div>
+  </div>
 </template>
 
 <script>
@@ -162,6 +161,54 @@ nothing!
       isEmpty(obj) {
         alert(obj != null);
         return obj != null;
+      },
+      checkMedia() {
+        let match = window.matchMedia('(max-width:415px)');
+        return match.matches;
+      },
+      getTime(time) {
+        let res = "";
+
+        let timespan = time * 1000;
+        let dateTime = new Date(timespan);
+
+        let year = dateTime.getFullYear();
+        let month = dateTime.getMonth() + 1;
+        let day = dateTime.getDate();
+        let hour = dateTime.getHours();
+        let minute = dateTime.getMinutes();
+        let second = dateTime.getSeconds();
+
+        let now = new Date();
+
+        let now_year = now.getFullYear();
+        let now_month = now.getMonth() + 1;
+        let now_day = now.getDate();
+        let now_hour = now.getHours();
+        let now_minute = now.getMinutes();
+        let now_second = now.getSeconds();
+
+        if (year === now_year) {
+          if (now_month - month) {
+            res += now_month - month + " 月 ";
+          } else {
+            if ((now_day - day) > 0) {
+              res += now_day - day + " 天 ";
+            }
+
+            if ((now_hour - hour) > 0) {
+              res += now_hour - hour + " 小时 ";
+            }
+
+            if ((now_minute - minute) > 0) {
+              res += now_minute - minute + " 分钟 ";
+            }
+          }
+        } else {
+          return year + "-" + month + "-" + day;
+        }
+
+        return res.trim() + "前";
       }
     },
     created() {
@@ -196,13 +243,13 @@ nothing!
   }
 
   .img-div img {
-    width: 59px;
-    padding-top: 20px;
+    width: 100%;
+    padding-top: 5px;
   }
 
-  .img-div {
-    float: right;
-  }
+  /*.img-div {*/
+    /*float: right;*/
+  /*}*/
 
   .post-content {
     padding: 30px 0 0 0;
@@ -267,15 +314,17 @@ nothing!
     border-left: white;
     border-right: white;
     border-bottom: white;
+    padding: 15px 0;
   }
 
   .post-comment-body-img {
     padding: 0;
-    margin-right: -20px;
+    /*margin-right: -20px;*/
   }
 
   .post-comment-body-img img {
-    width: 48px;
+    /*width: 48px;*/
+    width: 100%;
   }
 
   .comment-username {
@@ -292,7 +341,6 @@ nothing!
 
   .comment-foor-number {
     float: right;
-    margin-right: -50px;
   }
 
   .markdown {
@@ -307,5 +355,32 @@ nothing!
   .post-author b {
     color: grey;
     font-size: 15px;
+  }
+
+  @media screen and (max-width: 415px) {
+    #post-left,#post-right {
+      display: none;
+    }
+
+    div>h1 {
+      font-size: 28px;
+    }
+
+    span.post-title {
+      font-size: 20px;
+    }
+
+    div.nav {
+      font-size: 13px;
+    }
+
+    .post-header {
+      padding: 0;
+    }
+
+    div.img-div img {
+      width: 65px;
+    }
+
   }
 </style>

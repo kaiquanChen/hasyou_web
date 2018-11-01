@@ -9,7 +9,7 @@
     <div class="list-group-item col-sm-12 col-xs-12" id="book_body">
       <ol class="list-group"  v-for="item in data">
         <li :id='item.id' class="list-group-item">【TOP250】
-          <a target="_blank" href="#">{{item.name}}</a>
+          <router-link target="_blank" :to="getRoutes(item.id)">{{item.name}}</router-link>
           <span class="badge">{{item.stars}}</span>
         </li>
       </ol>
@@ -29,7 +29,9 @@
           }
         },
         methods:{
-
+          getRoutes(id) {
+            return "/book/subject/" + id;
+          }
         },
       created() {
         this.$http.get(book_list_url).then((data) => {

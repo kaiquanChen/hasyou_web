@@ -32,7 +32,7 @@
                   <span>{{post.node.title}}</span>
                 </router-link>&nbsp;/
                 <strong><a class="item-member">{{post.member.username}}</a></strong>
-                /&nbsp;&nbsp;&nbsp;{{post.create_time}}
+                /&nbsp;&nbsp;&nbsp;{{getTime(post.created)}}
               </div>
             </div>
           </div>
@@ -158,6 +158,50 @@
       getPagerCount() {
         let res = this.checkMedia();
         return res === true ? 5 : 10;
+      },
+      getTime(time) {
+        let res = "";
+
+        let timespan = time * 1000;
+        let dateTime = new Date(timespan);
+
+        let year = dateTime.getFullYear();
+        let month = dateTime.getMonth() + 1;
+        let day = dateTime.getDate();
+        let hour = dateTime.getHours();
+        let minute = dateTime.getMinutes();
+        let second = dateTime.getSeconds();
+
+        let now = new Date();
+
+        let now_year = now.getFullYear();
+        let now_month = now.getMonth() + 1;
+        let now_day = now.getDate();
+        let now_hour = now.getHours();
+        let now_minute = now.getMinutes();
+        let now_second = now.getSeconds();
+
+        if (year === now_year) {
+          if (now_month - month) {
+            res += now_month - month + " 月 ";
+          } else {
+            if ((now_day - day) > 0) {
+              res += now_day - day + " 天 ";
+            }
+
+            if ((now_hour - hour) > 0) {
+              res += now_hour - hour + " 小时 ";
+            }
+
+            if ((now_minute - minute) > 0) {
+              res += now_minute - minute + " 分钟 ";
+            }
+          }
+        } else {
+          return year + "-" + month + "-" + day;
+        }
+
+        return res.trim() + "前";
       }
     },
     created() {
