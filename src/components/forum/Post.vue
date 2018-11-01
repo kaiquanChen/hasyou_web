@@ -382,5 +382,8 @@
       width: 65px;
     }
 
+    span.post-author b {
+      font-size: 12px;
+    }
   }
 </style>
