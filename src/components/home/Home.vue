@@ -1,5 +1,5 @@
 <template>
-  <div :class="getClassByMedia()" id="home">
+  <div id="home">
     <div class="row">
       <div class="col-sm-5 col-xs-12">
         <!--read-->
@@ -45,35 +45,36 @@
 </template>
 
 <script>
-    import ReadHome from '@/components/home/ReadHome'
-    import BookHome from '@/components/home/BookHome'
-    import MovieHome from '@/components/home/MovieHome'
-    import ForumHome from '@/components/home/ForumHome'
-    import MusicHome from '@/components/home/MusicHome'
-    import EventHome from '@/components/home/EventHome'
-    export default {
-        name: "home",
-        components:{
-          youniRead: ReadHome,
-          youniBook: BookHome,
-          youniMovie: MovieHome,
-          youniForum: ForumHome,
-          youniMusic: MusicHome,
-          youniEvent: EventHome
-        },
-      methods: {
-          getClassByMedia() {
-            let media =  window.matchMedia('(max-width:600px)');
-            if (media.matches) {
-              return "container";
-            } else {
-              return "";
-            }
-          }
-      },
-      created() {
+  import ReadHome from '@/components/home/ReadHome'
+  import BookHome from '@/components/home/BookHome'
+  import MovieHome from '@/components/home/MovieHome'
+  import ForumHome from '@/components/home/ForumHome'
+  import MusicHome from '@/components/home/MusicHome'
+  import EventHome from '@/components/home/EventHome'
+
+  export default {
+    name: "home",
+    components: {
+      youniRead: ReadHome,
+      youniBook: BookHome,
+      youniMovie: MovieHome,
+      youniForum: ForumHome,
+      youniMusic: MusicHome,
+      youniEvent: EventHome
+    },
+    methods: {
+      getClassByMedia() {
+        let media = window.matchMedia('(max-width:600px)');
+        if (media.matches) {
+          return "container-fluid";
+        } else {
+          return "";
+        }
       }
+    },
+    created() {
     }
+  }
 </script>
 
 <style scoped>
@@ -81,6 +82,11 @@
     .home-blank {
       display: none;
     }
+
+    #home {
+      padding: 0;
+    }
+
   }
 
 

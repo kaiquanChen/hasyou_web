@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12" id="movie_home">
+  <div id="movie_home">
     <a style="color: #8B4513;" href="#" target="_blank">
       <img class="img-circle" style="height: 30px;" src="/static/icon/movie.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．电影</strong>
@@ -52,5 +52,17 @@
   #movie_body {
     margin: 5px 5px 5px 0;
     border: white;
+  }
+
+  @media screen and (max-width: 415px) {
+
+    #movie_home {
+      margin: 15px 0 5px 0;
+    }
+
+    div#movie_body {
+      padding: 0;
+    }
+
   }
 </style>

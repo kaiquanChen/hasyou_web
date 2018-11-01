@@ -1,12 +1,12 @@
 <template>
-  <div class="col-sm-12" id="read_home">
+  <div id="read_home">
     <a style="color: #8B4513;" href="#" target="_blank">
       <img class="img-circle" style="height: 30px;" src="/static/icon/read.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．阅读</strong>
     </a>
     <br/><br/>
     <span style="color: green;">今日推荐  · · · · · · </span><a href="#" style="color: chocolate">(更多)</a>
-    <div class="list-group-item col-sm-12" id="read_body">
+    <div class="list-group-item col-sm-12 col-xs-12" id="read_body">
       <ol class="list-group" v-for="item in data">
         <li :id="item.id" class="list-group-item">【阅读】<a target="_blank" href="#">{{item.name}}</a></li>
       </ol>
@@ -46,5 +46,17 @@
   #read_body {
     margin: 15px 5px 15px 0;
     border: white;
+  }
+
+  @media screen and (max-width: 415px) {
+
+    #read_home {
+      margin: 15px 0 5px 0;
+    }
+
+    div#read_body {
+      padding: 0;
+    }
+
   }
 </style>

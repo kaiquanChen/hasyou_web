@@ -60,4 +60,15 @@
     color: #8B4513;
   }
 
+  @media screen and (max-width: 415px) {
+
+    #forum_home {
+      margin: 15px 0 5px 0;
+    }
+
+    div#forum_body {
+      padding: 0;
+    }
+  }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12" id="event_home">
+  <div id="event_home">
     <a style="color: #8B4513;" href="#" target="_blank">
       <img class="img-circle" style="height: 30px;" src="/static/icon/city.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．同城</strong>
@@ -19,11 +19,11 @@
 
 <script>
   import global_ from "../config/Global"
-  var base_event_url = global_.URLS.EVENT_URL
-  var event_url = base_event_url + "subjects?loc_id=108296&p=1&count=5";
+  let base_event_url = global_.URLS.EVENT_URL;
+  let event_url = base_event_url + "subjects?loc_id=108296&p=1&count=5";
   export default {
     name: "MovieHome",
-    data(){
+    data() {
       return {
         data: []
       }
@@ -52,5 +52,17 @@
   #event_body {
     margin: 5px 5px 5px 0;
     border: white;
+  }
+
+  @media screen and (max-width: 415px) {
+
+    #event_home {
+      margin: 15px 0 5px 0;
+    }
+
+    div#event_body {
+      padding: 0;
+    }
+
   }
 </style>

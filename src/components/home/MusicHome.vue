@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12" id="music_home">
+  <div id="music_home">
     <a style="color: #8B4513;" href="#" target="_blank">
       <img class="img-circle" style="height: 30px;" src="/static/icon/talk.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．音乐</strong>
@@ -19,8 +19,8 @@
 
 <script>
   import global_ from "../config/Global"
-  var base_music_url = global_.URLS.DOUBAN_MUSIC_URL
-  var music_url = base_music_url + "/subjects";
+  let base_music_url = global_.URLS.DOUBAN_MUSIC_URL;
+  let music_url = base_music_url + "/subjects";
   export default {
     name: "MovieHome",
     data(){
@@ -52,5 +52,17 @@
   #music_body {
     margin: 5px 5px 5px 0;
     border: white;
+  }
+
+  @media screen and (max-width: 415px) {
+
+    #music_home {
+      margin: 15px 0 5px 0;
+    }
+
+    div#music_body {
+      padding: 0;
+    }
+
   }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="row" id="v2">
+  <div id="v2">
     <div class="col-lg-1" id="v2-body-left"></div>
     <div class="col-lg-8 col-xs-12" id="v2-body">
       <div class="v2-title col-xs-12 col-lg-12"><h1>有你论坛</h1></div>
@@ -22,11 +22,11 @@
               <img class="img-rounded" :src="post.member.avatar_large"/>
             </router-link>
             <!-- post info-->
+            <span class="badge">{{post.comment_count}}</span>
             <div class="col-xs-10 item-post">
               <span class="item-post-title">
                 <router-link target="_blank" :to="getPostRoutes(post.id)">{{post.title}}</router-link>
               </span>
-              <span class="badge">{{post.comment_count}}</span>
               <div class="item-post-node">
                 <router-link class="item-node" :to="getNodeRoutes(post.node.id)">
                   <span>{{post.node.title}}</span>
@@ -38,13 +38,13 @@
           </div>
           <div class="col-xs-12 col-lg-12" id="pagination">
             <el-pagination background
-                           :small="checkMedia()"
-                           @current-change="handleCurrentChange"
-                           :current-page.sync="posts.page.page"
-                           :page-size="posts.page.count"
-                           :pager-count="getPagerCount()"
-                           layout="total, prev, pager, next"
-                           :total="posts.page.total">
+                 :small="checkMedia()"
+                 @current-change="handleCurrentChange"
+                 :current-page.sync="posts.page.page"
+                 :page-size="posts.page.count"
+                 :pager-count="getPagerCount()"
+                 layout="total, prev, pager, next"
+                 :total="posts.page.total">
             </el-pagination>
           </div>
         </div>
@@ -186,7 +186,6 @@
     }
 
     .v2-content {
-      margin: 3px 5px 2px 5px;
       padding: 0;
     }
 
@@ -198,7 +197,7 @@
       font-size: 12px;
       display: block;
       word-break: break-all;
-      width: 300px;
+      width: 270px;
       margin: 0;
     }
 
@@ -234,13 +233,13 @@
   #v2-body-left {
     color: white;
   }
+
   #v2-body,.v2-list {
-    /*margin: 0 auto;*/
     padding: 0;
   }
 
   #v2 {
-    background-color: #F8F8F8;
+    background-color: grey;
   }
 
   .item-post-title a {

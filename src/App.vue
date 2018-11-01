@@ -6,8 +6,8 @@
     </div>
 
     <!-- body -->
-    <!--<div :class="checkMedia()" id="app_body">-->
-    <div class="container" id="app_body">
+    <div :class="checkMedia()" id="app_body">
+    <!--<div class="container" id="app_body">-->
       <router-view></router-view>
     </div>
 
@@ -34,7 +34,7 @@ export default {
     checkMedia() {
       let media =  window.matchMedia('(max-width:600px)');
       if (media.matches) {
-        return "container";
+        return "container-fluid";
       } else {
         return "container";
       }
@@ -44,5 +44,9 @@ export default {
 </script>
 
 <style scoped>
-
+  @media screen and (max-width: 415px) {
+    #app_body {
+      padding: 0;
+    }
+  }
 </style>
