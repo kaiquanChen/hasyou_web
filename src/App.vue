@@ -1,17 +1,18 @@
 <template>
-  <div id="app">
+  <div id="app" class="container-fluid">
     <!-- header -->
-    <div class="container" id="app_header">
+    <div class="row" id="app_header">
       <youni-header></youni-header>
     </div>
 
     <!-- body -->
+    <!--<div :class="checkMedia()" id="app_body">-->
     <div class="container" id="app_body">
       <router-view></router-view>
     </div>
 
     <!-- footer -->
-    <div class="container" id="app_footer">
+    <div class="row" id="app_footer">
       <youni-footer></youni-footer>
     </div>
   </div>
@@ -28,6 +29,16 @@ export default {
     youniHeader: Header,
     youniFooter:Footer,
     youniHome: Home
+  },
+  methods: {
+    checkMedia() {
+      let media =  window.matchMedia('(max-width:600px)');
+      if (media.matches) {
+        return "container";
+      } else {
+        return "container";
+      }
+    }
   }
 }
 </script>

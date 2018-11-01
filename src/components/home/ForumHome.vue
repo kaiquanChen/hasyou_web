@@ -1,12 +1,12 @@
 <template>
-  <div class="col-sm-12" id="forum_home">
+  <div id="forum_home">
     <router-link to="/forum">
       <img class="img-circle" style="height: 30px;" src="/static/icon/forum.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．论坛</strong>
     </router-link>
     <br/><br/>
     <span style="color: green;">今日推荐  · · · · · · </span><a href="#" style="color: chocolate">(更多)</a>
-    <div class="list-group-item col-sm-12" id="forum_body">
+    <div class="list-group-item col-xs-12" id="forum_body">
       <ol class="list-group"  v-for="item in data">
         <li :id='item.id' class="list-group-item">【{{item.node.title}}】
           <router-link target="_blank" :to="getRoutes(item.id)">{{item.title}}</router-link>
@@ -19,8 +19,8 @@
 
 <script>
     import global_ from "../config/Global"
-    var base_post_url = global_.URLS.POST_URL
-    var post_url = base_post_url + "/subjects?type=LATEST&p=1&count=5";
+    let base_post_url = global_.URLS.POST_URL;
+    let post_url = base_post_url + "/subjects?type=LATEST&p=1&count=5";
     export default {
       name: "ForumHome",
       data(){
@@ -59,4 +59,5 @@
   strong {
     color: #8B4513;
   }
+
 </style>

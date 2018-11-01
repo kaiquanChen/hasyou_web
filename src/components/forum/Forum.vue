@@ -1,67 +1,72 @@
 <template>
-  <el-row id="v2">
-    <el-row>
-      <el-col :span="3" id="v2-body-left">
-        nothing!
-      </el-col>
-      <el-col :span="15" id="v2-body">
-        <div><h1>有你论坛</h1></div>
+  <div class="row" id="v2">
+    <div class="col-lg-1" id="v2-body-left"></div>
+    <div class="col-lg-8 col-xs-12" id="v2-body">
+      <div class="v2-title col-xs-12 col-lg-12"><h1>有你论坛</h1></div>
+      <div class="v2-content col-xs-12 col-lg-12">
         <el-tabs id="v2-tabs"
-          v-model="activeName"
-          @tab-click="handleClick">
-          <el-tab-pane :label="node.title" :name="node.name" v-for="node in home_nodes" :key="node.id">
-            <div id="v2-latest" v-for="post in posts.body">
-              <div class="list-group-item row" :id="post.id">
-                <!-- image -->
-                <div class="item-post-left col-sm-1 item-img">
-                  <a :href="getPostRoutes(post.id)"><img class="img-rounded" :src="post.member.avatar_large"/></a>
-                </div>
-                <!-- post info-->
-                <div class="col-sm-11 item-post">
-                  <span class="item-post-title">
-                    <router-link target="_blank" :to="getPostRoutes(post.id)">{{post.title}}</router-link>
-                  </span>
-                  <span class="badge">{{post.comment_count}}</span>
-                  <div class="item-post-node">
-                    <router-link class="item-node" :to="getNodeRoutes(post.node.id)">
-                      <span>{{post.node.title}}</span>
-                    </router-link>&nbsp;&nbsp;•&nbsp;&nbsp;
-                    <strong><a class="item-member">{{post.member.username}}</a></strong>
-                    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;{{post.create_time}}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12" id="pagination">
-              <el-pagination background
-                             @current-change="handleCurrentChange"
-                             :current-page.sync="posts.page.page"
-                             :page-size="posts.page.count"
-                             layout="total, prev, pager, next"
-                             :total="posts.page.total">
-              </el-pagination>
-            </div>
+                 class="col-xs-12 col-lg-12"
+                 v-model="activeName"
+                 @tab-click="handleClick">
+          <el-tab-pane
+            :label="node.title"
+            :name="node.name"
+            v-for="node in home_nodes"
+            :key="node.id">
           </el-tab-pane>
         </el-tabs>
-      </el-col>
-      <el-col :span="6" id="v2-body-right">
-        <!--节点-->
-        <div class="col-sm-12" id="v2-node-header">
-          <strong class="item-node">热门节点</strong>
-        </div>
-        <div class="col-sm-12" id="v2-node-body">
-          <div  v-for="node in right_nodes">
-            <div class="col-sm-12 item-node">
-              <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}&nbsp;({{node.post_count}})</b></router-link>
+        <div class="col-xs-12 v2-list">
+          <div class="col-xs-12 list-group-item" id="v2-latest" v-for="post in posts.body" :id="post.id">
+            <!-- image -->
+            <router-link class="item-post-left col-xs-1 item-img" tag="div" :to="getPostRoutes(post.id)">
+              <img class="img-rounded" :src="post.member.avatar_large"/>
+            </router-link>
+            <!-- post info-->
+            <div class="col-xs-10 item-post">
+              <span class="item-post-title">
+                <router-link target="_blank" :to="getPostRoutes(post.id)">{{post.title}}</router-link>
+              </span>
+              <span class="badge">{{post.comment_count}}</span>
+              <div class="item-post-node">
+                <router-link class="item-node" :to="getNodeRoutes(post.node.id)">
+                  <span>{{post.node.title}}</span>
+                </router-link>&nbsp;/
+                <strong><a class="item-member">{{post.member.username}}</a></strong>
+                /&nbsp;&nbsp;&nbsp;{{post.create_time}}
+              </div>
             </div>
           </div>
+          <div class="col-xs-12 col-lg-12" id="pagination">
+            <el-pagination background
+                           :small="checkMedia()"
+                           @current-change="handleCurrentChange"
+                           :current-page.sync="posts.page.page"
+                           :page-size="posts.page.count"
+                           :pager-count="getPagerCount()"
+                           layout="total, prev, pager, next"
+                           :total="posts.page.total">
+            </el-pagination>
+          </div>
         </div>
-        <div class="col-sm-12" id="v2-node-more">
-            <router-link to="/forum/go/node"><b class="item-node">更多节点</b></router-link>
+      </div>
+    </div>
+    <div class="col-lg-3" id="v2-body-right">
+      <!--节点-->
+      <div class="col-xs-12" id="v2-node-header">
+        <strong class="item-node">热门节点</strong>
+      </div>
+      <div class="col-xs-12" id="v2-node-body">
+        <div  v-for="node in right_nodes">
+          <div class="col-xs-12 item-node">
+            <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}&nbsp;({{node.post_count}})</b></router-link>
+          </div>
         </div>
-      </el-col>
-    </el-row>
-  </el-row>
+      </div>
+      <div class="col-xs-12" id="v2-node-more">
+        <router-link to="/forum/go/node"><b class="item-node">更多节点</b></router-link>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -145,6 +150,14 @@
       },
       getPostRoutes(id) {
         return "/forum/" + id;
+      },
+      checkMedia() {
+        let match = window.matchMedia('(max-width:415px)');
+        return match.matches;
+      },
+      getPagerCount() {
+        let res = this.checkMedia();
+        return res === true ? 5 : 10;
       }
     },
     created() {
@@ -157,23 +170,77 @@
 
 <style scoped>
   @import "../../../static/css/forum.css";
+
+  @media screen and (max-width: 415px) {
+    .img-rounded {
+      width: 45px;
+      margin-top: 10px;
+    }
+
+    #v2-body-right,#v2-body-left {
+      display: none;
+    }
+
+    .v2-title h1 {
+      font-size: 24px;
+    }
+
+    .v2-content {
+      margin: 3px 5px 2px 5px;
+      padding: 0;
+    }
+
+    #v2-tabs {
+      margin: 3px 15px 5px 3px;
+    }
+
+    .item-post-title a {
+      font-size: 12px;
+      display: block;
+      word-break: break-all;
+      width: 300px;
+      margin: 0;
+    }
+
+    .v2-list {
+      padding: 0;
+    }
+
+    .item-node, .item-member {
+      font-size: 10px;
+    }
+
+    div.item-post-node {
+      font-size: 10px;
+    }
+
+    span.item-post-title {
+      width: 300px;
+    }
+
+    div.item-img {
+      margin-right: 10px;
+      margin-left: -7px;
+    }
+
+  }
+
+  @media screen and (min-width: 1100px) {
+    div.item-img img {
+      width: 60px;
+    }
+  }
+
   #v2-body-left {
     color: white;
   }
-  #v2-body {
-    margin: 0 auto;
-  }
-
-  .item-post-left {
-    padding: 0 5px 0 0;
+  #v2-body,.v2-list {
+    /*margin: 0 auto;*/
+    padding: 0;
   }
 
   #v2 {
     background-color: #F8F8F8;
-  }
-
-  #v2-latest img {
-    width: 60px;
   }
 
   .item-post-title a {
@@ -197,7 +264,7 @@
   }
 
   .item-img {
-    padding-left: 6px;
+    padding-left: 0;
   }
 
   #pagination {
@@ -235,4 +302,5 @@
     border-top: solid 1px grey;
     padding: 5px 0px 5px 10px;
   }
+
 </style>

@@ -1,43 +1,43 @@
 <template>
-  <div class="container">
-    <div class="container">
-      <div class="col-sm-5">
+  <div :class="getClassByMedia()" id="home">
+    <div class="row">
+      <div class="col-sm-5 col-xs-12">
         <!--read-->
         <youni-read></youni-read>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-5 col-xs-12">
         <!--forum-->
         <youni-forum></youni-forum>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-2 home-blank">
 
       </div>
     </div>
 
-    <div class="container">
-      <div class="col-sm-5">
+    <div class="row">
+      <div class="col-sm-5 col-xs-12">
         <!--movie-->
         <youni-movie></youni-movie>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-5 col-xs-12">
         <!--book-->
         <youni-book></youni-book>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-2 home-blank">
 
       </div>
     </div>
 
-    <div class="container">
-      <div class="col-sm-5">
+    <div class="row">
+      <div class="col-sm-5 col-xs-12">
         <!--music-->
         <youni-music></youni-music>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-5 col-xs-12">
         <!--event-->
         <youni-event></youni-event>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-2 home-blank">
 
       </div>
     </div>
@@ -60,10 +60,28 @@
           youniForum: ForumHome,
           youniMusic: MusicHome,
           youniEvent: EventHome
-        }
+        },
+      methods: {
+          getClassByMedia() {
+            let media =  window.matchMedia('(max-width:600px)');
+            if (media.matches) {
+              return "container";
+            } else {
+              return "";
+            }
+          }
+      },
+      created() {
+      }
     }
 </script>
 
 <style scoped>
+  @media screen and (max-width: 415px) {
+    .home-blank {
+      display: none;
+    }
+  }
+
 
 </style>
