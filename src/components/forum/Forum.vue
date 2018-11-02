@@ -1,70 +1,75 @@
 <template>
   <div id="v2">
-    <div class="col-lg-1" id="v2-body-left"></div>
-    <div class="col-lg-8 col-xs-12" id="v2-body">
-      <div class="v2-title col-xs-12 col-lg-12"><h1>有你论坛</h1></div>
-      <div class="v2-content col-xs-12 col-lg-12">
-        <el-tabs id="v2-tabs"
-                 class="col-xs-12 col-lg-12"
-                 v-model="activeName"
-                 @tab-click="handleClick">
-          <el-tab-pane
-            :label="node.title"
-            :name="node.name"
-            v-for="node in home_nodes"
-            :key="node.id">
-          </el-tab-pane>
-        </el-tabs>
-        <div class="col-xs-12 v2-list">
-          <div class="col-xs-12 list-group-item" id="v2-latest" v-for="post in posts.body" :id="post.id">
-            <!-- image -->
-            <router-link class="item-post-left col-xs-1 item-img" tag="div" :to="getPostRoutes(post.id)">
-              <img class="img-rounded" :src="post.member.avatar_large"/>
-            </router-link>
-            <!-- post info-->
-            <span class="badge">{{post.comment_count}}</span>
-            <div class="col-xs-10 item-post">
+    <div class="row">
+      <div class="col-lg-1" id="v2-body-left"></div>
+      <div class="col-lg-8 col-xs-12" id="v2-body">
+        <div class="v2-title col-xs-12 col-lg-12"><h1>有你论坛</h1></div>
+        <div class="v2-content col-xs-12 col-lg-12">
+          <el-tabs id="v2-tabs"
+                   class="col-xs-12 col-lg-12"
+                   v-model="activeName"
+                   @tab-click="handleClick">
+            <el-tab-pane
+              :label="node.title"
+              :name="node.name"
+              v-for="node in home_nodes"
+              :key="node.id">
+            </el-tab-pane>
+          </el-tabs>
+          <div class="col-xs-12 v2-list">
+            <div class="col-xs-12 list-group-item" id="v2-latest" v-for="post in posts.body" :id="post.id">
+              <!-- image -->
+              <router-link class="item-post-left col-xs-1 item-img" tag="div" :to="getPostRoutes(post.id)">
+                <img class="img-rounded" :src="post.member.avatar_large"/>
+              </router-link>
+              <!-- post info-->
+              <span class="badge">{{post.comment_count}}</span>
+              <div class="col-xs-10 item-post">
               <span class="item-post-title">
                 <router-link target="_blank" :to="getPostRoutes(post.id)">{{post.title}}</router-link>
               </span>
-              <div class="item-post-node">
-                <router-link class="item-node" :to="getNodeRoutes(post.node.id)">
-                  <span>{{post.node.title}}</span>
-                </router-link>&nbsp;/
-                <strong><a class="item-member">{{post.member.username}}</a></strong>
-                /&nbsp;&nbsp;&nbsp;{{getTime(post.created)}}
+                <div class="item-post-node">
+                  <router-link class="item-node" :to="getNodeRoutes(post.node.id)">
+                    <span>{{post.node.title}}</span>
+                  </router-link>&nbsp;/
+                  <strong><a class="item-member">{{post.member.username}}</a></strong>
+                  /&nbsp;&nbsp;&nbsp;{{getTime(post.created)}}
+                </div>
               </div>
             </div>
+            <div class="col-xs-12 col-lg-12" id="pagination">
+              <el-pagination background
+                             :small="checkMedia()"
+                             @current-change="handleCurrentChange"
+                             :current-page.sync="posts.page.page"
+                             :page-size="posts.page.count"
+                             :pager-count="getPagerCount()"
+                             layout="total, prev, pager, next"
+                             :total="posts.page.total">
+              </el-pagination>
+            </div>
           </div>
-          <div class="col-xs-12 col-lg-12" id="pagination">
-            <el-pagination background
-                 :small="checkMedia()"
-                 @current-change="handleCurrentChange"
-                 :current-page.sync="posts.page.page"
-                 :page-size="posts.page.count"
-                 :pager-count="getPagerCount()"
-                 layout="total, prev, pager, next"
-                 :total="posts.page.total">
-            </el-pagination>
+        </div>
+      </div>
+      <div class="col-lg-3" id="v2-body-right">
+        <!--节点-->
+        <div class="col-xs-12" id="v2-node-header">
+          <strong class="item-node">热门节点</strong>
+        </div>
+        <div class="col-xs-12" id="v2-node-body">
+          <div  v-for="node in right_nodes">
+            <div class="col-xs-12 item-node">
+              <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}&nbsp;({{node.post_count}})</b></router-link>
+            </div>
           </div>
+        </div>
+        <div class="col-xs-12" id="v2-node-more">
+          <router-link to="/forum/go/node"><b class="item-node">更多节点</b></router-link>
         </div>
       </div>
     </div>
-    <div class="col-lg-3" id="v2-body-right">
-      <!--节点-->
-      <div class="col-xs-12" id="v2-node-header">
-        <strong class="item-node">热门节点</strong>
-      </div>
-      <div class="col-xs-12" id="v2-node-body">
-        <div  v-for="node in right_nodes">
-          <div class="col-xs-12 item-node">
-            <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}&nbsp;({{node.post_count}})</b></router-link>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-12" id="v2-node-more">
-        <router-link to="/forum/go/node"><b class="item-node">更多节点</b></router-link>
-      </div>
+    <div class="row">
+
     </div>
   </div>
 </template>
@@ -234,7 +239,7 @@
     }
 
     #v2-tabs {
-      margin: 3px 15px 5px 3px;
+      margin: 3px 0 5px 0;
     }
 
     .item-post-title a {
@@ -280,10 +285,6 @@
 
   #v2-body,.v2-list {
     padding: 0;
-  }
-
-  #v2 {
-    background-color: grey;
   }
 
   .item-post-title a {

@@ -32,7 +32,6 @@
           <a>忽略主题</a>
         </div>
       </div>
-
       <div class="col-lg-12 col-xs-12 post-comment">
         <div class="col-lg-12 col-xs-12 post-comment-header">
           <span>
@@ -62,7 +61,7 @@
           <div class="col-lg-11 col-xs-11 post-comment-body-info">
             <span class="comment-foor-number badge">{{comment.floor_number}}</span>
             <strong class="comment-username">{{comment.author}}</strong>&nbsp;&nbsp;
-            <span class="comment-time">{{comment.create_time}}</span>&nbsp;&nbsp;
+            <span class="comment-time">{{getTime(comment.create_time)}}</span>&nbsp;&nbsp;
             <span class="comment-device" v-if="isWeb(comment.device)">via &nbsp;&nbsp;{{comment.device}}</span>
             <div class="comment-content">
               <span>{{comment.content}}</span>
@@ -200,7 +199,7 @@
               res += now_hour - hour + " 小时 ";
             }
 
-            if ((now_minute - minute) > 0) {
+            if ((now_minute - minute) > 0 && (now_day - day) === 0) {
               res += now_minute - minute + " 分钟 ";
             }
           }
@@ -247,12 +246,8 @@
     padding-top: 5px;
   }
 
-  /*.img-div {*/
-    /*float: right;*/
-  /*}*/
-
   .post-content {
-    padding: 30px 0 0 0;
+    padding: 10px 0 0 0;
     overflow: visible;
   }
 
@@ -319,11 +314,9 @@
 
   .post-comment-body-img {
     padding: 0;
-    /*margin-right: -20px;*/
   }
 
   .post-comment-body-img img {
-    /*width: 48px;*/
     width: 100%;
   }
 
@@ -345,6 +338,10 @@
 
   .markdown {
     margin-bottom: 20px;
+  }
+
+  div.markdown img {
+    width: 60%;
   }
 
   #pagination-top {
@@ -385,5 +382,14 @@
     span.post-author b {
       font-size: 12px;
     }
+
+    div#post-body {
+      padding: 0;
+    }
+
+    span.post-title {
+      font-size: 12px;
+    }
+
   }
 </style>
