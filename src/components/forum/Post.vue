@@ -61,7 +61,7 @@
           <div class="col-lg-11 col-xs-11 post-comment-body-info">
             <span class="comment-foor-number badge">{{comment.floor_number}}</span>
             <strong class="comment-username">{{comment.author}}</strong>&nbsp;&nbsp;
-            <span class="comment-time">{{getTime(comment.create_time)}}</span>&nbsp;&nbsp;
+            <span class="comment-time">{{getTime(comment.created)}}</span>&nbsp;&nbsp;
             <span class="comment-device" v-if="isWeb(comment.device)">via &nbsp;&nbsp;{{comment.device}}</span>
             <div class="comment-content">
               <span>{{comment.content}}</span>
