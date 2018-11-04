@@ -9,7 +9,7 @@
     <div class="list-group-item col-sm-12" id="event_body">
       <ol class="list-group"  v-for="item in data">
         <li :id='item.id' class="list-group-item">【{{item.loc_name}}】
-          <a target="_blank" href="#">{{item.title}}</a>
+          <a href="#">{{item.title}}</a>
           <span class="badge">{{item.category_name}}</span>
         </li>
       </ol>

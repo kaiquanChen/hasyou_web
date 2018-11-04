@@ -15,7 +15,7 @@
           <span class="post-title">{{post.title}}</span><br>
           <span class="post-author">
             <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{getTime(post.created)}}&nbsp; · &nbsp;
-            <a target="_blank" :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
+            <a :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
           </b></span>
         </div>
         <div class="col-lg-2 col-xs-3 img-div">

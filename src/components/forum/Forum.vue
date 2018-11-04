@@ -26,7 +26,7 @@
               <span class="badge">{{post.comment_count}}</span>
               <div class="col-xs-10 item-post">
               <span class="item-post-title">
-                <router-link target="_blank" :to="getPostRoutes(post.id)">{{post.title}}</router-link>
+                <router-link :to="getPostRoutes(post.id)">{{post.title}}</router-link>
               </span>
                 <div class="item-post-node">
                   <router-link class="item-node" :to="getNodeRoutes(post.node.id)">

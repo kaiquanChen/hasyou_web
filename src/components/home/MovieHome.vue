@@ -1,6 +1,6 @@
 <template>
   <div id="movie_home">
-    <a style="color: #8B4513;" href="#" target="_blank">
+    <a style="color: #8B4513;" href="#">
       <img class="img-circle" style="height: 30px;" src="/static/icon/movie.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．电影</strong>
     </a>
@@ -9,7 +9,7 @@
     <div class="list-group-item col-sm-12" id="movie_body">
       <ol class="list-group"  v-for="item in data">
         <li :id='item.id' class="list-group-item">【电影】
-          <a target="_blank" href="#">{{item.title}}</a>
+          <a href="#">{{item.title}}</a>
           <span class="badge">{{item.average}}</span>
         </li>
       </ol>

@@ -1,6 +1,6 @@
 <template>
   <div id="read_home">
-    <a style="color: #8B4513;" href="#" target="_blank">
+    <a style="color: #8B4513;" href="#">
       <img class="img-circle" style="height: 30px;" src="/static/icon/read.jpeg">&nbsp
       <strong style="font-size: 20px;">有你．阅读</strong>
     </a>
@@ -8,7 +8,7 @@
     <span style="color: green;">今日推荐  · · · · · · </span><a href="#" style="color: chocolate">(更多)</a>
     <div class="list-group-item col-sm-12 col-xs-12" id="read_body">
       <ol class="list-group" v-for="item in data">
-        <li :id="item.id" class="list-group-item">【阅读】<a target="_blank" href="#">{{item.name}}</a></li>
+        <li :id="item.id" class="list-group-item">【阅读】<a href="#">{{item.name}}</a></li>
       </ol>
     </div>
   </div>
