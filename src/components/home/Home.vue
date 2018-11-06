@@ -62,16 +62,6 @@
       youniMusic: MusicHome,
       youniEvent: EventHome
     },
-    methods: {
-      getClassByMedia() {
-        let media = window.matchMedia('(max-width:600px)');
-        if (media.matches) {
-          return "container-fluid";
-        } else {
-          return "";
-        }
-      }
-    },
     created() {
     }
   }

@@ -7,7 +7,6 @@
 
     <!-- body -->
     <div :class="checkMedia()" id="app_body">
-    <!--<div class="container" id="app_body">-->
       <router-view></router-view>
     </div>
 
@@ -39,6 +38,9 @@ export default {
         return "container";
       }
     }
+  },
+  created() {
+
   }
 }
 </script>

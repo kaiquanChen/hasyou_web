@@ -14,7 +14,7 @@
           </div>
           <span class="post-title">{{post.title}}</span><br>
           <span class="post-author">
-            <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{getTime(post.created)}}&nbsp; · &nbsp;
+            <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{getTime(post.create_time)}}&nbsp; · &nbsp;
             <a :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
           </b></span>
         </div>
@@ -61,7 +61,7 @@
           <div class="col-lg-11 col-xs-11 post-comment-body-info">
             <span class="comment-foor-number badge">{{comment.floor_number}}</span>
             <strong class="comment-username">{{comment.author}}</strong>&nbsp;&nbsp;
-            <span class="comment-time">{{getTime(comment.created)}}</span>&nbsp;&nbsp;
+            <span class="comment-time">{{comment.created}}</span>&nbsp;&nbsp;
             <span class="comment-device" v-if="isWeb(comment.device)">via &nbsp;&nbsp;{{comment.device}}</span>
             <div class="comment-content">
               <span>{{comment.content}}</span>
@@ -167,9 +167,9 @@
       },
       getTime(time) {
         let res = "";
-
-        let timespan = time * 1000;
-        let dateTime = new Date(timespan);
+        // let timespan = time * 1000;
+        let dateTime = new Date(time);
+        console.log(time);
 
         let year = dateTime.getFullYear();
         let month = dateTime.getMonth() + 1;
@@ -178,36 +178,48 @@
         let minute = dateTime.getMinutes();
         let second = dateTime.getSeconds();
 
-        let now = new Date();
+        // console.log(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
 
+        let now = new Date();
         let now_year = now.getFullYear();
         let now_month = now.getMonth() + 1;
         let now_day = now.getDate();
         let now_hour = now.getHours();
         let now_minute = now.getMinutes();
-        let now_second = now.getSeconds();
 
         if (year === now_year) {
-          if (now_month - month) {
+          if ((now_month - month) > 0) {
             res += now_month - month + " 月 ";
           } else {
             if ((now_day - day) > 0) {
               res += now_day - day + " 天 ";
-            }
-
-            if ((now_hour - hour) > 0) {
-              res += now_hour - hour + " 小时 ";
-            }
-
-            if ((now_minute - minute) > 0 && (now_day - day) === 0) {
-              res += now_minute - minute + " 分钟 ";
+              if ((now_hour - hour) > 0) {
+                res += now_hour - hour + " 小时 ";
+              }
+            } else {
+              if ((now_hour - hour) > 0) {
+                res += now_hour - hour + " 小时 ";
+                if ((now_minute - minute) > 0) {
+                  res += now_minute - minute + " 分钟 ";
+                }
+              } else {
+                if ((now_minute - minute) > 0) {
+                  res += now_minute - minute + " 分钟 ";
+                } else {
+                  res += "刚刚";
+                }
+              }
             }
           }
         } else {
           return year + "-" + month + "-" + day;
         }
 
-        return res.trim() + "前";
+        if (res.trim().endsWith("刚刚")) {
+          return res.trim();
+        } else  {
+          return res.trim() + "前";
+        }
       }
     },
     created() {
