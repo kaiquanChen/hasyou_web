@@ -6,7 +6,7 @@
           <span><h2>新书快递</h2></span><hr>
           <div class="col-lg-2 col-xs-3 new-book" v-for="item in book_express">
             <div class="book-img" :id="item.id">
-              <router-link :to="getBookDetail(item.id)"><img :src="item.image_url"></router-link>
+              <router-link :to="getBookDetail(item.id)" append><img :src="item.image_url"></router-link>
             </div>
             <div class="book-info">
               <span class="book-info-title"><router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span>
@@ -19,7 +19,7 @@
           <span><h2>热门标签&emsp;&emsp;<router-link to="/book/tag"><b>更多>></b></router-link></h2></span><hr>
           <div class="col-lg-12 col-xs-12" v-for="item in hot_tags">
             <span>{{item.tag_name}}</span>
-            <el-tag type="info" class="hot-tag-info" size="medium" :key="item.id" v-for="(tag, index) in item.children" v-if="index <= 7">
+            <el-tag type="info" class="hot-tag-info" size="medium" :key="index" v-for="(tag, index) in item.children" v-if="index <= 7">
               <router-link tag="a" :to="gotoTag(item.id)" append>{{tag.tag_name}}</router-link>
             </el-tag>
             <br/>
@@ -109,7 +109,7 @@
     }
 </script>
 
-<style>
+<style scoped>
   div.body {
     padding: 0;
   }

@@ -178,8 +178,6 @@
         let minute = dateTime.getMinutes();
         let second = dateTime.getSeconds();
 
-        // console.log(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
-
         let now = new Date();
         let now_year = now.getFullYear();
         let now_month = now.getMonth() + 1;

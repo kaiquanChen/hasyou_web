@@ -2,7 +2,7 @@
   <header class="header">
     <div class="row">
       <nav class="navbar navbar-light bg-light justify-content-between">
-        <div class="col-lg-6 col-xs-8">
+        <div class="col-lg-6 col-xs-8 left">
           <router-link tag="div" class="navbar-brand" to="/">
             <img src="../../static/image/header.png" width="30" height="30" class="d-inline-block align-top img-rounded" alt="有你LOGO">
           </router-link>
@@ -14,13 +14,18 @@
           <router-link class="navbar-brand" to="/forum">论坛</router-link>
         </div>
         <div class="col-lg-2 blank"></div>
-        <div class="col-lg-4 col-xs-4">
-          <el-input
-            placeholder="请输入内容"
-            v-model="input5"
-            class="input-with-select search">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
+        <div class="col-lg-4 col-xs-4 right">
+          <router-link class="navbar-brand" to="#">关于有你</router-link>
+          <router-link class="navbar-brand" to="#">留言板</router-link>
+        </div>
+        <div class="col-lg-12 col-xs-12 search-area">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4 col-xs-12">
+            <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
+              <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+          </div>
+          <div class="col-lg-4"></div>
         </div>
       </nav>
     </div>
@@ -32,9 +37,9 @@
   let base_group_url = global_.URLS.GROUP + "subjects";
 
   export default {
-    name: "",
     data() {
       return {
+        data:[],
         input3: '',
         input4: '',
         input5: '',
@@ -55,6 +60,12 @@
 </script>
 
 <style scoped>
+  .search-area {
+    background-color: #e9e9e2;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
   .row {
     margin: 0;
     padding: 0;
@@ -72,33 +83,39 @@
     color: black;
   }
 
-  .search {
-    width: 60%;
+  div.right a {
     float: right;
-    margin-top: 4px;
   }
 
   @media screen and (max-width: 415px) {
+    div.search-area {
+      background-color: #e9e9e2;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
     div.blank {
       display: none;
     }
 
-    div.col-xs-8 a {
+    div.right a, div.left a {
       font-size: 12px;
+    }
+
+    div.left a {
       width: 30%;
       margin: 0 -20px 0 -20px;
+    }
+
+    div.right a {
+      padding-left: 0;
+      padding-right: 0;
+      width: 50%;
     }
 
     div.col-xs-8 img {
       width: 20px;
       height: 20px;
-    }
-
-    .search {
-      float: right;
-      margin-right: -12px;
-      width: 135px;
-      font-size: 12px;
     }
 
     .search button {
@@ -125,13 +142,6 @@
     div.col-xs-8 img {
       width: 20px;
       height: 20px;
-    }
-
-    .search {
-      float: right;
-      margin-right: -12px;
-      width: 135px;
-      font-size: 12px;
     }
 
     .search button {
