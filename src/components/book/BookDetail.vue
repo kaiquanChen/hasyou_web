@@ -42,10 +42,7 @@
             <div id="book-rate">
               <span>豆瓣评分: </span><br/>
               <strong><b>{{ data.stars }}</b></strong>
-              <el-rate
-                v-model="data.stars / 2"
-                disabled
-              >
+              <el-rate v-model="data.stars / 2" disabled>
               </el-rate>
               <span style="color: #006030">{{data.comments_count + data.reviews_count}} 人评价</span>
             </div>

@@ -15,6 +15,16 @@
             </div>
             <br/>
           </div>
+          <div class="col-lg-12 col-xs-12" id="pagination-bottom">
+            <el-pagination background
+                           @current-change="handleCurrentChange"
+                           :current-page.sync="express_page.page"
+                           :page-size="express_page.count"
+                           :small="checkMedia()"
+                           layout="total, prev, pager, next"
+                           :total="express_page.total">
+            </el-pagination>
+          </div>
         </div>
         <div class="col-xs-12 col-lg-4" id="hot-tag">
           <span><h2>热门标签&emsp;&emsp;<router-link to="/book/tag"><b>更多>></b></router-link></h2></span><hr>
@@ -40,10 +50,10 @@
           </div>
         </div>
         <div class="col-xs-12 col-lg-4" id="book-top250">
-          <span><h2>图书 Top 250 &emsp;<router-link to="#"><b>更多>></b></router-link></h2></span><hr>
+          <span><h2>图书 Top 250 &emsp;<router-link to="top250" append><b>更多>></b></router-link></h2></span><hr>
           <div class="col-lg-12 col-xs-12 top250 list-group-item" v-for="(item, index) in book_top250">
             <span class="book-info-title">{{index + 1}}.<router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span><br/>
-            <span class="book-info-author" v-for="author in item.authors">{{author}}&emsp;&emsp;</span>
+            <span class="book-info-author" v-for="author in item.authors">{{author}}&emsp;</span>
           </div>
         </div>
       </div>
@@ -62,6 +72,8 @@
           book_express:[],
           book_top250:[],
           book_good_market:[],
+          express_page:{},
+          good_market_page:{},
           hot_tags:[]
         };
       },
@@ -76,18 +88,31 @@
 
             if (type === "BOOK_EXPRESS") {
               this.book_express = data.body.data.body;
+              this.express_page.total = data.body.data.total;
+              this.express_page.page = data.body.data.page;
+              this.express_page.count = data.body.data.count;
             } else if (type === "TOP250") {
               this.book_top250 = data.body.data.body;
             } else if (type === "BOOK_GOOD_MARKET") {
               this.book_good_market = data.body.data.body;
+              this.good_market_page.total = data.body.data.total;
+              this.good_market_page.page = data.body.data.page;
+              this.good_market_page.count = data.body.data.count;
             }
           });
+        },
+        handleCurrentChange(val) {
+          this.express_page.page = val;
+          this.getBookList("BOOK_EXPRESS", val, this.express_page.count);
         },
         getBookDetail(id) {
           return "subject/" + id;
         },
         gotoTag(id) {
           return "/book/tag/" + id;
+        },
+        checkMedia() {
+          return window.matchMedia('(max-width:415px)').matches;
         },
         getHotTags() {
           this.$http.get(tag_url + "subjects/DOUBAN_BOOK").then( (data) => {
@@ -102,7 +127,12 @@
         },
       },
       created() {
-        this.getBookList("BOOK_EXPRESS", 1, 1000);
+        let result = this.checkMedia();
+        let count = 5;
+        if (result) {
+          count = 6;
+        }
+        this.getBookList("BOOK_EXPRESS", 1, count);
         this.getBookList("TOP250", 1, 10);
         this.getBookList("BOOK_GOOD_MARKET", 1, 1000);
         this.getHotTags();
@@ -163,10 +193,6 @@
     font-weight:bold;
   }
 
-  div.top250 {
-    font-size: 20px;
-  }
-
   div#book-top250 b {
     font-size: 16px;
   }
@@ -176,8 +202,12 @@
   }
 
   div.list-group-item {
-    border: white;
-    border-bottom: grey 1px dashed;
+    font-size: 16px;
+    margin-bottom: 1px;
+    border-bottom: lightgray 1px dashed;
+    border-top: white;
+    border-left: white;
+    border-right: white;
   }
 
   div#hot-tag b {
