@@ -4,13 +4,14 @@
       <div class="col-xs-12 col-lg-12 body">
         <div class="col-xs-12 col-lg-8" id="book-express">
           <span><h2>新书快递</h2></span><hr>
-          <div class="col-lg-2 col-xs-3 new-book" v-for="item in book_express">
+          <div class="col-lg-2 col-xs-3 new-book" v-for="(item, index) in book_express">
             <div class="book-img" :id="item.id">
-              <router-link :to="getBookDetail(item.id)" append><img :src="item.image_url"></router-link>
+              <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
+              <router-link :to="getBookDetail(item.id)" append v-else><img :src="item.image.medium"></router-link>
             </div>
             <div class="book-info">
               <span class="book-info-title"><router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span>
-              <span class="book-info-author" v-for="author in item.authors">{{author}}</span>
+              <span class="book-info-author" >{{item.authors[0]}}</span>
             </div>
             <br/>
           </div>
