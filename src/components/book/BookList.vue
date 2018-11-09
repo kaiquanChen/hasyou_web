@@ -135,10 +135,6 @@
     -webkit-box-orient: vertical;
   }
 
-  #pagination {
-    /*margin: 20px 0 30px 10px;*/
-  }
-
   .text-info {
     color: grey;
   }

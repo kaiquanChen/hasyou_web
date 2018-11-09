@@ -59,11 +59,24 @@
           <h4 style="color: green">书评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-review" v-for="item in reviews.body" :key="item.id">
             <div>
-              <span style="float: left">{{item.title}}&nbsp;&nbsp;<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;{{item.published}}</span>
+              <!--<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;-->
+              <span style="float: left">{{item.title}}&nbsp;&nbsp;</span>{{item.published}}
               <span class="badge">{{item.useless}}无用</span>
               <span class="badge">{{item.votes}}有用</span>
             </div>
             <p>{{item.summary}}</p>
+          </div>
+          <div class="col-lg-12 col-xs-12">
+            <el-pagination background
+                           class="comment-pagination"
+                           @current-change="handleCurrentChange2"
+                           :current-page.sync="reviews.page.page"
+                           :page-size="reviews.page.count"
+                           :small="checkMedia()"
+                           :pager-count="pager_count"
+                           layout="total, prev, pager, next"
+                           :total="reviews.page.total">
+            </el-pagination>
           </div>
         </div>
         <div class="col-lg-12 col-xs-12 book-label">
@@ -84,6 +97,8 @@
                            @current-change="handleCurrentChange"
                            :current-page.sync="comments.page.page"
                            :page-size="comments.page.count"
+                           :pager-count="pager_count"
+                           :small="checkMedia()"
                            layout="total, prev, pager, next"
                            :total="comments.page.total">
             </el-pagination>
@@ -103,9 +118,16 @@
   export default {
     name: "BookList",
     methods: {
+      checkMedia() {
+        return window.matchMedia('(max-width:415px)').matches;
+      },
       handleCurrentChange(val) {
-        this.page = val;
+        this.comments.page.page = val;
         this.getBookComment();
+      },
+      handleCurrentChange2(val) {
+        this.reviews.page.page = val;
+        this.getBookReview();
       },
       getBook() {
         let book_id = this.$route.params.id;
@@ -175,10 +197,14 @@
             page: 1,
             count: 5
           }
-        }
+        },
+        pager_count: 7
       }
     },
     created() {
+      if (this.checkMedia()) {
+        this.pager_count = 5;
+      }
       this.getBook();
       this.getBookReview();
       this.getBookComment();
