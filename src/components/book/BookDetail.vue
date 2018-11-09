@@ -5,8 +5,8 @@
       <div class="col-lg-8 col-xs-12" id ="book-body">
         <h3 class="book-title"><b>{{data.name}}</b></h3>
         <div class="col-lg-2 col-xs-2 book-img">
-          <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
-          <router-link :to="getBookDetail(item.id)" append v-else><img :src="item.image.medium"></router-link>
+          <router-link :to="getBookDetail(data.id)" append v-if="data.image_url"><img :src="data.image_url"></router-link>
+          <router-link :to="getBookDetail(data.id)" append v-else><img :src="data.image.medium"></router-link>
         </div>
         <div class="col-lg-6 col-xs-5" id="book-info">
           <div class="info" v-if="isEmpty(data.authors)">
