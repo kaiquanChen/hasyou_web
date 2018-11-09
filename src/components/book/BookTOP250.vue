@@ -14,7 +14,7 @@
             <span v-if="item.publisher">{{item.publisher}}&nbsp;/&nbsp;</span>
             <span v-if="item.publish_time">{{item.publish_time}}&nbsp;/&nbsp;</span>
             <span v-if="item.price">{{item.price}}</span><br/><br/>
-            <el-rate v-model="item.stars / 2" disabled></el-rate><br/>
+            <el-rate v-model="item.stars/2" :score-template="item.stars" show-score="true" disabled>&nbsp;{{item.stars}}</el-rate><br/>
             <p class="quote">'{{item.vars.intro}}'</p>
           </div>
         </div>
