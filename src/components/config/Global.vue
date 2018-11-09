@@ -18,7 +18,7 @@
   // douban short comment
   const BOOK_SHORT_COMMENT_URL = COMMON_URL + DOUBAN_BOOK + 'comment'
 
-  const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "review"
+  const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "review/"
 
   // group
   const GROUP = COMMON_URL + 'group/'

@@ -5,7 +5,8 @@
       <div class="col-lg-8 col-xs-12" id ="book-body">
         <h3 class="book-title"><b>{{data.name}}</b></h3>
         <div class="col-lg-2 col-xs-2 book-img">
-          <a target="_blank" :href="data.image_url"><img :src="data.image_url" /></a>
+          <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
+          <router-link :to="getBookDetail(item.id)" append v-else><img :src="item.image.medium"></router-link>
         </div>
         <div class="col-lg-6 col-xs-5" id="book-info">
           <div class="info" v-if="isEmpty(data.authors)">
@@ -158,9 +159,12 @@
           this.comments.page.count = data.body.data.count;
         });
       },
+      getBookDetail(id) {
+        return "subject/" + id;
+      },
       getBookReview() {
         let book_id = this.$route.params.id;
-        const url = review_url + "/" + book_id + "?p=" + this.reviews.page.page + "&count=" + this.reviews.page.count;
+        const url = review_url + book_id + "?p=" + this.reviews.page.page + "&count=" + this.reviews.page.count;
         this.$http.get(url).then((data) => {
           if (data.status !== 200) {
             console.log(data);
