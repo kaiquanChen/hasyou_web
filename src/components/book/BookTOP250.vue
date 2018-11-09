@@ -4,10 +4,11 @@
       <div class="col-lg-9 col-xs-12 list-body">
         <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in books">
           <div class="col-lg-2 col-xs-3 top250-img">
-            <router-link :to="getBookRoute(item.id)"><img :src="item.image.medium"></router-link>
+            <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
+            <router-link :to="getBookDetail(item.id)" append v-else><img :src="item.image.medium"></router-link>
           </div>
           <div class="col-lg-10 col-xs-9 top250-book-info">
-            <router-link :to="getBookRoute(item.id)">{{item.name}}</router-link><br>
+            <router-link :to="getBookDetail(item.id)">{{item.name}}</router-link><br>
             <span>{{item.origin_work_name}}</span><br><br>
             <span>{{item.authors[0]}}</span>&nbsp;/&nbsp;
             <span v-if="item.translators[0]">{{item.translators[0]}}&nbsp;/&nbsp;</span>
@@ -15,7 +16,7 @@
             <span v-if="item.publish_time">{{item.publish_time}}&nbsp;/&nbsp;</span>
             <span v-if="item.price">{{item.price}}</span><br/><br/>
             <el-rate v-model="item.stars/2" :score-template="item.stars" show-score="true" disabled>&nbsp;{{item.stars}}</el-rate><br/>
-            <p class="quote">'{{item.vars.intro}}'</p>
+            <p v-if="item.vars.intro">'{{item.vars.intro}}'</p>
           </div>
         </div>
         <div class="col-lg-12 col-xs-12" id="pagination-bottom">
@@ -70,7 +71,7 @@
         checkMedia() {
           return window.matchMedia('(max-width:415px)').matches;
         },
-        getBookRoute(id) {
+        getBookDetail(id) {
           return "/book/subject/" + id;
         }
       },
@@ -81,6 +82,10 @@
 </script>
 
 <style scoped>
+  div.top250-book-info span,p {
+    color: #666666;
+  }
+
   div.list-group-item {
     margin-bottom: 1px;
     border-top: white;
@@ -95,7 +100,6 @@
   }
 
   div.top250-img img {
-    /*width: 90px;*/
     width: 100%;
     float: right;
   }

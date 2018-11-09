@@ -40,13 +40,24 @@
           <span><h2>畅销图书榜</h2></span><hr>
           <div class="col-lg-2 col-xs-3 good-market" v-for="item in book_good_market">
             <div class="book-img" :id="item.id">
-              <router-link :to="getBookDetail(item.id)" append><img :src="item.image_url"></router-link>
+              <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
+              <router-link :to="getBookDetail(item.id)" append v-else><img :src="item.image.medium"></router-link>
             </div>
             <div class="book-info">
               <span class="book-info-title"><router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span>
               <span class="book-info-author" v-for="author in item.authors">{{author}}</span>
             </div>
             <br/>
+          </div>
+          <div class="col-lg-12 col-xs-12">
+            <el-pagination background
+                           @current-change="handleCurrentChange2"
+                           :current-page.sync="good_market_page.page"
+                           :page-size="good_market_page.count"
+                           :small="checkMedia()"
+                           layout="total, prev, pager, next"
+                           :total="good_market_page.total">
+            </el-pagination>
           </div>
         </div>
         <div class="col-xs-12 col-lg-4" id="book-top250">
@@ -101,6 +112,10 @@
             }
           });
         },
+        handleCurrentChange2(val) {
+          this.good_market_page.page = val;
+          this.getBookList("BOOK_GOOD_MARKET", val, this.good_market_page.count);
+        },
         handleCurrentChange(val) {
           this.express_page.page = val;
           this.getBookList("BOOK_EXPRESS", val, this.express_page.count);
@@ -133,8 +148,8 @@
           count = 6;
         }
         this.getBookList("BOOK_EXPRESS", 1, count);
+        this.getBookList("BOOK_GOOD_MARKET", 1, count);
         this.getBookList("TOP250", 1, 10);
-        this.getBookList("BOOK_GOOD_MARKET", 1, 1000);
         this.getHotTags();
       }
     }
@@ -251,6 +266,5 @@
       white-space:nowrap;
       display:block;
     }
-
   }
 </style>

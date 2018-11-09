@@ -68,9 +68,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-
-    </div>
   </div>
 </template>
 
@@ -344,7 +341,6 @@
 
   #v2-node-more {
     border-top: solid 1px grey;
-    padding: 5px 0px 5px 10px;
+    padding: 5px 0 5px 10px;
   }
-
 </style>

@@ -1,12 +1,13 @@
 <template>
-  <div id="book_list" class="container">
-    <h1>图书列表</h1>
-    <div class="col-sm-12">
-      <div class="col-sm-12 list-group-item" v-for="item in data">
-        <div class="col-sm-2 img_div">
-          <router-link :to="getRoutes(item.id)"><img :src="item.image_url" /></router-link>
+  <div id="book_list" class="row">
+    <div class="col-lg-12 col-xs-12 book-list-title"><h1>图书列表</h1></div>
+    <div class="col-lg-12 col-xs-12">
+      <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in data">
+        <div class="col-lg-1 col-xs-2 img_div">
+          <router-link :to="getRoutes(item.id)" v-if="item.image_url"><img :src="item.image_url" /></router-link>
+          <router-link :to="getRoutes(item.id)" v-else><img :src="item.image.medium" /></router-link>
         </div>
-        <div class="col-sm-10 book-list-info">
+        <div class="col-lg-11 col-xs-10 book-list-info">
           <div><router-link :to="getRoutes(item.id)">{{item.name}}</router-link></div>
           <div>
             <span class="text-info">{{getBookInfo(item)}}</span>&nbsp;&nbsp;&nbsp;
@@ -23,11 +24,13 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-12" id="pagination">
+    <div class="col-lg-12 col-xs-12" id="pagination">
       <el-pagination background
                      @current-change="handleCurrentChange"
                      :current-page.sync="page"
                      :page-size="count"
+                     :pager-count="pager_count"
+                     :small="checkMedia()"
                      layout="total, prev, pager, next"
                      :total="total">
       </el-pagination>
@@ -88,12 +91,16 @@
             alert("数据获取失败!");
             return;
           }
+
           let res = data.body.data;
           this.data = res.body;
           this.total = res.total;
           this.page = res.page;
           this.count = res.count;
         });
+      },
+      checkMedia() {
+        return window.matchMedia('(max-width:415px)').matches;
       }
     },
     data() {
@@ -101,10 +108,14 @@
         data: [],
         total: 0,
         page: 1,
-        count: 20
+        count: 20,
+        pager_count: 7
       }
     },
     created() {
+      if (this.checkMedia()) {
+        this.pager_count = 5;
+      }
       this.getBookList();
     }
   }
@@ -112,13 +123,8 @@
 </script>
 
 <style scoped>
-  .img_div {
-    width: 110px;
-    margin-left: -15px;
-  }
-
   .img_div img {
-    width: 90px;
+    width: 85px;
   }
 
   .text-info {
@@ -130,25 +136,38 @@
   }
 
   #pagination {
-    margin: 20px 0 30px 10px;
-  }
-
-  .book-list-info div {
-    margin: 7px 0 7px 0;
-  }
-
-  .book-list-rate {
-    display: inline-block;
+    /*margin: 20px 0 30px 10px;*/
   }
 
   .text-info {
     color: grey;
   }
 
-  .list-group-item {
+  div.list-group-item {
     border-left: white;
     border-right: white;
     border-top: dashed 1px grey;
     border-bottom: dashed 1px grey;
+    padding: 20px 0 20px 0;
+  }
+
+  @media screen and (max-width: 415px) {
+    .img_div img {
+      width: 110%;
+    }
+
+    div.img_div {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .book-list-rate {
+      margin-top: -15px;
+      margin-bottom: 5px;
+    }
+
+    div.book-list-title h1 {
+      font-size: 30px;
+    }
   }
 </style>

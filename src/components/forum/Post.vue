@@ -72,7 +72,6 @@
       <div class="col-lg-12 col-xs-12 post-comment-bottom">
         <a href="#"><strong>↑</strong>&nbsp;回到顶部</a>
       </div>
-
       <div class="col-lg-12 col-xs-12" id="pagination-bottom">
         <el-pagination background
                        @current-change="handleCurrentChange"
@@ -162,14 +161,11 @@
         return obj != null;
       },
       checkMedia() {
-        let match = window.matchMedia('(max-width:415px)');
-        return match.matches;
+        return window.matchMedia('(max-width:415px)').matches;
       },
       getTime(time) {
         let res = "";
-        // let timespan = time * 1000;
         let dateTime = new Date(time);
-        console.log(time);
 
         let year = dateTime.getFullYear();
         let month = dateTime.getMonth() + 1;
@@ -400,6 +396,5 @@
     span.post-title {
       font-size: 12px;
     }
-
   }
 </style>
