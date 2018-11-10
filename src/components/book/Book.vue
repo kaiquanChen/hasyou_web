@@ -3,7 +3,17 @@
     <div class="row">
       <div class="col-xs-12 col-lg-12 body">
         <div class="col-xs-12 col-lg-8" id="book-express">
-          <span><h2>新书快递</h2></span><hr>
+          <div class="col-lg-12 col-xs-12 book-title">
+            <b>新书快递</b>
+            <el-pagination background
+                           @current-change="handleCurrentChange"
+                           :current-page.sync="express_page.page"
+                           :page-size="express_page.count"
+                           :small="checkMedia()"
+                           layout="prev, next"
+                           :total="express_page.total">
+            </el-pagination>
+          </div>
           <div class="col-lg-2 col-xs-3 new-book" v-for="(item, index) in book_express">
             <div class="book-img" :id="item.id">
               <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
@@ -14,16 +24,6 @@
               <span class="book-info-author" >{{item.authors[0]}}</span>
             </div>
             <br/>
-          </div>
-          <div class="col-lg-12 col-xs-12" id="pagination-bottom">
-            <el-pagination background
-                           @current-change="handleCurrentChange"
-                           :current-page.sync="express_page.page"
-                           :page-size="express_page.count"
-                           :small="checkMedia()"
-                           layout="total, prev, pager, next"
-                           :total="express_page.total">
-            </el-pagination>
           </div>
         </div>
         <div class="col-xs-12 col-lg-4" id="hot-tag">
@@ -37,7 +37,17 @@
           </div>
         </div>
         <div class="col-xs-12 col-lg-8" id="good-market">
-          <span><h2>畅销图书榜</h2></span><hr>
+          <div class="col-lg-12 col-xs-12 book-title">
+            <b>畅销图书榜</b>
+            <el-pagination background
+                           @current-change="handleCurrentChange2"
+                           :current-page.sync="good_market_page.page"
+                           :page-size="good_market_page.count"
+                           :small="checkMedia()"
+                           layout="prev, next"
+                           :total="good_market_page.total">
+            </el-pagination>
+          </div><hr>
           <div class="col-lg-2 col-xs-3 good-market" v-for="item in book_good_market">
             <div class="book-img" :id="item.id">
               <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
@@ -48,16 +58,6 @@
               <span class="book-info-author" v-for="author in item.authors">{{author}}</span>
             </div>
             <br/>
-          </div>
-          <div class="col-lg-12 col-xs-12">
-            <el-pagination background
-                           @current-change="handleCurrentChange2"
-                           :current-page.sync="good_market_page.page"
-                           :page-size="good_market_page.count"
-                           :small="checkMedia()"
-                           layout="total, prev, pager, next"
-                           :total="good_market_page.total">
-            </el-pagination>
           </div>
         </div>
         <div class="col-xs-12 col-lg-4" id="book-top250">
@@ -143,7 +143,7 @@
       },
       created() {
         let result = this.checkMedia();
-        let count = 5;
+        let count = 10;
         if (result) {
           count = 6;
         }
@@ -231,6 +231,20 @@
 
   .hot-tag-info {
     margin: 2px 8px 0 0;
+  }
+
+  div.book-title {
+    margin: 5px 0 15px 0;
+    padding-bottom: 4px;
+    border-bottom: grey 1px solid;
+  }
+
+  div.book-title b {
+    font-size: 24px;
+  }
+
+  div.el-pagination {
+    float: right;
   }
 
   @media screen and (max-width: 415px) {
