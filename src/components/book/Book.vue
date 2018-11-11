@@ -55,7 +55,7 @@
             </div>
             <div class="book-info">
               <span class="book-info-title"><router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span>
-              <span class="book-info-author" v-for="author in item.authors">{{author}}</span>
+              <span class="book-info-author">{{item.authors[0]}}</span>
             </div>
             <br/>
           </div>
