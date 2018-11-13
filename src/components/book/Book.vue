@@ -5,6 +5,7 @@
         <div class="col-xs-12 col-lg-8" id="book-express">
           <div class="col-lg-12 col-xs-12 book-title">
             <b>新书快递</b>
+            <span class="page-show">({{express_page.page}} / {{express_page.total / express_page.count}})</span>
             <el-pagination background
                            @current-change="handleCurrentChange"
                            :current-page.sync="express_page.page"
