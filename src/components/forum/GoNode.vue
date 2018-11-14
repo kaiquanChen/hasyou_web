@@ -4,7 +4,7 @@
       <div class="col-lg-1" id="v2-body-left"></div>
       <div class="col-lg-8 col-xs-12" id="v2-body">
         <div class="v2-title col-xs-12 col-lg-12"><h3>
-          <router-link to="/forum"><b>论坛首页</b></router-link>&nbsp;&nbsp;>&nbsp;&nbsp;{{node.title}}</h3>
+          <router-link to="/forum"><b class="title-nav">论坛首页</b></router-link>&nbsp;&nbsp;>&nbsp;&nbsp;{{node.title}}</h3>
         </div>
         <div class="v2-content col-xs-12 col-lg-12">
           <div class="col-xs-12 v2-list">
@@ -87,8 +87,7 @@
         this.getPostList(id);
       },
       getPagerCount() {
-        let res = this.checkMedia();
-        return res === true ? 5 : 10;
+        return this.checkMedia() === true ? 5 : 10;
       },
       getTime(time) {
         let res = "";
@@ -189,6 +188,10 @@
 
 <style scoped>
   @import "../../../static/css/forum.css";
+
+  b.title-nav {
+    color: #4d5256;
+  }
 
   @media screen and (max-width: 415px) {
     .img-rounded {
