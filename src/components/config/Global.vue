@@ -29,7 +29,7 @@
   // movie
   const DOUBAN_MOVIE = COMMON_URL + 'movie/'
   const MOVIE_SHORT_COMMENT_URL = DOUBAN_MOVIE + "comments/"
-  const MOVIE_REVIEW_URL = DOUBAN_MOVIE + "reviews"
+  const MOVIE_REVIEW_URL = DOUBAN_MOVIE + "reviews/"
   const MOVIE_GENRE_URL = DOUBAN_MOVIE + "/tag/genres"
 
   // v2 post

@@ -1,117 +1,134 @@
 <template>
-  <el-row>
-    <el-col :span="24">
-      <el-col :span="4" style="width: 16.7%;height:100%;background-color: white"></el-col>
-      <el-col :span="16" id="movie-body">
-        <el-col :span="24">
-          <h3><b>{{data.title}}</b></h3>
-          <el-col :span="6">
-            <a id="movie-image" target="_blank" :href="data.image_url"><img :src="image.large" /></a>
-          </el-col>
-          <el-col :span="12" id="movie-info">
-            <div class="info" v-if="isEmpty(data.directors)">
-              导演:
-              <span v-for="director in data.directors">
-              <a>{{ director.name }}</a>&nbsp;
+  <div class="row">
+    <div class="col-lg-12 col-xs-12" id="movie-detail">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-8 col-xs-12" id ="movie-body">
+        <h3 class="movie-title"><b>{{data.title}}</b></h3>
+        <div class="col-lg-2 col-xs-2 movie-img">
+          <span v-if="data.image_url"><img :src="data.image_url"></span>
+          <span v-else-if="data.image"><img :src="data.image.medium"></span>
+          <span v-else><img src=""></span>
+        </div>
+        <div class="col-lg-6 col-xs-5" id="movie-info">
+          <div class="info" v-if="!isEmpty(data.directors)">
+            导演:
+            <span v-for="director in data.directors">
+                  <a>{{ director.name }}</a>&nbsp;
+                </span><br/>
+          </div>
+          <div class="info" v-if="!isEmpty(data.writers)">
+            编剧:
+            <span v-for="writer in data.writers"><a><font>{{ writer.name }}</font></a>&nbsp;</span><br/>
+          </div>
+          <div class="info" v-if="!isEmpty(data.casts)">
+            主演:
+            <span v-for="(cast, index) in data.casts" :key="cast.id">
+              <a>{{ cast.name }}</a>&nbsp;
             </span><br/>
-            </div>
-            <div class="info" v-if="isEmpty(data.writers)">
-              编剧:
-              <span v-for="writer in data.writers"><a>{{ writer.name }}</a>&nbsp;</span><br/>
-            </div>
-            <div class="info" v-if="isEmpty(data.casts)">
-              主演:
-              <span v-for="cast in data.casts"><a>{{ cast.name }}</a>&nbsp;</span><br/>
-            </div>
-            <div class="info" v-if="isEmpty(data.genres)">
-              类型:
-              <span v-for="genre in data.genres"
-                    v-if="genre.level === 1 || genre.level === 2 || genre.level === 3">
-                <span>{{ genre.name }}</span>&nbsp;
+          </div>
+          <div class="info" v-if="!isEmpty(data.genres)">
+            类型:
+            <span v-for="genre in data.genres"
+                  v-if="genre.level === 1 || genre.level === 2 || genre.level === 3">
+              <span><font>{{ genre.name }}</font></span>&nbsp;
               </span><br/>
-            </div>
-            <div class="info" v-if="isEmpty(data.countries)">
-              制片国家/地区:
-              <span v-for="country in data.countries">
-                <span>{{ country }}</span>&nbsp;
+          </div>
+          <div class="info" v-if="!isEmpty(data.countries)">
+            制片国家/地区:
+            <span v-for="country in data.countries">
+              <span><font>{{ country }}</font></span>&nbsp;
               </span><br/>
-            </div>
-            <div class="info" v-if="isEmpty(data.pubdate)">
-              <span>上映时间: </span>{{ data.pubdate }}<br/>
-            </div>
-            <div class="info" v-if="isEmpty(data.aka)">
-              又名:
-              <span v-for="name in data.aka">
-                <span>{{ name }}</span>&nbsp;
+          </div>
+          <div class="info" v-if="!isEmpty(data.pubdate)">
+            <span>上映时间: </span><font v-for="pubdate in data.pubdate" :key="pubdate">{{ pubdate }}&nbsp;&nbsp;</font><br/>
+          </div>
+          <div class="info" v-if="!isEmpty(data.aka)">
+            又名:
+            <span v-for="name in data.aka">
+              <span><font>{{ name }}&emsp;</font></span>
               </span><br/>
-            </div>
-            <div class="info" v-if="isEmpty(data.durations)">
-              单片集长:
-              <span v-for="duration in data.durations">
-                <span>{{ duration }}</span>&nbsp;
+          </div>
+          <div class="info" v-if="!isEmpty(data.durations)">
+            单片集长:
+            <span v-for="duration in data.durations">
+              <span><font>{{ duration }}</font></span>&nbsp;
               </span><br/>
+          </div>
+          <div class="info" v-if="!isEmpty(data.year)">
+            年份:
+            <span><font>{{ data.year }}</font>&nbsp;</span><br/>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xs-5 rate">
+          <div id="movie-rate">
+            <span>豆瓣评分: </span><br/>
+            <strong><b>{{ data.average }}</b></strong>
+            <el-rate v-model="data.average / 2" disabled></el-rate>
+            <span style="color: #006030">{{data.comments_count + data.reviews_count}} 人评价</span>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xs-12 movie-label" id="movie-intro">
+          <h4 style="color: green">内容简介  · · · · · ·</h4>
+          <div v-for="p_item in data.summaries">
+            <p>{{p_item}}</p>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xs-12 movie-label">
+          <h4 style="color: green">{{data.title}}的书评  · · · · · ·<span>(共{{reviews.page.total}}条)</span></h4>
+          <div class="col-lg-12 col-xs-12 list-group-item movie-review" v-for="item in reviews.body" :key="item.id">
+            <div>
+              <!--<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;-->
+              <span style="float: left">{{item.title}}&nbsp;&nbsp;</span>{{item.published}}
+              <span class="badge" v-if="item.votes">{{item.votes}}赞</span>
             </div>
-            <div class="info" v-if="isEmpty(data.year)">
-              年份:
-              <span>{{ data.year }}&nbsp;</span><br/>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div id="movie-rate">
-              <span>豆瓣评分: </span><br/>
-              <strong><b>{{ data.average }}</b></strong>
-              <el-rate
-                v-model="data.average / 2"
-                disabled
-              >
-              </el-rate>
-              <span style="color: #006030">{{data.comments_count + data.reviews_count}} 人评价</span>
-            </div>
-          </el-col>
-          <el-col :span="24" class="movie-label" id="movie-intro">
-            <h4 style="color: green">内容简介  · · · · · ·</h4>
-            <div v-for="summary in data.summaries">
-              <p>{{summary}}</p>
-            </div>
-          </el-col>
-          <el-col :span="24" class="movie-label">
-            <h4 style="color: green">影评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
-            <el-col :span="24" id="movie-review" class="list-group-item" v-for="item in reviews.body" :key="item.id">
-              <el-col >
-                <span style="float: left">{{item.title}}&nbsp;&nbsp;<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;{{item.published}}</span>
-                <span class="badge">{{item.votes}}有用</span>
-              </el-col>
-              <p>{{item.summary}}</p>
-            </el-col>
-          </el-col>
-          <el-col :span="24" class="movie-label">
-            <h4 style="color: green">短评  · · · · · ·<span>(共{{data.comments_count}}条)</span></h4>
-            <el-col :span="24" id="movie-comment" class="list-group-item" v-for="item in comments.body" :key="item.id">
-              <a>{{item.author}}</a>&nbsp;
-              <b style="color: orange;">
-                <el-rate
-                  v-model="item.stars / 2"
-                  disabled class="comment-rate">
-                </el-rate></b>&nbsp;&nbsp;&nbsp;{{item.created_at}}
-              <a><span class="badge">{{item.useful_count}}有用</span></a>
-              <p>{{item.content}}</p>
-            </el-col>
-            <el-col :span="24">
-              <el-pagination background
-                             class="comment-pagination"
-                             @current-change="handleCurrentChange"
-                             :current-page.sync="comments.page.page"
-                             :page-size="comments.page.count"
-                             layout="total, prev, pager, next"
-                             :total="comments.page.total">
-              </el-pagination>
-            </el-col>
-          </el-col>
-        </el-col>
-      </el-col>
-      <el-col :span="4" style="width: 16.7%;height:100%;background-color: black"></el-col>
-    </el-col>
-  </el-row>
+            <p>{{item.summary}}</p>
+          </div>
+          <div class="col-lg-12 col-xs-12">
+            <el-pagination background
+                           class="comment-pagination"
+                           @current-change="handleReviewCurrentChange"
+                           :current-page.sync="reviews.page.page"
+                           :page-size="reviews.page.count"
+                           :small="checkMedia()"
+                           :pager-count="pager_count"
+                           layout="total, prev, pager, next"
+                           :total="reviews.page.total">
+            </el-pagination>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xs-12 movie-label">
+          <h4 style="color: green">{{data.title}}的短评  · · · · · ·<span>(共{{comments.page.total}}条)</span></h4>
+          <div class="col-lg-12 col-xs-12 list-group-item movie-comment" v-for="item in comments.body" :key="item.id">
+            <router-link to="#" v-if="item.author">{{item.author.name}}</router-link>&nbsp;
+            <a><span class="badge">{{item.useful_count}}赞</span></a>
+            &nbsp;&nbsp;&nbsp;{{item.created_at}}
+            <el-rate
+              class="movie-extra-rate"
+              v-model="item.stars"
+              disabled
+              show-score
+              text-color="#ff9900"
+              :score-template="item.stars + ''">
+            </el-rate>
+            <p>{{item.content}}</p>
+          </div>
+          <div class="col-lg-12 col-xs-12">
+            <el-pagination background
+                           class="comment-pagination"
+                           @current-change="handleCommentCurrentChange"
+                           :current-page.sync="comments.page.page"
+                           :page-size="comments.page.count"
+                           :pager-count="pager_count"
+                           :small="checkMedia()"
+                           layout="total, prev, pager, next"
+                           :total="comments.page.total">
+            </el-pagination>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -122,9 +139,13 @@
   export default {
     name: "MovieDetail",
     methods: {
-      handleCurrentChange(val) {
-        this.page = val;
+      handleCommentCurrentChange(val) {
+        this.comments.page.page = val;
         this.getMovieComment();
+      },
+      handleReviewCurrentChange(val) {
+        this.reviews.page.page = val;
+        this.getMovieReview();
       },
       getMovie() {
         let movie_id = this.$route.params.id;
@@ -138,16 +159,13 @@
 
           this.data = data.body.data;
           this.image = this.data.image;
-          this.comments.page.total = this.data.comments_count;
-          this.reviews.page.total = this.data.reviews_count;
         });
       },
       getMovieComment() {
         let movie_id = this.$route.params.id;
-        const url = comment_url + "/" + movie_id + "?p="
+        const url = comment_url + movie_id + "?p="
           + this.comments.page.page + "&count="
-          + this.comments.page.count
-          + "&popular=" + this.popular_comment;
+          + this.comments.page.count;
         this.$http.get(url).then((data) => {
           if (data.status !== 200) {
             console.log(data);
@@ -163,10 +181,9 @@
       },
       getMovieReview() {
         let movie_id = this.$route.params.id;
-        const url = review_url + "/" + movie_id
+        const url = review_url + movie_id
           + "?p=" + this.reviews.page.page
-          + "&count=" + this.reviews.page.count
-          + "&popular=" + this.popular_review;
+          + "&count=" + this.reviews.page.count;
         this.$http.get(url).then((data) => {
           if (data.status !== 200) {
             console.log(data);
@@ -178,15 +195,13 @@
           this.reviews.page.total = data.body.data.total;
           this.reviews.page.page = data.body.data.page;
           this.reviews.page.count = data.body.data.count;
-          console.log(this.reviews.body);
-          console.log(data.body.data.body);
         });
       },
       isEmpty(array) {
-        if (JSON.stringify(array) === '[]') {
-          return false;
-        }
-        return true;
+        return array === null || array === undefined || array.length === 0;
+      },
+      checkMedia() {
+        return window.matchMedia('(max-width:415px)').matches;
       }
     },
     data() {
@@ -210,10 +225,14 @@
             page: 1,
             count: 5
           }
-        }
+        },
+        pager_count: 7
       }
     },
     created() {
+      if (this.checkMedia()) {
+        this.pager_count = 5;
+      }
       this.getMovie();
       this.getMovieReview();
       this.getMovieComment();
@@ -222,29 +241,17 @@
 </script>
 
 <style scoped>
-  #movie_left {
-    background-color: white;
+  div.movie-img {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  div.movie-img img {
+    width: 105%;
   }
 
   .intro h4 {
     color: green;
-  }
-
-  #movie-image img {
-    width: 120px;
-  }
-
-  #movie-image {
-    width: 120px;
-  }
-
-  #movie-body {
-    margin: 30px 0 30px 60px;
-  }
-
-  #movie-info {
-    margin-top: -7px;
-    margin-left: -50px;
   }
 
   div.info span {
@@ -254,10 +261,6 @@
   div.info {
     color: gray;
     margin: 3px;
-  }
-
-  div.info span {
-    color: black;
   }
 
   #movie-rate {
@@ -273,8 +276,8 @@
     font-size: 45px;
   }
 
-  .movie-label {
-    margin: 10px 0 10px 0;
+  div.movie-label {
+    margin: 30px 0 10px 0;
   }
 
   #movie-intro {
@@ -302,16 +305,16 @@
     display: inline-block;
   }
 
-  #movie-review {
+  .movie-review {
     color: #3377aa;
   }
 
-  #movie-review p {
+  .movie-review p {
     color: black;
     margin: 13px 0 13px 0;
   }
 
-  #movie-review div {
+  .movie-review div {
     padding-bottom: 10px;
   }
 
@@ -319,10 +322,63 @@
     margin-top: 20px;
   }
 
-  #movie-review, #movie-comment {
+  .movie-review,.movie-comment {
     border-left: white;
     border-right: white;
     border-top: solid 1px gainsboro;
     border-bottom: solid 1px gainsboro;
+  }
+
+  div.catalog {
+    padding-left: 30px;
+  }
+
+  font {
+    color: #111;
+  }
+
+  div.movie-extra-rate {
+    margin-top: 5px;
+  }
+
+  @media screen and (max-width: 415px) {
+    div#movie-detail {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .movie-title {
+      font-size: 18px;
+    }
+
+    div#movie-info {
+      font-size: 10px;
+    }
+
+    div#movie-rate {
+      font-size: 10px;
+    }
+
+    div#movie-rate b {
+      font-size: 24px;
+    }
+
+    div.rate {
+      padding-right: 0;
+    }
+
+    div.movie-label, div.movie-comment,div.movie-review {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    div.movie-label h4 {
+      font-size: 16px;
+    }
+
+    div.movie-label span {
+      font-size: 14px;
+    }
+
   }
 </style>

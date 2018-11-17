@@ -14,6 +14,7 @@ import GoNode from '@/components/forum/GoNode'
 import Node from '@/components/forum/Node'
 import MovieDetail from '@/components/movie/MovieDetail'
 import MovieList from '@/components/movie/MovieList'
+import Test from '@/components/Test'
 
 export const routes = [
   {path: '/', component: Home},
@@ -23,7 +24,7 @@ export const routes = [
   /* movie */
   {path: '/movie', component: Movie},
   {path: '/movie/tag', component: MovieList},
-  {path: '/movie/:id', component: MovieDetail},
+  {path: '/movie/subject/:id', component: MovieDetail},
   /* book */
   {path: '/book', component: Book},
   {path: '/book/tag', component: BookTag},
@@ -34,5 +35,8 @@ export const routes = [
   {path: '/forum', component: Forum},
   {path: '/forum/:id', component: Post},
   {path: '/forum/node/:id', component: GoNode},
-  {path: '/forum/go/node', component: Node}
+  {path: '/forum/go/node', component: Node},
+
+  /* test */
+  {path: '/test', component: Test}
 ]

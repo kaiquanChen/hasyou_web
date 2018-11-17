@@ -226,10 +226,6 @@
     width: 105%;
   }
 
-  div#book-info {
-
-  }
-
   .intro h4 {
     color: green;
   }
