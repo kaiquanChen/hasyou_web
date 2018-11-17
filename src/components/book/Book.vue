@@ -5,7 +5,7 @@
         <div class="col-xs-12 col-lg-8" id="book-express">
           <div class="col-lg-12 col-xs-12 book-title">
             <b>新书快递</b>
-            <!--<span class="page-show">({{express_page.page}} / {{express_page.total / express_page.count}})</span>-->
+            <span class="page-show">({{express_page.page}} / {{Math.ceil(express_page.total / express_page.count)}})</span>
             <el-pagination background
                            @current-change="handleCurrentChange"
                            :current-page.sync="express_page.page"
@@ -40,6 +40,7 @@
         <div class="col-xs-12 col-lg-8" id="good-market">
           <div class="col-lg-12 col-xs-12 book-title">
             <b>畅销图书榜</b>
+            <span class="page-show">({{good_market_page.page}} / {{Math.ceil(good_market_page.total / good_market_page.count)}})</span>
             <el-pagination background
                            @current-change="handleCurrentChange2"
                            :current-page.sync="good_market_page.page"

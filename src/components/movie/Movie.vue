@@ -5,6 +5,7 @@
         <div class="col-xs-12 col-lg-8" id="in-theaters">
           <div class="col-lg-12 col-xs-12 movie-title">
             <b>正在热映</b>
+            <span class="page-show">({{in_theaters_page.page}} / {{Math.ceil(in_theaters_page.total / in_theaters_page.count)}})</span>
             <el-pagination background
                            @current-change="handleCurrentChange"
                            :current-page.sync="in_theaters_page.page"
@@ -20,9 +21,9 @@
               <router-link :to="getMovieDetail(item.id)" v-else><img :src="item.image.medium"></router-link>
             </div>
             <div class="movie-info">
-              <span class="book-info-title"><router-link :to="getMovieDetail(item.id)" append>{{item.title}}</router-link></span>
-              <span class="book-info-rate" v-if="item.average">豆瓣评分:{{item.average}}</span>
-              <span class="book-info-rate" v-else="item.average">暂无评分</span>
+              <span class="movie-info-title"><router-link :to="getMovieDetail(item.id)" append>{{item.title}}</router-link></span>
+              <span class="movie-info-rate" v-if="item.average">豆瓣评分:<b class="average">{{item.average}}</b></span>
+              <span class="movie-info-rate" v-else="item.average">暂无评分</span>
             </div>
             <br/>
           </div>
@@ -115,7 +116,7 @@
     },
     created() {
       let result = this.checkMedia();
-      let count = 10;
+      let count = 12;
       if (result) {
         count = 6;
       }
@@ -166,6 +167,23 @@
     padding-right: 0;
   }
 
+  div.movie-info {
+    margin-top: 5px;
+  }
+
+  div.movie-info span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space:nowrap;
+    width: 115px;
+    display:block;
+  }
+
+  b.average {
+    color: #e09015;
+  }
+
   @media screen and (max-width: 415px) {
 
     div#in-theaters {
@@ -183,9 +201,6 @@
     div.book-img img {
       width: 105px;
       height: 142px;
-    }
-
-    div.new-movie {
     }
 
     div.movie-info span {
