@@ -154,6 +154,10 @@
     float: right;
   }
 
+  span.page-show {
+    color: #666;
+  }
+
   div {
     text-align: center;
   }

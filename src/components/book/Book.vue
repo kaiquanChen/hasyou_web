@@ -197,6 +197,10 @@
     margin-top: 5px;
   }
 
+  span.page-show {
+    color: #666;
+  }
+
   div.book-info span {
     overflow: hidden;
     text-overflow: ellipsis;
