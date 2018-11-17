@@ -172,11 +172,11 @@
       },
       handleNewMoviesCurrentChange(val) {
         this.in_theaters_page.page = val;
-        this.getMovieList("IN_THEATERS", val, this.in_theaters_page.count);
+        this.getMovieList("NEW_MOVIES", val, this.in_theaters_page.count);
       },
       handleComingSoonCurrentChange(val) {
         this.in_theaters_page.page = val;
-        this.getMovieList("IN_THEATERS", val, this.in_theaters_page.count);
+        this.getMovieList("COMING_SOON", val, this.in_theaters_page.count);
       },
       getMovieDetail(id) {
         return "subject/" + id;

@@ -4,11 +4,12 @@
       <div class="col-lg-1"></div>
       <div class="col-lg-8 col-xs-12" id ="book-body">
         <h3 class="book-title"><b>{{data.name}}</b></h3>
-        <div class="col-lg-2 col-xs-2 book-img">
+        <div class="col-lg-2 col-xs-3 book-img">
           <router-link :to="getBookDetail(data.id)" append v-if="data.image_url"><img :src="data.image_url"></router-link>
-          <router-link :to="getBookDetail(data.id)" append v-else><img :src="data.image.medium"></router-link>
+          <router-link :to="getBookDetail(data.id)" append v-else-if="data.image"><img :src="data.image.medium"></router-link>
+          <router-link :to="getBookDetail(data.id)" append v-else><img src=""></router-link>
         </div>
-        <div class="col-lg-6 col-xs-5" id="book-info">
+        <div class="col-lg-6 col-xs-6" id="book-info">
           <div class="info" v-if="isEmpty(data.authors)">
             作者:
             <span v-for="author in data.authors">
@@ -38,7 +39,7 @@
             <span>装帧: </span>{{ data.binding }}<br/>
           </div>
         </div>
-        <div class="col-lg-4 col-xs-5 rate">
+        <div class="col-lg-4 col-xs-3 rate">
           <div id="book-rate">
             <span>豆瓣评分: </span><br/>
             <strong><b>{{ data.stars }}</b></strong>
@@ -48,9 +49,18 @@
         </div>
         <div class="col-lg-12 col-xs-12 book-label" id="book-intro">
           <h4 style="color: green">内容简介  · · · · · ·</h4>
-          <div v-for="p_item in data.intro">
-            <p>{{p_item}}</p>
+          <div class="content-summary simple">
+            <div v-for="(p_item, index) in data.intro">
+              <p v-if="index < 3">{{p_item}}</p>
+            </div>
+            <span class="summary-show" v-if="data.intro.length > 3">(展开全部)</span>
           </div>
+          <!--<div class="content-summary" :v-show="summary_show">-->
+            <!--<div v-for="p_item in data.intro">-->
+              <!--<p>{{p_item}}}</p>-->
+            <!--</div>-->
+            <!--<span class="summary-hidden">收起</span>-->
+          <!--</div>-->
         </div>
         <div class="col-lg-12 col-xs-12 book-label" id="book-category">
           <h4 style="color: green">目录  · · · · · ·</h4>
@@ -180,7 +190,8 @@
       },
       isEmpty(array) {
         return JSON.stringify(array) !== '[]';
-
+      },
+      summaryShowToggle() {
       }
     },
     data() {
@@ -202,7 +213,9 @@
             count: 5
           }
         },
-        pager_count: 7
+        pager_count: 7,
+        summary_show: false,
+        content_show: false
       }
     },
     created() {
@@ -309,6 +322,11 @@
     padding-left: 30px;
   }
 
+  span.summary-show {
+    font-size: 14px;
+    color: #3377aa;
+  }
+
   @media screen and (max-width: 415px) {
     div#book-detail {
       padding-left: 0;
@@ -320,7 +338,9 @@
     }
 
     div#book-info {
-      font-size: 10px;
+      font-size: 12px;
+      padding-left: 7px;
+      padding-right: 5px;
     }
 
     div#book-rate {
@@ -333,6 +353,7 @@
 
     div.rate {
       padding-right: 0;
+      padding-left: 0;
     }
 
     div.book-label, div.book-comment,div.book-review {
@@ -340,5 +361,13 @@
       padding-right: 0;
     }
 
+    div.content-summary p {
+      font-size: 11px;
+    }
+
+    span.summary-show {
+      font-size: 12px;
+      color: #3377aa;
+    }
   }
 </style>

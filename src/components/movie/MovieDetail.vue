@@ -4,12 +4,12 @@
       <div class="col-lg-1"></div>
       <div class="col-lg-8 col-xs-12" id ="movie-body">
         <h3 class="movie-title"><b>{{data.title}}</b></h3>
-        <div class="col-lg-2 col-xs-2 movie-img">
+        <div class="col-lg-2 col-xs-3 movie-img">
           <span v-if="data.image_url"><img :src="data.image_url"></span>
           <span v-else-if="data.image"><img :src="data.image.medium"></span>
           <span v-else><img src=""></span>
         </div>
-        <div class="col-lg-6 col-xs-5" id="movie-info">
+        <div class="col-lg-6 col-xs-6" id="movie-info">
           <div class="info" v-if="!isEmpty(data.directors)">
             导演:
             <span v-for="director in data.directors">
@@ -59,7 +59,7 @@
             <span><font>{{ data.year }}</font>&nbsp;</span><br/>
           </div>
         </div>
-        <div class="col-lg-4 col-xs-5 rate">
+        <div class="col-lg-4 col-xs-3 rate">
           <div id="movie-rate">
             <span>豆瓣评分: </span><br/>
             <strong><b>{{ data.average }}</b></strong>
@@ -352,7 +352,9 @@
     }
 
     div#movie-info {
-      font-size: 10px;
+      font-size: 12px;
+      padding-left: 7px;
+      padding-right: 5px;
     }
 
     div#movie-rate {
@@ -365,6 +367,7 @@
 
     div.rate {
       padding-right: 0;
+      padding-left: 0;
     }
 
     div.movie-label, div.movie-comment,div.movie-review {
