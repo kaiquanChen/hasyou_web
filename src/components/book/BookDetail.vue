@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="row">
     <div class="col-lg-12 col-xs-12" id="book-detail">
       <div class="col-lg-1"></div>
@@ -49,22 +49,33 @@
         </div>
         <div class="col-lg-12 col-xs-12 book-label" id="book-intro">
           <h4 style="color: green">内容简介  · · · · · ·</h4>
-          <div class="content-summary simple">
+          <div class="book-summary" v-show="!summary_show" >
             <div v-for="(p_item, index) in data.intro">
               <p v-if="index < 3">{{p_item}}</p>
             </div>
-            <span class="summary-show" v-if="data.intro.length > 3">(展开全部)</span>
+            <span v-show="!summary_show" v-on:click="summaryShowToggle()" class="summary-show" v-if="data.intro.length > 3">(展开全部)</span>
           </div>
-          <!--<div class="content-summary" :v-show="summary_show">-->
-            <!--<div v-for="p_item in data.intro">-->
-              <!--<p>{{p_item}}}</p>-->
-            <!--</div>-->
-            <!--<span class="summary-hidden">收起</span>-->
-          <!--</div>-->
+          <div class="book-summary" v-show="summary_show">
+            <div v-for="p_item in data.intro">
+              <p>{{p_item}}}</p>
+            </div>
+            <span class="summary-show" v-on:click="summaryShowToggle()">(收起)</span>
+          </div>
         </div>
         <div class="col-lg-12 col-xs-12 book-label" id="book-category">
           <h4 style="color: green">目录  · · · · · ·</h4>
-          <div class="catalog" v-for="category in data.category"><span>{{category}}</span></div>
+          <div class="catalog" v-show="!content_show">
+            <div v-for="(p_category, index) in data.category">
+              <p v-if="index < 3">{{p_category}}</p>
+            </div>
+            <span v-show="!content_show" v-on:click="contentShowToggle()" class="summary-show" v-if="data.category.length > 3">(展开全部)</span>
+          </div>
+          <div class="catalog" v-show="content_show">
+            <div v-for="category in data.category">
+              <p>{{category}}</p>
+            </div>
+            <span class="summary-show" v-on:click="contentShowToggle()">(收起)</span>
+          </div>
         </div>
         <div class="col-lg-12 col-xs-12 book-label">
           <h4 style="color: green">书评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
@@ -192,6 +203,10 @@
         return JSON.stringify(array) !== '[]';
       },
       summaryShowToggle() {
+        this.summary_show = !this.summary_show;
+      },
+      contentShowToggle() {
+        this.content_show = !this.content_show;
       }
     },
     data() {
@@ -327,6 +342,10 @@
     color: #3377aa;
   }
 
+  span.summary-show:hover,span.summary-show:hover {
+    cursor: pointer;
+  }
+
   @media screen and (max-width: 415px) {
     div#book-detail {
       padding-left: 0;
@@ -361,7 +380,7 @@
       padding-right: 0;
     }
 
-    div.content-summary p {
+    div.book-summary p {
       font-size: 11px;
     }
 

@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="row">
     <div class="col-lg-12 col-xs-12" id="movie-detail">
       <div class="col-lg-1"></div>
@@ -69,8 +69,17 @@
         </div>
         <div class="col-lg-12 col-xs-12 movie-label" id="movie-intro">
           <h4 style="color: green">内容简介  · · · · · ·</h4>
-          <div v-for="p_item in data.summaries">
-            <p>{{p_item}}</p>
+          <div v-show="!summary_show">
+            <div v-for="(p_item, index) in data.summaries">
+              <p v-if="index < 3">{{p_item}}</p>
+            </div>
+            <span v-on:click="summaryShowToggle()" class="summary-show" v-if="data.summaries.length > 3">(展开全部)</span>
+          </div>
+          <div v-show="summary_show">
+            <div v-for="p_item in data.summaries">
+              <p>{{p_item}}</p>
+            </div>
+            <span v-on:click="summaryShowToggle()" class="summary-show">(收起)</span>
           </div>
         </div>
         <div class="col-lg-12 col-xs-12 movie-label">
@@ -202,6 +211,9 @@
       },
       checkMedia() {
         return window.matchMedia('(max-width:415px)').matches;
+      },
+      summaryShowToggle() {
+        this.summary_show = !this.summary_show;
       }
     },
     data() {
@@ -226,7 +238,8 @@
             count: 5
           }
         },
-        pager_count: 7
+        pager_count: 7,
+        summary_show: false
       }
     },
     created() {
