@@ -7,7 +7,7 @@
             <b>正在热映</b>
             <span class="page-show">({{in_theaters_page.page}} / {{Math.ceil(in_theaters_page.total / in_theaters_page.count)}})</span>
             <el-pagination background
-                           @current-change="handleCurrentChange"
+                           @current-change="handleInTheatersChange"
                            :current-page.sync="in_theaters_page.page"
                            :page-size="in_theaters_page.count"
                            :small="checkMedia()"
@@ -34,7 +34,7 @@
             <b>即将上映</b>
             <span class="page-show">({{coming_soon_page.page}} / {{Math.ceil(coming_soon_page.total / coming_soon_page.count)}})</span>
             <el-pagination background
-                           @current-change="handleCurrentChange"
+                           @current-change="handleComingSoonCurrentChange"
                            :current-page.sync="coming_soon_page.page"
                            :page-size="coming_soon_page.count"
                            :small="checkMedia()"
@@ -61,7 +61,7 @@
             <b>最新电影</b>
             <span class="page-show">({{new_page.page}} / {{Math.ceil(new_page.total / new_page.count)}})</span>
             <el-pagination background
-                           @current-change="handleCurrentChange"
+                           @current-change="handleNewMoviesCurrentChange"
                            :current-page.sync="new_page.page"
                            :page-size="new_page.count"
                            :small="checkMedia()"
@@ -166,7 +166,15 @@
           }
         });
       },
-      handleCurrentChange(val) {
+      handleInTheatersChange(val) {
+        this.in_theaters_page.page = val;
+        this.getMovieList("IN_THEATERS", val, this.in_theaters_page.count);
+      },
+      handleNewMoviesCurrentChange(val) {
+        this.in_theaters_page.page = val;
+        this.getMovieList("IN_THEATERS", val, this.in_theaters_page.count);
+      },
+      handleComingSoonCurrentChange(val) {
         this.in_theaters_page.page = val;
         this.getMovieList("IN_THEATERS", val, this.in_theaters_page.count);
       },
