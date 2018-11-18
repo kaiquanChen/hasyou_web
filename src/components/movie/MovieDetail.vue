@@ -7,7 +7,8 @@
         <div class="col-lg-2 col-xs-3 movie-img">
           <span v-if="data.image_url"><img :src="data.image_url"></span>
           <span v-else-if="data.image"><img :src="data.image.medium"></span>
-          <span v-else><img src=""></span>
+          <span v-else><img src="/static/image/movie_anon.jpg"></span>
+          <el-button class="btn-update" v-on:click="updateMovie()">实时更新</el-button>
         </div>
         <div class="col-lg-6 col-xs-6" id="movie-info">
           <div class="info" v-if="!isEmpty(data.directors)">
@@ -58,6 +59,9 @@
             年份:
             <span><font>{{ data.year }}</font>&nbsp;</span><br/>
           </div>
+          <div class="info">
+            <a target="_blank" style="cursor: pointer" :href="getOriginRoutes(data.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
+          </div>
         </div>
         <div class="col-lg-4 col-xs-3 rate">
           <div id="movie-rate">
@@ -71,9 +75,9 @@
           <h4 style="color: green">内容简介  · · · · · ·</h4>
           <div v-show="!summary_show">
             <div v-for="(p_item, index) in data.summaries">
-              <p v-if="index < 3">{{p_item}}</p>
+              <p v-if="index < 1">{{p_item}}</p>
             </div>
-            <span v-on:click="summaryShowToggle()" class="summary-show" v-if="data.summaries.length > 3">(展开全部)</span>
+            <span v-on:click="summaryShowToggle()" class="summary-show" v-if="data.summaries.length > 1">(展开全部)</span>
           </div>
           <div v-show="summary_show">
             <div v-for="p_item in data.summaries">
@@ -170,6 +174,23 @@
           this.image = this.data.image;
         });
       },
+      updateMovie() {
+        let movie_id = this.$route.params.id;
+        let update_movie_url = movie_url + "update/" + movie_id;
+        this.$http.get(update_movie_url).then((data) => {
+          if (data.status !== 200) {
+            console.log(data);
+            this.$message.error("数据更新错误,请稍后再试!");
+            return;
+          }
+
+          this.data = data.body.data;
+          this.$message({
+            message: "数据更新成功!",
+            type: 'success'
+          });
+        });
+      },
       getMovieComment() {
         let movie_id = this.$route.params.id;
         const url = comment_url + movie_id + "?p="
@@ -187,6 +208,9 @@
           this.comments.page.page = data.body.data.page;
           this.comments.page.count = data.body.data.count;
         });
+      },
+      getOriginRoutes(id) {
+        return "https://movie.douban.com/subject/" + id;
       },
       getMovieReview() {
         let movie_id = this.$route.params.id;
@@ -354,6 +378,20 @@
     margin-top: 5px;
   }
 
+  span.summary-show {
+    font-size: 14px;
+    color: #3377aa;
+  }
+
+  span.summary-show:hover {
+    cursor: pointer;
+  }
+
+  .btn-update {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
   @media screen and (max-width: 415px) {
     div#movie-detail {
       padding-left: 0;
@@ -394,6 +432,11 @@
 
     div.movie-label span {
       font-size: 14px;
+    }
+
+    span.summary-show {
+      font-size: 12px;
+      color: #3377aa;
     }
 
   }

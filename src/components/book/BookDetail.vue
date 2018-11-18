@@ -8,6 +8,7 @@
           <router-link :to="getBookDetail(data.id)" append v-if="data.image_url"><img :src="data.image_url"></router-link>
           <router-link :to="getBookDetail(data.id)" append v-else-if="data.image"><img :src="data.image.medium"></router-link>
           <router-link :to="getBookDetail(data.id)" append v-else><img src=""></router-link>
+          <el-button class="btn-update" v-on:click="updateBook()">实时更新</el-button>
         </div>
         <div class="col-lg-6 col-xs-6" id="book-info">
           <div class="info" v-if="isEmpty(data.authors)">
@@ -162,6 +163,26 @@
           }
 
           this.data = data.body.data;
+        });
+      },
+      goto() {
+
+      },
+      updateBook() {
+        let book_id = this.$route.params.id;
+        const update_book_url = book_url + "update/" + book_id;
+        this.$http.get(update_book_url).then((data) => {
+          if (data.status !== 200) {
+            console.log(data);
+            this.$message.error("数据更新错误,请稍后再试!");
+            return;
+          }
+
+          this.data = data.body.data;
+          this.$message({
+            message: "数据更新成功!",
+            type: 'success'
+          });
         });
       },
       getBookComment() {
@@ -344,6 +365,11 @@
 
   span.summary-show:hover,span.summary-show:hover {
     cursor: pointer;
+  }
+
+  .btn-update {
+    font-size: 12px;
+    margin-top: 10px;
   }
 
   @media screen and (max-width: 415px) {
