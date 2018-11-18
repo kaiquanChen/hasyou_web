@@ -151,6 +151,10 @@
     div img {
       margin-left: -20px;
     }
+
+    div.right a {
+      font-size: 8px;
+    }
   }
 
 </style>

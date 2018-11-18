@@ -14,6 +14,8 @@ import GoNode from '@/components/forum/GoNode'
 import Node from '@/components/forum/Node'
 import MovieDetail from '@/components/movie/MovieDetail'
 import MovieList from '@/components/movie/MovieList'
+import MovieTOP250 from '@/components/movie/MovieTOP250'
+
 import Test from '@/components/Test'
 
 export const routes = [
@@ -25,6 +27,7 @@ export const routes = [
   {path: '/movie', component: Movie},
   {path: '/movie/tag', component: MovieList},
   {path: '/movie/subject/:id', component: MovieDetail},
+  {path: '/movie/top250', component: MovieTOP250},
   /* book */
   {path: '/book', component: Book},
   {path: '/book/tag', component: BookTag},
