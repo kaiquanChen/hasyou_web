@@ -343,4 +343,8 @@
     border-top: solid 1px grey;
     padding: 5px 0 5px 10px;
   }
+
+  div.item-post {
+    padding-left: 7px;
+  }
 </style>

@@ -15,6 +15,7 @@ import Node from '@/components/forum/Node'
 import MovieDetail from '@/components/movie/MovieDetail'
 import MovieList from '@/components/movie/MovieList'
 import MovieTOP250 from '@/components/movie/MovieTOP250'
+import Note from '@/components/Note'
 
 import Test from '@/components/Test'
 
@@ -39,6 +40,8 @@ export const routes = [
   {path: '/forum/:id', component: Post},
   {path: '/forum/node/:id', component: GoNode},
   {path: '/forum/go/node', component: Node},
+  /* note */
+  {path: '/note', component: Note},
 
   /* test */
   {path: '/test', component: Test}
