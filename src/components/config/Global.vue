@@ -3,6 +3,8 @@
 </template>
 
 <script>
+  const uuidV4 = require("uuid/v4");
+
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'http://www.hasyou.cn:8028/'
 
@@ -47,6 +49,56 @@
   // music
   const DOUBAN_MUSIC_URL = COMMON_URL + 'music/'
 
+  // global function
+  let getUuid = function () {
+    return uuidV4().replace(/-/g, "");
+  }
+
+  let getBid = function () {
+    let bid = localStorage.getItem("bid");
+    if (!bid) {
+      bid = getUuid();
+      localStorage.setItem("bid", bid);
+    }
+    return bid;
+  }
+
+  let request = function (reqUrl, result, params, method, headers) {
+    if (!reqUrl) {
+      alert("url must not be empty!");
+      return;
+    }
+
+    if (!method) {
+      method = "get";
+    }
+
+    if (!headers) {
+      headers = getBid();
+    }
+
+    if (!params) {
+      params = {};
+    }
+
+    axios.request({
+      url: reqUrl,
+      method: method,
+      headers: {"bid":headers},
+      params:params,
+      transformResponse:[function (data) {
+        // if (data.code !== 200) {
+        //   alert("数据获取失败!");
+        //   console.log(data);
+        //   alert(2);
+        //   return;
+        // }
+        alert(1);
+        result = data;
+      }]
+     });
+  }
+
   const URLS = {
     TEST_URL,
     FLY_URL,
@@ -74,8 +126,15 @@
     GROUP,
   }
 
+  const FUNC = {
+    getUuid,
+    getBid,
+    request
+  }
+
   export default {
-    URLS
+    URLS,
+    FUNC
   }
 </script>
 

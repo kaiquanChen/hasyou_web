@@ -155,7 +155,11 @@
       getBook() {
         let book_id = this.$route.params.id;
         const book_detail_url = book_url + "subject/" + book_id;
-        this.$http.get(book_detail_url).then((data) => {
+        this.$http.get(book_detail_url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -171,7 +175,11 @@
       updateBook() {
         let book_id = this.$route.params.id;
         const update_book_url = book_url + "update/" + book_id;
-        this.$http.get(update_book_url).then((data) => {
+        this.$http.get(update_book_url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             this.$message.error("数据更新错误,请稍后再试!");
@@ -187,8 +195,16 @@
       },
       getBookComment() {
         let book_id = this.$route.params.id;
-        const url = comment_url + "/" + book_id + "?p=" + this.comments.page.page + "&count=" + this.comments.page.count;
-        this.$http.get(url).then((data) => {
+        const url = comment_url + "/" + book_id;
+        this.$http.get(url, {
+          params:{
+            p: this.comments.page.page,
+            count: this.comments.page.cout
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -206,8 +222,16 @@
       },
       getBookReview() {
         let book_id = this.$route.params.id;
-        const url = review_url + book_id + "?p=" + this.reviews.page.page + "&count=" + this.reviews.page.count;
-        this.$http.get(url).then((data) => {
+        const url = review_url + book_id;
+        this.$http.get(url, {
+          params:{
+            p: this.reviews.page.page,
+            count: this.reviews.page.cout
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");

@@ -114,7 +114,11 @@
       getPost() {
         let post_id = this.$route.params.id;
         let url = post_url + "subject/" + post_id;
-        this.$http.get(url).then((data) => {
+        this.$http.get(url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -129,10 +133,16 @@
       },
       getComments() {
         let post_id = this.$route.params.id;
-        let url = comment_url + post_id + "?p="
-          + this.comment.page.page + "&count="
-          + this.comment.page.count;
-        this.$http.get(url).then((data) => {
+        let url = comment_url + post_id;
+        this.$http.get(url, {
+          params:{
+            p:this.comment.page.page,
+            count:this.comment.page.count
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");

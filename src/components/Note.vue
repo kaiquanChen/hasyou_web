@@ -18,6 +18,10 @@
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
+
+      <form action="">
+
+      </form>
     </div>
   </div>
 </template>
@@ -48,7 +52,6 @@
       }
     },
     created() {
-
     }
   };
 </script>

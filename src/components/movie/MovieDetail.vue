@@ -163,7 +163,11 @@
       getMovie() {
         let movie_id = this.$route.params.id;
         const movie_detail_url = movie_url + "subject/" + movie_id;
-        this.$http.get(movie_detail_url).then((data) => {
+        this.$http.get(movie_detail_url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -177,7 +181,11 @@
       updateMovie() {
         let movie_id = this.$route.params.id;
         let update_movie_url = movie_url + "update/" + movie_id;
-        this.$http.get(update_movie_url).then((data) => {
+        this.$http.get(update_movie_url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             this.$message.error("数据更新错误,请稍后再试!");
@@ -193,10 +201,16 @@
       },
       getMovieComment() {
         let movie_id = this.$route.params.id;
-        const url = comment_url + movie_id + "?p="
-          + this.comments.page.page + "&count="
-          + this.comments.page.count;
-        this.$http.get(url).then((data) => {
+        const url = comment_url + movie_id;
+        this.$http.get(url, {
+          params:{
+            p:this.comments.page.page,
+            count:this.comments.page.count
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -214,10 +228,16 @@
       },
       getMovieReview() {
         let movie_id = this.$route.params.id;
-        const url = review_url + movie_id
-          + "?p=" + this.reviews.page.page
-          + "&count=" + this.reviews.page.count;
-        this.$http.get(url).then((data) => {
+        const url = review_url + movie_id;
+        this.$http.get(url, {
+          params:{
+            p:this.reviews.page.page,
+            count:this.reviews.page.count
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");

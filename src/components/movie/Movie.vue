@@ -135,7 +135,15 @@
     },
     methods: {
       getMovieList(type, p, count) {
-        this.$http.get(MOVIE_URL + type + "?p=" + p + "&count=" + count).then( (data) => {
+        this.$http.get(MOVIE_URL + type, {
+          params:{
+            p:p,
+            count:count
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then( (data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");

@@ -26,7 +26,11 @@
           }
         },
         created() {
-          this.$http.get(shortbook_list_url).then((data) => {
+          this.$http.get(shortbook_list_url, {
+            headers: {
+              "bid": global_.FUNC.getBid()
+            }
+          }).then((data) => {
             if (data.status !== 200) {
               console.log(data);
               alert("数据获取失败!");

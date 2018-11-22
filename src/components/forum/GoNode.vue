@@ -100,7 +100,6 @@
         let day = dateTime.getDate();
         let hour = dateTime.getHours();
         let minute = dateTime.getMinutes();
-        let second = dateTime.getSeconds();
 
         let now = new Date();
 
@@ -144,8 +143,16 @@
         if (!node_id) {
           node_id = this.$route.params.id;
         }
-        let url = post_url + "subjects/" + node_id + "?p=" + this.posts.page.page + "&count=" + this.posts.page.count;
-        this.$http.get(url).then((data) => {
+        let url = post_url + "subjects/" + node_id;
+        this.$http.get(url, {
+          params:{
+            p:this.posts.page.page,
+            count:this.posts.page.count
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -165,7 +172,11 @@
       },
       getMoreNodeList() {
         let more_node_url = node_url + "list";
-        this.$http.get(more_node_url).then((data) => {
+        this.$http.get(more_node_url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");

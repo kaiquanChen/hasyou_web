@@ -32,7 +32,11 @@
 
     },
     created() {
-      this.$http.get(music_url).then((data) => {
+      this.$http.get(music_url, {
+        headers: {
+          "bid": global_.FUNC.getBid()
+        }
+      }).then((data) => {
         if (data.status !== 200) {
           console.log(data);
           alert("数据获取失败!");

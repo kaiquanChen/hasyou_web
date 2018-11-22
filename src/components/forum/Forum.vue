@@ -105,8 +105,17 @@
         this.getPostList(this.activeName)
       },
       getPostList(type) {
-        let url = post_url + "subjects?type=" + type + "&p=" + this.posts.page.page + "&count=" + this.posts.page.count;
-        this.$http.get(url).then((data) => {
+        let url = post_url + "subjects";
+        this.$http.get(url, {
+          params:{
+            type:type,
+            p:this.posts.page.page,
+            count:this.posts.page.count
+          },
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -124,7 +133,11 @@
       },
       getNodeList() {
         let node_home_url = node_url + "home";
-        this.$http.get(node_home_url).then((data) => {
+        this.$http.get(node_home_url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
@@ -132,7 +145,6 @@
           }
 
           this.home_nodes = data.body.data;
-          console.log(this.home_nodes);
           if (this.home_nodes.length !== 0) {
             this.activeName = this.home_nodes[0].name;
           }
@@ -140,7 +152,11 @@
       },
       getMoreNodeList() {
         let more_node_url = node_url + "list";
-        this.$http.get(more_node_url).then((data) => {
+        this.$http.get(more_node_url, {
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then((data) => {
           if (data.status !== 200) {
             console.log(data);
             alert("数据获取失败!");
