@@ -275,7 +275,7 @@
     color: #e09015;
   }
 
-  div.home-movie, div#weekly {
+  div.home-movie, div#weekly{
     margin-top: 30px;
   }
 
@@ -337,7 +337,7 @@
       display:block;
     }
 
-    div#weekly, div#top250, div.us-box {
+    div#weekly, div#top250, div#us-box {
       padding-left: 0;
       padding-right: 0;
     }
