@@ -35,8 +35,9 @@
       </div>
       <div class="col-lg-12 col-xs-12 statement">
         <p>
-          欢迎提BUG!;
-          欢迎大家(虽然目测并没有多少人......!)尽情吐槽(反正我也不听..!).
+          欢迎提BUG!;<br>
+          欢迎大家 (虽然目测并没有多少人......!)<br>
+          尽情吐槽 (反正我也不听..!).
         </p>
       </div>
     </div>
@@ -212,7 +213,7 @@
     background-color: #f0eee7;
   }
 
-  @media screen and (max-width: 415px) {
+  @media screen and (max-width: 600px) {
 
     div.note-list {
       padding-left: 0;
@@ -220,11 +221,12 @@
     }
 
     .title {
-      font-size: 11px;
+      font-size: 16px;
     }
 
     div.note-submit {
       margin-top: 50px;
     }
+
   }
 </style>
