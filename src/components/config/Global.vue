@@ -8,7 +8,7 @@
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'http://www.hasyou.cn:8028/'
 
-  const COMMON_URL = FLY_URL
+  const COMMON_URL = TEST_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -48,6 +48,13 @@
 
   // music
   const DOUBAN_MUSIC_URL = COMMON_URL + 'music/'
+
+  // file
+  const FILE_URL = "http://image.hasyou.cn:8048/file/";
+  // const FILE_URL = "http://localhost:8048/file/";
+
+  // note
+  const NOTE_URL = COMMON_URL + "note/";
 
   // global function
   let getUuid = function () {
@@ -120,8 +127,15 @@
     POST_URL,
     NODE_URL,
 
+    /* file */
+    FILE_URL,
+
     /* short book */
     SHORT_BOOK_URL,
+
+    /* note */
+    NOTE_URL,
+
     /* other */
     GROUP,
   }

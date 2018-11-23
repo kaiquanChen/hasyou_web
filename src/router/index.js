@@ -15,7 +15,8 @@ import Node from '@/components/forum/Node'
 import MovieDetail from '@/components/movie/MovieDetail'
 import MovieList from '@/components/movie/MovieList'
 import MovieTOP250 from '@/components/movie/MovieTOP250'
-import Note from '@/components/Note'
+import Note from '@/components/note/Note'
+import NoteDetail from '@/components/note/NoteDetail'
 
 import Test from '@/components/Test'
 
@@ -42,6 +43,7 @@ export const routes = [
   {path: '/forum/go/node', component: Node},
   /* note */
   {path: '/note', component: Note},
+  {path: '/note/subject/:id', component: NoteDetail},
 
   /* test */
   {path: '/test', component: Test}
