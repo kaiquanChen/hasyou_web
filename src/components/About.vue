@@ -3,7 +3,7 @@
     <div class="col-lg-2"></div>
     <div class="col-lg-7 col-xs-12">
       <div class="row img">
-        <a target="_blank" href="/static/image/youni.png"><img src="/static/image/youni.png"></a>
+        <a target="_blank" style="width: 100%" href="/static/image/youni.png"><img src="/static/image/youni.png"></a>
       </div>
       <div class="title col-lg-12 col-xs-12">
         <span>关于有你</span>
@@ -56,5 +56,11 @@
     font-size: 30px;
     color: #666666;
     background-color: #f2fbf2;
+  }
+
+  @media screen and (max-width: 600px) {
+    div img {
+      width: 100%;
+    }
   }
 </style>

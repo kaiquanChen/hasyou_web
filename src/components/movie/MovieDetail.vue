@@ -5,9 +5,9 @@
       <div class="col-lg-8 col-xs-12" id ="movie-body">
         <h3 class="movie-title"><b>{{data.title}}</b></h3>
         <div class="col-lg-2 col-xs-3 movie-img">
-          <span v-if="data.image_url"><img :src="data.image_url"></span>
-          <span v-else-if="data.image"><img :src="data.image.medium"></span>
-          <span v-else><img src="/static/image/movie_anon.jpg"></span>
+          <a :href="getImage(data)" v-if="data.image_url"><img :src="data.image_url"></a>
+          <a :href="getImage(data)" v-else-if="data.image"><img :src="data.image.medium"></a>
+          <a :href="getImage(data)" v-else><img src="/static/image/movie_anon.jpg"></a>
           <el-button class="btn-update" v-on:click="updateMovie()">实时更新</el-button>
         </div>
         <div class="col-lg-6 col-xs-6" id="movie-info">
@@ -60,7 +60,7 @@
             <span><font>{{ data.year }}</font>&nbsp;</span><br/>
           </div>
           <div class="info">
-            <router-link target="_blank" style="cursor: pointer" :to="getOriginRoutes(data.id)"><img title="跳转原网页" src="/static/image/go.png" /></router-link>
+            <a target="_blank" style="cursor: pointer" :href="getOriginRoutes(data.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
           </div>
         </div>
         <div class="col-lg-4 col-xs-3 rate">
@@ -152,6 +152,15 @@
   export default {
     name: "MovieDetail",
     methods: {
+      getImage(data) {
+        if (data.image_url) {
+          return data.image_url;
+        } else if (data.image) {
+          return data.image.medium;
+        } else {
+          return "";
+        }
+      },
       handleCommentCurrentChange(val) {
         this.comments.page.page = val;
         this.getMovieComment();

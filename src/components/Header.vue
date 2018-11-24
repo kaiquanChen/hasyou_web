@@ -20,11 +20,18 @@
         </div>
         <div class="col-lg-12 col-xs-12 search-area">
           <div class="col-lg-4"></div>
-          <div class="col-lg-4 col-xs-12">
-            <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
-              <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
+          <div class="col-lg-4 col-xs-12 search-div">
+            <aplayer autoplay
+                     mutex
+                       :music="{
+                  title: 'secret base~君がくれたもの~',
+                  artist: 'Silent Siren',
+                  src: 'http://image.hasyou.cn/fly/note/fb055be4341e4c1fb84f4e40ffc7cf3c.mp3',
+                  pic: 'http://image.hasyou.cn/fly/note/25abfa03f7f94162b0be14e3901d5778.png'
+                }"
+            ></aplayer>
           </div>
+          <div></div>
           <div class="col-lg-4"></div>
         </div>
       </nav>
@@ -33,10 +40,14 @@
 </template>
 
 <script>
+  import Aplayer from 'vue-aplayer'
   import global_ from "./config/Global"
   let base_group_url = global_.URLS.GROUP + "subjects";
 
   export default {
+    components: {
+      Aplayer
+    },
     data() {
       return {
         data:[],
@@ -89,6 +100,11 @@
 
   div.right a {
     float: right;
+  }
+
+  div.search-div {
+    position: relative;
+    display: inline-block;
   }
 
   @media screen and (max-width: 415px) {

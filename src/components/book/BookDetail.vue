@@ -5,9 +5,9 @@
       <div class="col-lg-8 col-xs-12" id ="book-body">
         <h3 class="book-title"><b>{{data.name}}</b></h3>
         <div class="col-lg-2 col-xs-3 book-img">
-          <router-link :to="getBookDetail(data.id)" append v-if="data.image_url"><img :src="data.image_url"></router-link>
-          <router-link :to="getBookDetail(data.id)" append v-else-if="data.image"><img :src="data.image.medium"></router-link>
-          <router-link :to="getBookDetail(data.id)" append v-else><img src=""></router-link>
+          <a target="_blank" v-if="data.image_url" :href="getImage(data)"><img :src="data.image_url"></a>
+          <a target="_blank" v-else-if="data.image" :href="getImage(data)" ><img :src="data.image.medium"></a>
+          <a target="_blank" v-else :href="getImage(data)"><img src=""></a>
           <el-button class="btn-update" v-on:click="updateBook()">实时更新</el-button>
         </div>
         <div class="col-lg-6 col-xs-6" id="book-info">
@@ -38,6 +38,9 @@
           </div>
           <div class="info" v-if="data.binding">
             <span>装帧: </span>{{ data.binding }}<br/>
+          </div>
+          <div class="info">
+            <a target="_blank" style="cursor: pointer" :href="getOriginRoutes(data.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
           </div>
         </div>
         <div class="col-lg-4 col-xs-3 rate">
@@ -141,6 +144,15 @@
   export default {
     name: "BookList",
     methods: {
+      getImage(data) {
+        if (data.image_url) {
+          return data.image_url;
+        } else if (data.image) {
+          return data.image.medium;
+        } else {
+          return "";
+        }
+      },
       checkMedia() {
         return window.matchMedia('(max-width:415px)').matches;
       },
@@ -151,6 +163,9 @@
       handleCurrentChange2(val) {
         this.reviews.page.page = val;
         this.getBookReview();
+      },
+      getOriginRoutes(id) {
+        return "https://book.douban.com/subject/" + id;
       },
       getBook() {
         let book_id = this.$route.params.id;
@@ -296,7 +311,8 @@
   }
 
   div.book-img img {
-    width: 105%;
+    width: 130px;
+    height: 200px;
   }
 
   .intro h4 {
@@ -397,6 +413,11 @@
   }
 
   @media screen and (max-width: 415px) {
+    div.book-img img{
+      width: 100px;
+      height: 150px;
+    }
+
     div#book-detail {
       padding-left: 0;
       padding-right: 0;
