@@ -60,7 +60,7 @@
             <span><font>{{ data.year }}</font>&nbsp;</span><br/>
           </div>
           <div class="info">
-            <a target="_blank" style="cursor: pointer" :href="getOriginRoutes(data.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
+            <router-link target="_blank" style="cursor: pointer" :to="getOriginRoutes(data.id)"><img title="跳转原网页" src="/static/image/go.png" /></router-link>
           </div>
         </div>
         <div class="col-lg-4 col-xs-3 rate">
@@ -358,10 +358,6 @@
     margin: 5px 0 5px 0;
   }
 
-  .comment-rate {
-    display: inline-block;
-  }
-
   .movie-review {
     color: #3377aa;
   }
@@ -384,10 +380,6 @@
     border-right: white;
     border-top: solid 1px gainsboro;
     border-bottom: solid 1px gainsboro;
-  }
-
-  div.catalog {
-    padding-left: 30px;
   }
 
   font {

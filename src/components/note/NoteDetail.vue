@@ -37,7 +37,7 @@
         <form method="post" enctype="multipart/form-data">
           <textarea class="note-content" rows="6" name="content" ref="content" placeholder="请输入内容"></textarea><br/>
           <el-button type="primary" @click="submitForm()">提交</el-button>
-          <el-button type="info" @click="clearForm()">清空</el-button>
+          <el-button type="info" :loading="loading" @click="clearForm()">清空</el-button>
         </form>
       </div>
     </div>
@@ -59,7 +59,8 @@
           page:{
             p: 1,
             count: 5
-          }
+          },
+          loading:false
         }
     },
     methods: {
@@ -109,6 +110,12 @@
           this.$refs.content.value = "";
       },
       submitForm() {
+        if (!this.$refs.content.value) {
+          this.$message.error("内容栏不能空!");
+          return;
+        }
+
+        this.loading = true;
         this.$http.post(create_comment_url,
           {
             "body":{
@@ -119,6 +126,7 @@
           {
             headers:{"bid":global_.FUNC.getBid()}
           }).then((data) => {
+          this.loading = false;
             if (data.body.code !== 200) {
               console.log(data);
               this.$message.error("获取存储失败!");
@@ -126,7 +134,7 @@
             }
             this.$refs.content.value = "";
             this.$message({
-              message: '提交成功!',
+              message: '评论成功!',
               type: 'success'
             });
 
@@ -136,7 +144,7 @@
     },
     created() {
         if (this.checkMedia()) {
-          this.page.count = 1;
+          this.page.count = 5;
         }
         this.getNoteDetail();
         this.getNoteCommentList();

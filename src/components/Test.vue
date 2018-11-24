@@ -3,6 +3,7 @@
     <div v-if="value === 1">1</div>
     <div v-else-if="value">2</div>
     <div v-else>3</div>
+    <el-button type="primary" :loading="false">1</el-button>
   </div>
 </template>
 

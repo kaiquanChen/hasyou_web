@@ -30,14 +30,15 @@
           <input class="note-title" type="text" name="title" ref="title" placeholder="请输入标题"><br/>
           <textarea class="note-content" rows="6" name="content" ref="content" placeholder="请输入内容"></textarea><br/>
           <input type="file" name="file" ref="file" @change="uploadFile">
-          <el-button type="primary" @click="submitForm()">提交</el-button>
+          <el-button type="primary" :loading="loading" @click="submitForm()">提交</el-button>
         </form>
       </div>
       <div class="col-lg-12 col-xs-12 statement">
         <p>
+          Hi,认识的,不认识的:(虽然目测并没有多少人..!)<br>
           欢迎提BUG!;<br>
-          欢迎大家 (虽然目测并没有多少人......!)<br>
-          尽情吐槽 (反正我也不听..!).
+          欢迎大家尽情吐槽 (反正我也不听..!),<br>
+          欢迎提出设计,数据等方面的建议(这个可以听..!).
         </p>
       </div>
     </div>
@@ -58,11 +59,18 @@
           count: 10,
           total: 0
         },
-        notes:[]
+        notes:[],
+        loading:false
       };
     },
     methods: {
       submitForm() {
+        if (!this.$refs.title.value) {
+          this.$message.error("标题栏不能空!");
+          return;
+        }
+
+        this.loading = true;
         this.$http.post(note_create_url,
           {
             "body":{
@@ -74,11 +82,20 @@
           {
             headers:{"bid":global_.FUNC.getBid()}
           }).then((data) => {
+          this.loading = false;
           if (data.body.code !== 200) {
             console.log(data);
             this.$message.error("获取存储失败!");
             return;
           }
+
+          this.$refs.title.value = "";
+          this.$refs.content.value = "";
+          this.$refs.file.value = "";
+          this.$message({
+            message: '提交成功!',
+            type: 'success'
+          });
 
           this.notes.unshift(data.body.data);
         });
@@ -139,7 +156,7 @@
 
   div.row {
     background-color: #E1E0C7;
-    border-radius: 15px;
+    border-radius: 30px;
   }
 
   .header-title {
