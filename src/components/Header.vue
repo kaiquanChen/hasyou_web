@@ -15,7 +15,7 @@
         </div>
         <div class="col-lg-2 blank"></div>
         <div class="col-lg-4 col-xs-4 right">
-          <router-link class="navbar-brand" to="#">关于有你</router-link>
+          <router-link class="navbar-brand" to="/about">关于有你</router-link>
           <router-link class="navbar-brand" to="/note">留言板</router-link>
         </div>
         <div class="col-lg-12 col-xs-12 search-area">
