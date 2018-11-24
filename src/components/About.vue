@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-7 col-xs-12">
-      <div class="row">
+      <div class="row img">
         <a target="_blank" href="/static/image/youni.png"><img src="/static/image/youni.png"></a>
       </div>
       <div class="title col-lg-12 col-xs-12">
@@ -41,6 +41,10 @@
 </script>
 
 <style scoped>
+  div.img {
+    margin: 20px 0 50px 0;
+  }
+
   p.about-content {
     text-indent: 2em;
     color: #4d5256;
@@ -48,9 +52,9 @@
   }
 
   div.title {
+    margin: 20px 0;
     font-size: 30px;
     color: #666666;
     background-color: #f2fbf2;
-    margin: 20px 0;
   }
 </style>
