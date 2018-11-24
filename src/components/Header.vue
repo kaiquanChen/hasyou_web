@@ -23,11 +23,11 @@
           <div class="col-lg-4 col-xs-12 search-div">
             <aplayer
               :music="{
-            title: 'HollyBowling',
-            artist: '',
-            src: 'http://image.hasyou.cn/fly/note/fb055be4341e4c1fb84f4e40ffc7cf3c.mp3',
-            pic: 'http://image.hasyou.cn/fly/note/25abfa03f7f94162b0be14e3901d5778.png'
-            }"
+                title: 'HollyBowling',
+                artist: '',
+                src: 'http://image.hasyou.cn/fly/note/fb055be4341e4c1fb84f4e40ffc7cf3c.mp3',
+                pic: 'http://image.hasyou.cn/fly/note/25abfa03f7f94162b0be14e3901d5778.png'
+              }"
             ></aplayer>
             <!--<aplayer-->
               <!--listFolded-->
