@@ -3,9 +3,10 @@
     <div class="col-lg-8 col-xs-12 note-list">
       <h3 class="header-title">留言墙</h3>
       <div class="col-xs-12 col-lg-12 list-group-item" v-for="item in notes">
-        <router-link class="title" :to="getNoteRoute(item.id)" v-if="item.type === 'FLY'" style="color: red">{{item.title}}</router-link>
+        <router-link class="title" :to="getNoteRoute(item.id)" v-if="item.type === 'FLY'" style="color: red;">{{item.title}}</router-link>
         <router-link class="title" :to="getNoteRoute(item.id)" v-else>{{item.title}}</router-link><br>
-        <span class="info" v-if="!item.user_id">游客</span>&emsp;
+        <span class="info" v-if="item.cookies.bid === hostBid" style="color: #8cc5ff">站长</span>
+        <span class="info" v-else>游客</span>&emsp;
         <span class="info">{{item.create_time}}</span>&emsp;<br/>
         <span class="content">
           {{item.content}}
@@ -23,7 +24,7 @@
       </div>
     </div>
     <div class="col-lg-4 col-xs-12 note-submit">
-      <h3 class="header-title">信纸在此</h3>
+      <h3 class="header-title">信纸</h3>
       <div class="col-lg-12 col-xs-12 note-form">
         <!--提交表单-->
         <form method="post" enctype="multipart/form-data">
@@ -60,6 +61,7 @@
           total: 0
         },
         notes:[],
+        hostBid:"fa0e5c8ef49d481e912521e90ff6fb6c",
         loading:false
       };
     },

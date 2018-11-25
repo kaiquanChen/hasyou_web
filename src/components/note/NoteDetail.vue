@@ -4,7 +4,8 @@
     <div class="col-lg-8 col-xs-12">
       <div class="col-lg-12 col-xs-12 note-item">
         <span class="note-title">{{note.title}}</span><br>
-        <span class="info" v-if="!note.user_id">游客</span>&emsp;
+        <span class="info" v-if="note.type === 'FLY'" style="color: #8cc5ff;">站长</span>
+        <span class="info" v-else>游客</span>&emsp;
         <span class="info">{{note.create_time}}</span><hr>
         <span class="content">
           {{note.content}}
@@ -16,7 +17,9 @@
       </div>
       <div class="col-lg-12 col-xs-12 note-comment">
         <div class="col-lg-12 col-xs-12 list-group-item" v-for="(comment, index) in note_comments">
-          <span class="info" v-if="!comment.user_id">游客</span>&emsp;
+          <span class="info" v-if="comment.cookies.bid === hostBid" style="color: #8cc5ff;">站长</span>
+          <span class="info" v-else-if="comment.cookies.bid === note.cookies.bid" style="color: red;">楼主(疑似)</span>
+          <span class="info" v-else>游客</span>&emsp;
           <span class="info">{{comment.create_time}}</span>
           <span class="badge">{{(page.p - 1) * page.count + index + 1}}</span><br>
           <p class="content">{{comment.content}}</p>
@@ -60,6 +63,7 @@
             p: 1,
             count: 5
           },
+          hostBid:"fa0e5c8ef49d481e912521e90ff6fb6c",
           loading:false
         }
     },
@@ -235,6 +239,11 @@
   textarea {
     border-radius: 9px;
     width: 100%;
+  }
+
+  hr {
+    margin: 5px 0;
+    color: black;
   }
 
 </style>

@@ -5,10 +5,10 @@
 <script>
   const uuidV4 = require("uuid/v4");
 
-  const TEST_URL = 'https://localhost:8028/'
+  const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'https://www.hasyou.cn:8028/'
 
-  const COMMON_URL = FLY_URL
+  const COMMON_URL = TEST_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -32,7 +32,7 @@
   const DOUBAN_MOVIE = COMMON_URL + 'movie/'
   const MOVIE_SHORT_COMMENT_URL = DOUBAN_MOVIE + "comments/"
   const MOVIE_REVIEW_URL = DOUBAN_MOVIE + "reviews/"
-  const MOVIE_GENRE_URL = DOUBAN_MOVIE + "/tag/genres"
+  const MOVIE_GENRE_URL = DOUBAN_MOVIE + "tag/genres"
 
   // v2 post
   const POST_URL = COMMON_URL + 'v2/'
@@ -51,7 +51,7 @@
 
   // file
   const FILE_URL = "https://image.hasyou.cn:8048/file/";
-  // const FILE_URL = "http://localhost:8048/file/";
+  // const FILE_URL = "https://localhost:8048/file/";
 
   // note
   const NOTE_URL = COMMON_URL + "note/";
