@@ -61,7 +61,7 @@
           <div class="col-lg-11 col-xs-11 post-comment-body-info">
             <span class="comment-foor-number badge">{{comment.floor_number}}</span>
             <strong class="comment-username">{{comment.author}}</strong>&nbsp;&nbsp;
-            <span class="comment-time">{{comment.created}}</span>&nbsp;&nbsp;
+            <span class="comment-time">{{comment.create_time}}</span>&nbsp;&nbsp;
             <span class="comment-device" v-if="isWeb(comment.device)">via &nbsp;&nbsp;{{comment.device}}</span>
             <div class="comment-content">
               <span>{{comment.content}}</span>
@@ -173,58 +173,6 @@
       checkMedia() {
         return window.matchMedia('(max-width:415px)').matches;
       },
-      getTime(time) {
-        let res = "";
-        let dateTime = new Date(time);
-
-        let year = dateTime.getFullYear();
-        let month = dateTime.getMonth() + 1;
-        let day = dateTime.getDate();
-        let hour = dateTime.getHours();
-        let minute = dateTime.getMinutes();
-        let second = dateTime.getSeconds();
-
-        let now = new Date();
-        let now_year = now.getFullYear();
-        let now_month = now.getMonth() + 1;
-        let now_day = now.getDate();
-        let now_hour = now.getHours();
-        let now_minute = now.getMinutes();
-
-        if (year === now_year) {
-          if ((now_month - month) > 0) {
-            res += now_month - month + " 月 ";
-          } else {
-            if ((now_day - day) > 0) {
-              res += now_day - day + " 天 ";
-              if ((now_hour - hour) > 0) {
-                res += now_hour - hour + " 小时 ";
-              }
-            } else {
-              if ((now_hour - hour) > 0) {
-                res += now_hour - hour + " 小时 ";
-                if ((now_minute - minute) > 0) {
-                  res += now_minute - minute + " 分钟 ";
-                }
-              } else {
-                if ((now_minute - minute) > 0) {
-                  res += now_minute - minute + " 分钟 ";
-                } else {
-                  res += "刚刚";
-                }
-              }
-            }
-          }
-        } else {
-          return year + "-" + month + "-" + day;
-        }
-
-        if (res.trim().endsWith("刚刚")) {
-          return res.trim();
-        } else  {
-          return res.trim() + "前";
-        }
-      }
     },
     created() {
       this.getPost();
