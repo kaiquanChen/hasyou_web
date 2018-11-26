@@ -33,7 +33,7 @@
                     <span>{{post.node.title}}</span>
                   </router-link>&nbsp;/
                   <strong><a class="item-member">{{post.member.username}}</a></strong>
-                  /&nbsp;&nbsp;&nbsp;{{getTime(post.created)}}
+                  /&nbsp;&nbsp;&nbsp;{{post.create_time}}
                 </div>
               </div>
             </div>
