@@ -18,8 +18,9 @@
           <router-link class="navbar-brand" to="/about">关于有你</router-link>
           <router-link class="navbar-brand" to="/note">留言板</router-link>
         </div>
-        <div class="col-lg-12 col-xs-12 search-area">
-          <div class="col-lg-4"></div>
+        <div class="col-lg-12 col-xs-12 header-bar">
+          <div class="col-lg-4">
+          </div>
           <div class="col-lg-4 col-xs-12 search-div">
             <aplayer
               :music="{
@@ -27,19 +28,7 @@
                 artist: '',
                 src: 'http://image.hasyou.cn/fly/note/fb055be4341e4c1fb84f4e40ffc7cf3c.mp3',
                 pic: 'http://image.hasyou.cn/fly/note/25abfa03f7f94162b0be14e3901d5778.png'
-              }"
-            ></aplayer>
-            <!--<aplayer-->
-              <!--listFolded-->
-              <!--theme="pic"-->
-              <!--shuffle-->
-              <!--repeat="list"-->
-              <!--show-lrc-->
-              <!--:muted.sync="muted"-->
-              <!--:volume.sync="volume"-->
-              <!--:music='list3[0]'-->
-              <!--:list='list3'-->
-            <!--&gt;</aplayer>-->
+              }"></aplayer>
           </div>
           <div></div>
           <div class="col-lg-4"></div>
@@ -69,7 +58,29 @@
             src: 'http://image.hasyou.cn/fly/note/fb055be4341e4c1fb84f4e40ffc7cf3c.mp3',
             pic: 'http://image.hasyou.cn/fly/note/25abfa03f7f94162b0be14e3901d5778.png'
           }
-        ]
+        ],
+        restaurants: [],
+        state4: '',
+        timeout:  null
+      }
+    },
+    methods: {
+      querySearchAsync(queryString, cb) {
+        var restaurants = this.restaurants;
+        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(results);
+        }, 3000 * Math.random());
+      },
+      createStateFilter(queryString) {
+        return (state) => {
+          return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
+      handleSelect(item) {
+        console.log(item);
       }
     },
     created() {
@@ -90,7 +101,7 @@
 </script>
 
 <style scoped>
-  .search-area {
+  .header-bar {
     background-color: #e9e9e2;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -123,7 +134,7 @@
   }
 
   @media screen and (max-width: 415px) {
-    div.search-area {
+    div.header-bar {
       background-color: #e9e9e2;
       padding-top: 10px;
       padding-bottom: 10px;

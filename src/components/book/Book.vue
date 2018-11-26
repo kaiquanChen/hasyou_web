@@ -57,7 +57,8 @@
             </div>
             <div class="book-info">
               <span class="book-info-title"><router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span>
-              <span class="book-info-author">{{item.authors[0]}}</span>
+              <span class="book-info-author" v-if="item.authors.length > 0">{{item.authors[0]}}</span>
+              <span class="book-info-author" v-if="item.authors.length === 0">&nbsp;</span>
             </div>
             <br/>
           </div>
@@ -198,7 +199,7 @@
 
   div.book-img img {
     width: 115px;
-    height: 172px;
+    height: 170px;
   }
 
   div.new-book {
@@ -279,7 +280,7 @@
     }
 
     div.new-book, div.good-market {
-      height: 200px;
+      height: 235px;
     }
 
     div.book-img img {

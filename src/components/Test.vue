@@ -1,12 +1,10 @@
 <template>
   <div class="container-fluid">
-    <div v-if="value === 1">1</div>
-    <div v-else-if="value">2</div>
-    <div v-else>3</div>
-    <span v-for="(item, index) in test">
-      {{test[index+1]}}
-    </span>
-    <el-button type="primary" :loading="false">1</el-button>
+    <div>
+      <Input search placeholder="Enter something..." />
+      <Input search enter-button placeholder="Enter something..." />
+      <Input search enter-button="Search" placeholder="Enter something..." />
+    </div>
   </div>
 </template>
 
