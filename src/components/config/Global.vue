@@ -8,7 +8,7 @@
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'https://www.hasyou.cn:8028/'
 
-  const COMMON_URL = TEST_URL
+  const COMMON_URL = FLY_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -56,6 +56,12 @@
   // note
   const NOTE_URL = COMMON_URL + "note/";
 
+  // global search
+  const GLOBAL_SEARCH_URL = COMMON_URL + "search/";
+
+  // global variable
+  let GLOBAL_VARIABLE = {};
+
   // global function
   let getUuid = function () {
     return uuidV4().replace(/-/g, "");
@@ -68,6 +74,10 @@
       localStorage.setItem("bid", bid);
     }
     return bid;
+  }
+
+  let getValue = function (key) {
+    return localStorage.getItem(key);
   }
 
   let request = function (reqUrl, result, params, method, headers) {
@@ -138,6 +148,11 @@
 
     /* other */
     GROUP,
+
+    /* global search*/
+    GLOBAL_SEARCH_URL,
+
+    GLOBAL_VARIABLE
   }
 
   const FUNC = {

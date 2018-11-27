@@ -18,6 +18,7 @@ import MovieTOP250 from '@/components/movie/MovieTOP250'
 import Note from '@/components/note/Note'
 import NoteDetail from '@/components/note/NoteDetail'
 import About from '@/components/About'
+import SearchResult from '@/components/SearchResult'
 
 import Test from '@/components/Test'
 
@@ -47,7 +48,8 @@ export const routes = [
   {path: '/note/subject/:id', component: NoteDetail},
   /* about */
   {path: '/about', component: About},
-
+  /* search */
+  {path: '/search', component: SearchResult},
   /* test */
   {path: '/test', component: Test}
 ]
