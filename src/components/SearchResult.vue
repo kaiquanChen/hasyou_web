@@ -7,8 +7,8 @@
       </div>
       <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in items">
         <div class="col-lg-10 col-xs-10 info">
-          <span class="title" v-if="item.type === 'book'">[图书]<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span>
-          <span class="title" v-if="item.type === 'movie'">[电影]<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span><br>
+          <span class="title" v-if="item.type === 'book'">[图书]&nbsp;<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span>
+          <span class="title" v-if="item.type === 'movie'">[电影]&nbsp;<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span><br>
           <el-rate
             class="book-list-rate"
             v-model="item.stars / 2"
@@ -22,7 +22,7 @@
           <span v-if="item.type === 'book' && item.vars.translators && index < 1" v-for="(translator, index) in item.vars.translators">译者: {{translator}} / </span>
           <span v-if="item.type === 'movie' && item.vars.year">年份: {{item.vars.year}} / </span>
           <span v-if="item.type === 'movie' && item.vars.countries && index < 1" v-for="(country, index) in item.vars.countries">国家: {{country}} / </span>
-          <span class="intro">{{item.intro}}</span>
+          <span class="intro text-info">{{item.intro}}</span>
         </div>
         <div class="col-lg-2 col-xs-2 img">
           <a target="_blank" :href="item.image_url"><img :src="item.image_url" :alt="item.name" /></a>
@@ -151,6 +151,11 @@
     div.img {
       padding-left: 0;
       padding-right: 0;
+    }
+
+    div.list-group-item {
+      padding-left: 5px;
+      padding-right: 5px;
     }
   }
 </style>

@@ -164,8 +164,8 @@
 <style scoped>
   .header-bar {
     background-color: #e9e9e2;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .row {
@@ -216,7 +216,6 @@
 
   div.input-with-select {
     width: 100%;
-    margin-top: 15px;
   }
 
   div.search-result-footer {
@@ -235,8 +234,6 @@
   @media screen and (max-width: 415px) {
     div.header-bar {
       background-color: #e9e9e2;
-      padding-top: 10px;
-      padding-bottom: 10px;
     }
 
     div.blank {

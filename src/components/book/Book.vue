@@ -203,7 +203,7 @@
   }
 
   div.new-book {
-    height: 230px;
+    height: 225px;
   }
 
   div.book-info {
@@ -280,7 +280,7 @@
     }
 
     div.new-book, div.good-market {
-      height: 235px;
+      height: 183px;
     }
 
     div.book-img img {
