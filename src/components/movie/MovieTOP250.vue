@@ -9,7 +9,7 @@
           </div>
           <div class="col-lg-10 col-xs-9 top250-movie-info">
             <router-link :to="getMovieDetail(item.id)">{{item.movie_tag.rank}}.{{item.title}}&nbsp;/&nbsp;{{item.original_title}}</router-link><br>
-            <el-rate class="movie-rate" v-model="item.average/2" :score-template="item.average + ''" show-score='true' disabled>&nbsp;{{item.stars}}</el-rate><br/>
+            <el-rate class="movie-rate" v-model="item.average/2" :score-template="item.average + ''" show-score disabled>&nbsp;{{item.stars}}</el-rate><br/>
             <span>{{item.ratings_count}}人评价</span>
           </div>
         </div>
@@ -44,11 +44,21 @@
           }
       },
       methods:{
-        getMovieList(type, p, count) {
-          this.$http.get(movie_url + type, {
-            params:{
-              p:p,
-              count:count
+        handleCurrentChange(val) {
+          this.page.page = val;
+          this.getMovieList("TOP250", val, this.page.count);
+        },
+        checkMedia() {
+          return window.matchMedia('(max-width:415px)').matches;
+        },
+        getMovieDetail(id) {
+          return "/movie/subject/" + id;
+        },
+        getMovieTop250() {
+          this.$http.get(movie_url + "top250", {
+            params: {
+              p: 1,
+              count: 10
             },
             headers: {
               "bid": global_.FUNC.getBid()
@@ -61,24 +71,14 @@
             }
 
             this.movies = data.body.data.body;
-            this.page.total = data.body.data.total;
             this.page.page = data.body.data.page;
             this.page.count = data.body.data.count;
+            this.page.total = data.body.data.total;
           });
-        },
-        handleCurrentChange(val) {
-          this.page.page = val;
-          this.getMovieList("TOP250", val, this.page.count);
-        },
-        checkMedia() {
-          return window.matchMedia('(max-width:415px)').matches;
-        },
-        getMovieDetail(id) {
-          return "/movie/subject/" + id;
         }
       },
       created() {
-        this.getMovieList("TOP250", this.page.page, this.page.count);
+        this.getMovieTop250();
       }
     }
 </script>

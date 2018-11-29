@@ -138,6 +138,10 @@
     margin: 0 0 5px 3px;
   }
 
+  div.img {
+    padding-right: 0;
+  }
+
   @media screen and (max-width: 415px) {
     div.body {
       padding-left: 0;

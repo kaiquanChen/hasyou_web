@@ -15,7 +15,7 @@
             <span v-if="item.publisher">{{item.publisher}}&nbsp;/&nbsp;</span>
             <span v-if="item.publish_time">{{item.publish_time}}&nbsp;/&nbsp;</span>
             <span v-if="item.price">{{item.price}}</span><br/><br/>
-            <el-rate v-model="item.stars/2" :score-template="item.stars" show-score="true" disabled>&nbsp;{{item.stars}}</el-rate><br/>
+            <el-rate v-model="item.stars/2" :score-template="item.stars" show-score disabled>&nbsp;{{item.stars}}</el-rate><br/>
             <p v-if="item.vars.intro">'{{item.vars.intro}}'</p>
           </div>
         </div>
@@ -38,7 +38,7 @@
   import global_ from "../config/Global"
   const BOOK_URL = global_.URLS.BOOK_URL;
     export default {
-        name: "",
+      name: "",
       data(){
           return {
             books:[],
@@ -50,41 +50,35 @@
           }
       },
       methods:{
-        getBookList(type, p, count) {
-          this.$http.get(BOOK_URL + type, {
-            params:{
-              p:p,
-              count:count
-            },
-            headers: {
-              "bid": global_.FUNC.getBid()
-            }
-          }).then( (data) => {
-            if (data.status !== 200) {
-              console.log(data);
-              alert("数据获取失败!");
-              return;
-            }
-
-            this.books = data.body.data.body;
-            this.page.total = data.body.data.total;
-            this.page.page = data.body.data.page;
-            this.page.count = data.body.data.count;
-          });
-        },
         handleCurrentChange(val) {
           this.page.page = val;
-          this.getBookList("TOP250", val, this.page.count);
+          this.getBookList();
         },
         checkMedia() {
           return window.matchMedia('(max-width:415px)').matches;
         },
         getBookDetail(id) {
           return "/book/subject/" + id;
+        },
+        getBookList() {
+          this.$http.get(BOOK_URL + "subjects/top250", {
+            params: {
+              p: this.page.page,
+              count: this.page.count
+            },
+            headers: {
+              "bid":global_.FUNC.getBid()
+            }
+          }).then((data) => {
+            this.books = data.body.data.body;
+            this.page.total = data.body.data.total;
+            this.page.page = data.body.data.page;
+            this.page.count = data.body.data.count;
+          });
         }
       },
       created() {
-        this.getBookList("TOP250", this.page.page, this.page.count);
+        this.getBookList();
       }
     }
 </script>

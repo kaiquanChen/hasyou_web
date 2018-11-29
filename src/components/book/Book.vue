@@ -7,7 +7,7 @@
             <b>新书快递</b>
             <span class="page-show">({{express_page.page}} / {{Math.ceil(express_page.total / express_page.count)}})</span>
             <el-pagination background
-                           @current-change="handleCurrentChange"
+                           @current-change="handleExpress"
                            :current-page.sync="express_page.page"
                            :page-size="express_page.count"
                            :small="checkMedia()"
@@ -42,7 +42,7 @@
             <b>畅销图书榜</b>
             <span class="page-show">({{good_market_page.page}} / {{Math.ceil(good_market_page.total / good_market_page.count)}})</span>
             <el-pagination background
-                           @current-change="handleCurrentChange2"
+                           @current-change="handleGoodMarket"
                            :current-page.sync="good_market_page.page"
                            :page-size="good_market_page.count"
                            :small="checkMedia()"
@@ -86,50 +86,60 @@
           book_express:[],
           book_top250:[],
           book_good_market:[],
-          express_page:{},
-          good_market_page:{},
-          hot_tags:[]
+          express_page:{
+            total:0,
+            p:1,
+            count:10
+          },
+          good_market_page:{
+            total:0,
+            p:1,
+            count:10
+          },
+          hot_tags:[],
+          book_data:{}
         };
       },
       methods: {
-        getBookList(type, p, count) {
+        getBookList(type) {
           this.$http.get(BOOK_URL + type, {
-            params:{
-              p: p,
-              count: count
-            },
             headers: {
               "bid": global_.FUNC.getBid()
             }
-          }).then( (data) => {
+          }).then((data) => {
             if (data.status !== 200) {
               console.log(data);
               alert("数据获取失败!");
               return;
             }
 
-            if (type === "BOOK_EXPRESS") {
-              this.book_express = data.body.data.body;
-              this.express_page.total = data.body.data.total;
-              this.express_page.page = data.body.data.page;
-              this.express_page.count = data.body.data.count;
-            } else if (type === "TOP250") {
-              this.book_top250 = data.body.data.body;
-            } else if (type === "BOOK_GOOD_MARKET") {
-              this.book_good_market = data.body.data.body;
-              this.good_market_page.total = data.body.data.total;
-              this.good_market_page.page = data.body.data.page;
-              this.good_market_page.count = data.body.data.count;
+            this.book_data[type] = data.body.data;
+            for (let i = 0; i < this.express_page.count; i++) {
+              if (type === "BOOK_EXPRESS") {
+                this.express_page.total = data.body.data.length;
+                this.book_express[i] = data.body.data[i];
+              } else if (type === "BOOK_GOOD_MARKET") {
+                this.good_market_page.total = data.body.data.length;
+                this.book_good_market[i] = data.body.data[i];
+              }
             }
           });
         },
-        handleCurrentChange2(val) {
-          this.good_market_page.page = val;
-          this.getBookList("BOOK_GOOD_MARKET", val, this.good_market_page.count);
+        handleExpress(val) {
+          this.book_express = [];
+          this.express_page.p = val;
+          let start = (val - 1) * this.express_page.count;
+          for (let j = 0; j < this.express_page.count && start < this.book_data["BOOK_EXPRESS"].length; start++) {
+            this.book_express[j++] = this.book_data["BOOK_EXPRESS"][start];
+          }
         },
-        handleCurrentChange(val) {
-          this.express_page.page = val;
-          this.getBookList("BOOK_EXPRESS", val, this.express_page.count);
+        handleGoodMarket(val) {
+          this.book_good_market = [];
+          this.good_market_page.p = val;
+          let start = (val - 1) * this.good_market_page.count;
+          for (let j = 0; j < this.good_market_page.count && start < this.book_data["BOOK_GOOD_MARKET"].length; start++) {
+            this.book_good_market[j++] = this.book_data["BOOK_GOOD_MARKET"][start];
+          }
         },
         getBookDetail(id) {
           return "subject/" + id;
@@ -155,17 +165,30 @@
             this.hot_tags = data.body.data;
           });
         },
+        getBookTop250() {
+          this.$http.get(BOOK_URL + "subjects/top250", {
+            params: {
+              p: 1,
+              count: 10
+            },
+            headers: {
+              "bid":global_.FUNC.getBid()
+            }
+          }).then((data) => {
+            this.book_top250 = data.body.data.body;
+          });
+        }
       },
       created() {
         let result = this.checkMedia();
-        let count = 10;
+        this.count = 10;
         if (result) {
-          count = 6;
+          this.count = 6;
         }
-        this.getBookList("BOOK_EXPRESS", 1, count);
-        this.getBookList("BOOK_GOOD_MARKET", 1, count);
-        this.getBookList("TOP250", 1, 10);
+        this.getBookList("BOOK_EXPRESS");
+        this.getBookList("BOOK_GOOD_MARKET");
         this.getHotTags();
+        this.getBookTop250();
       }
     }
 </script>

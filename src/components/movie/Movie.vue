@@ -128,17 +128,67 @@
         movie_weekly:[],
         movie_top250:[],
         movie_us_box:[],
-        coming_soon_page:{},
-        in_theaters_page:{},
-        new_page:{}
+        coming_soon_page:{
+          total:0,
+          page:1,
+          count:10
+        },
+        in_theaters_page:{
+          total:0,
+          page:1,
+          count:10
+        },
+        new_page:{
+          total:0,
+          page:1,
+          count:10
+        },
+        movie_data:{}
       };
     },
     methods: {
       getMovieList(type, p, count) {
         this.$http.get(MOVIE_URL + type, {
-          params:{
-            p:p,
-            count:count
+          headers: {
+            "bid": global_.FUNC.getBid()
+          }
+        }).then( (data) => {
+          if (data.status !== 200) {
+            console.log(data);
+            alert("数据获取失败!");
+            return;
+          }
+
+          this.movie_data[type] = data.body.data;
+          for (let i = 0; i < count; i++) {
+            if (type === "IN_THEATERS") {
+              this.movie_in_theaters[i] = data.body.data[i];
+              this.in_theaters_page.page = 1;
+              this.in_theaters_page.count = count;
+              this.in_theaters_page.total = data.body.data.length;
+            } else if (type === "COMING_SOON") {
+              this.movie_coming_soon[i] = data.body.data[i];
+              this.coming_soon_page.page = 1;
+              this.coming_soon_page.count = count;
+              this.coming_soon_page.total = data.body.data.length;
+            } else if (type === "NEW_MOVIES") {
+              this.movie_new[i] = data.body.data[i];
+              this.new_page.page = 1;
+              this.new_page.count = count;
+              this.new_page.total = data.body.data.length;
+            } else if (type === "WEEKLY" && i < data.body.data.length) {
+              this.movie_weekly[i] = data.body.data[i];
+            } else if (type === "US_BOX" && i < data.body.data.length) {
+              this.movie_us_box[i] = data.body.data[i];
+            }
+          }
+        });
+      },
+      getMovieTop250() {
+        this.$http.get(MOVIE_URL + "top250", {
+          params: {
+            p: 1,
+            count: 10
           },
           headers: {
             "bid": global_.FUNC.getBid()
@@ -150,41 +200,32 @@
             return;
           }
 
-          if (type === "IN_THEATERS") {
-            this.movie_in_theaters = data.body.data.body;
-            this.in_theaters_page.page = data.body.data.page;
-            this.in_theaters_page.count = count;
-            this.in_theaters_page.total = data.body.data.total;
-          } else if (type === "COMING_SOON") {
-            this.movie_coming_soon = data.body.data.body;
-            this.coming_soon_page.page = data.body.data.page;
-            this.coming_soon_page.count = count;
-            this.coming_soon_page.total = data.body.data.total;
-          } else if (type === "NEW_MOVIES") {
-            this.movie_new = data.body.data.body;
-            this.new_page.page = data.body.data.page;
-            this.new_page.count = count;
-            this.new_page.total = data.body.data.total;
-          } else if (type === "WEEKLY") {
-            this.movie_weekly = data.body.data.body;
-          } else if (type === "TOP250") {
-            this.movie_top250 = data.body.data.body;
-          } else if (type === "US_BOX") {
-            this.movie_us_box = data.body.data.body;
-          }
+          this.movie_top250 = data.body.data.body;
         });
       },
       handleInTheatersChange(val) {
+        this.movie_in_theaters = [];
         this.in_theaters_page.page = val;
-        this.getMovieList("IN_THEATERS", val, this.in_theaters_page.count);
+        let start = (val - 1) * this.in_theaters_page.count;
+        for (let j = 0; j < this.in_theaters_page.count && start < this.movie_data["IN_THEATERS"].length; start++) {
+          this.movie_in_theaters[j++] = this.movie_data["IN_THEATERS"][start];
+        }
       },
       handleNewMoviesCurrentChange(val) {
-        this.in_theaters_page.page = val;
-        this.getMovieList("NEW_MOVIES", val, this.in_theaters_page.count);
+        this.movie_new = [];
+        this.new_page.page = val;
+        let start = (val - 1) * this.new_page.count;
+        for (let j = 0; j < this.new_page.count && start < this.movie_data["NEW_MOVIES"].length; start++) {
+          this.movie_new[j++] = this.movie_data["NEW_MOVIES"][start];
+        }
       },
       handleComingSoonCurrentChange(val) {
-        this.in_theaters_page.page = val;
-        this.getMovieList("COMING_SOON", val, this.in_theaters_page.count);
+        this.movie_coming_soon = [];
+        this.coming_soon_page.page = val;
+        let start = (val - 1) * this.coming_soon_page.count;
+        for (let j = 0; j < this.coming_soon_page.count && start < this.movie_data["COMING_SOON"].length; start++) {
+          this.movie_coming_soon[j++] = this.movie_data["COMING_SOON"][start];
+        }
       },
       getMovieDetail(id) {
         return "subject/" + id;
@@ -200,14 +241,14 @@
       let result = this.checkMedia();
       let count = 12;
       if (result) {
-        count = 6;
+        this.count = 6;
       }
       this.getMovieList("IN_THEATERS", 1, count);
       this.getMovieList("COMING_SOON", 1, count);
       this.getMovieList("NEW_MOVIES", 1, count);
       this.getMovieList("WEEKLY", 1, 12);
-      this.getMovieList("TOP250", 1, 12);
       this.getMovieList("US_BOX", 1, 12);
+      this.getMovieTop250();
     }
   }
 </script>

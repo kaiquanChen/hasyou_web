@@ -1,9 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div>
-      <Input search placeholder="Enter something..." />
-      <Input search enter-button placeholder="Enter something..." />
-      <Input search enter-button="Search" placeholder="Enter something..." />
+    <div v-for="(item, index2) in test">
     </div>
   </div>
 </template>
@@ -17,10 +14,17 @@
           value:null,
           result:{},
           test:[
-            "1",
-            "2",
-            "3"
-          ]
+            {
+              "id":"1"
+            },
+            {
+              "id":"2"
+            },
+            {
+              "id":"3"
+            }
+          ],
+          index2:2
         };
       },
       methods: {
