@@ -238,10 +238,9 @@
       }
     },
     created() {
-      let result = this.checkMedia();
       let count = 12;
-      if (result) {
-        this.count = 6;
+      if (this.checkMedia()) {
+        count = 6;
       }
       this.getMovieList("IN_THEATERS", 1, count);
       this.getMovieList("COMING_SOON", 1, count);
