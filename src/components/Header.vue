@@ -2,8 +2,8 @@
   <header class="header">
     <div class="row">
       <nav class="navbar navbar-light bg-light justify-content-between">
-        <div class="col-lg-6 col-xs-8 left">
-          <router-link tag="div" class="navbar-brand" to="/">
+        <div class="col-lg-4 col-xs-8 left">
+          <router-link class="navbar-brand" to="/">
             <img src="../../static/image/header.png" width="30" height="30" class="d-inline-block align-top img-rounded" alt="有你LOGO">
           </router-link>
           <router-link class="navbar-brand" to="/movie">电影</router-link>
@@ -13,41 +13,44 @@
           <router-link class="navbar-brand" to="/event">同城</router-link>
           <router-link class="navbar-brand" to="/forum">论坛</router-link>
         </div>
-        <div class="col-lg-2 blank"></div>
+        <div class="col-lg-4 blank web-search">
+          <el-input placeholder="书籍、电影、音乐"
+                    v-model="keywords"
+                    @keyup.enter.native="submitSearch()"
+                    class="input-with-select">
+            <el-button slot="append" icon="el-icon-search" @click="submitSearch()" ></el-button>
+          </el-input>
+        </div>
         <div class="col-lg-4 col-xs-4 right">
           <router-link class="navbar-brand" to="/about">关于有你</router-link>
           <router-link class="navbar-brand" to="/note">留言板</router-link>
         </div>
         <div class="col-lg-12 col-xs-12 header-bar">
-          <div class="col-lg-4">
-            <!--<aplayer-->
-              <!--id="input-search"-->
-              <!--style="width: 60%;"-->
-              <!--:music="{-->
-                <!--title: 'HollyBowling',-->
-                <!--artist: '',-->
-                <!--src: 'http://image.hasyou.cn/fly/note/fb055be4341e4c1fb84f4e40ffc7cf3c.mp3',-->
-                <!--pic: 'http://image.hasyou.cn/fly/note/25abfa03f7f94162b0be14e3901d5778.png'-->
-              <!--}" ></aplayer>-->
-          </div>
-          <div class="col-lg-4 col-xs-12 search-div" >
+          <div class="col-lg-4 col-xs-12 search-div">
             <el-input placeholder="书籍、电影、音乐"
                       v-model="keywords"
+                      v-show="checkMedia()"
                       @keyup.enter.native="submitSearch()"
                       class="input-with-select">
               <el-button slot="append" icon="el-icon-search" @click="submitSearch()" ></el-button>
             </el-input>
             <!--<div class="row result" v-show="has_result">-->
-              <!--<router-link class="result-item" v-for="item in items" :key="result.id" to="getDetail(result)" tag="div">-->
-                <!--<span v-if="item.name">{{item.name}}</span>-->
-                <!--<span v-else-if="item.title">{{item.title}}</span>-->
-              <!--</router-link>-->
-              <!--<div class="search-result-footer">-->
-                <!--<span class="pick-up" @click="pickUp()">收起</span>-->
-              <!--</div>-->
+            <!--<router-link class="result-item" v-for="item in items" :key="result.id" to="getDetail(result)" tag="div">-->
+            <!--<span v-if="item.name">{{item.name}}</span>-->
+            <!--<span v-else-if="item.title">{{item.title}}</span>-->
+            <!--</router-link>-->
+            <!--<div class="search-result-footer">-->
+            <!--<span class="pick-up" @click="pickUp()">收起</span>-->
+            <!--</div>-->
             <!--</div>-->
           </div>
-          <div></div>
+          <div class="col-lg-4 col-xs-12 music">
+            <aplayer
+              id="input-search"
+              listFolded
+              :music="music_list[0]"
+              :list="music_list"></aplayer>
+          </div>
           <div class="col-lg-4"></div>
         </div>
       </nav>
@@ -76,7 +79,21 @@
           total: 0,
           p: 1,
           count: 5
-        }
+        },
+        music_list:[
+          {
+            title: '永夜',
+            artist: '石岩',
+            src: 'http://image.hasyou.cn/fly/note/bb8812cf60014d819f29fea5db16ed06.mp3',
+            pic: 'http://image.hasyou.cn/fly/note/fd88240b79ba4bf6ba9f06e88be2b86d.jpg'
+          },
+          {
+            title: 'HollyBowling',
+            artist: '',
+            src: 'http://image.hasyou.cn/fly/note/fb055be4341e4c1fb84f4e40ffc7cf3c.mp3',
+            pic: 'http://image.hasyou.cn/fly/note/25abfa03f7f94162b0be14e3901d5778.png'
+          }
+        ]
       }
     },
     methods: {
@@ -152,6 +169,9 @@
 
           this.globalSearch();
         });
+      },
+      checkMedia() {
+        return window.matchMedia('(max-width:415px)').matches;
       }
     },
     created() {
@@ -231,6 +251,10 @@
     cursor: pointer;
   }
 
+  div.web-search {
+    padding-top: 3px;
+  }
+
   @media screen and (max-width: 415px) {
     div.header-bar {
       background-color: #e9e9e2;
@@ -255,17 +279,13 @@
       width: 50%;
     }
 
-    div.col-xs-8 img {
-      width: 20px;
-      height: 20px;
+    .left img {
+      width: 25px;
+      height: 25px;
     }
 
     .search button {
       font-size: 10px;
-    }
-
-    div img {
-      margin-left: -20px;
     }
 
     div.result {
@@ -292,10 +312,6 @@
 
     .search button {
       font-size: 10px;
-    }
-
-    div img {
-      margin-left: -20px;
     }
 
     div.right a {

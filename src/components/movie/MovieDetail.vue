@@ -77,7 +77,7 @@
             <div v-for="(p_item, index) in data.summaries">
               <p v-if="index < 1">{{p_item}}</p>
             </div>
-            <span v-on:click="summaryShowToggle()" class="summary-show" v-if="data.summaries.length > 1">(展开全部)</span>
+            <span v-on:click="summaryShowToggle()" class="summary-show" v-if="data.summaries !== undefined && data.summaries.length > 1">(展开全部)</span>
           </div>
           <div v-show="summary_show">
             <div v-for="p_item in data.summaries">
@@ -86,8 +86,8 @@
             <span v-on:click="summaryShowToggle()" class="summary-show">(收起)</span>
           </div>
         </div>
-        <div class="col-lg-12 col-xs-12 movie-label">
-          <h4 style="color: green">{{data.title}}的书评  · · · · · ·<span>(共{{reviews.page.total}}条)</span></h4>
+        <div class="col-lg-12 col-xs-12 movie-label"  id="movie-review-anchor">
+          <h4 style="color: green">{{data.title}}的影评  · · · · · ·<span>(共{{reviews.page.total}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item movie-review" v-for="item in reviews.body" :key="item.id">
             <div>
               <!--<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;-->
@@ -109,7 +109,7 @@
             </el-pagination>
           </div>
         </div>
-        <div class="col-lg-12 col-xs-12 movie-label">
+        <div class="col-lg-12 col-xs-12 movie-label" id="movie-comment-anchor">
           <h4 style="color: green">{{data.title}}的短评  · · · · · ·<span>(共{{comments.page.total}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item movie-comment" v-for="item in comments.body" :key="item.id">
             <router-link to="#" v-if="item.author">{{item.author.name}}</router-link>&nbsp;
@@ -164,10 +164,14 @@
       handleCommentCurrentChange(val) {
         this.comments.page.page = val;
         this.getMovieComment();
+
+        this.goAnchor("#movie-comment-anchor");
       },
       handleReviewCurrentChange(val) {
         this.reviews.page.page = val;
         this.getMovieReview();
+
+        this.goAnchor("#movie-review-anchor");
       },
       getMovie() {
         let movie_id = this.$route.params.id;
@@ -267,7 +271,11 @@
       },
       summaryShowToggle() {
         this.summary_show = !this.summary_show;
-      }
+      },
+      goAnchor(query) {
+        let anchor = this.$el.querySelector(query)
+        document.documentElement.scrollTop = anchor.offsetTop
+      },
     },
     data() {
       return {

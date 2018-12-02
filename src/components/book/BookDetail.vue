@@ -81,7 +81,7 @@
             <span class="summary-show" v-on:click="contentShowToggle()">(收起)</span>
           </div>
         </div>
-        <div class="col-lg-12 col-xs-12 book-label">
+        <div class="col-lg-12 col-xs-12 book-label" id="book-review">
           <h4 style="color: green">书评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-review" v-for="item in reviews.body" :key="item.id">
             <div>
@@ -105,7 +105,7 @@
             </el-pagination>
           </div>
         </div>
-        <div class="col-lg-12 col-xs-12 book-label">
+        <div class="col-lg-12 col-xs-12 book-label" id="book-comment">
           <h4 style="color: green">短评  · · · · · ·<span>(共{{data.comments_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-comment" v-for="item in comments.body" :key="item.id">
             <a>{{item.creator_name}}</a>&nbsp;
@@ -159,10 +159,14 @@
       handleCurrentChange(val) {
         this.comments.page.page = val;
         this.getBookComment();
+
+        this.goAnchor("#book-comment");
       },
       handleCurrentChange2(val) {
         this.reviews.page.page = val;
         this.getBookReview();
+
+        this.goAnchor("#book-review");
       },
       getOriginRoutes(id) {
         return "https://book.douban.com/subject/" + id;
@@ -184,8 +188,9 @@
           this.data = data.body.data;
         });
       },
-      goto() {
-
+      goAnchor(query) {
+        var anchor = this.$el.querySelector(query)
+        document.documentElement.scrollTop = anchor.offsetTop
       },
       updateBook() {
         let book_id = this.$route.params.id;

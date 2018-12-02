@@ -51,7 +51,7 @@
                          :total="comment.page.total">
           </el-pagination>
         </div>
-        <div class="col-lg-12 col-xs-12 list-group-item post-comment-body" v-for="comment in comment.body">
+        <div id="comment-start" class="col-lg-12 col-xs-12 list-group-item post-comment-body" v-for="comment in comment.body">
           <div class="col-lg-1 col-xs-1 post-comment-body-img" v-if="comment.member">
             <a><img class="img-rounded" :src="comment.member.avatar_large" :id="comment.member.id"></a>
           </div>
@@ -162,6 +162,7 @@
       handleCurrentChange(val) {
         this.comment.page.page = val;
         this.getComments();
+        this.goAnchor("#comment-start");
       },
       isWeb(device) {
         return device !== "Web";
@@ -173,6 +174,10 @@
       checkMedia() {
         return window.matchMedia('(max-width:415px)').matches;
       },
+      goAnchor(query) {
+        var anchor = this.$el.querySelector(query)
+        document.documentElement.scrollTop = anchor.offsetTop
+      }
     },
     created() {
       this.getPost();

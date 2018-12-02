@@ -10,7 +10,6 @@
         <youni-forum></youni-forum>
       </div>
       <div class="col-sm-2 home-blank">
-
       </div>
     </div>
 
@@ -24,7 +23,6 @@
         <youni-book></youni-book>
       </div>
       <div class="col-sm-2 home-blank">
-
       </div>
     </div>
 
