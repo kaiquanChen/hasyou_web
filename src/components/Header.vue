@@ -22,8 +22,8 @@
           </el-input>
         </div>
         <div class="col-lg-4 col-xs-4 right">
-          <router-link class="navbar-brand" to="/about">关于有你</router-link>
-          <router-link class="navbar-brand" to="/note">留言板</router-link>
+          <router-link class="navbar-brand" to="/register">注册</router-link>
+          <router-link class="navbar-brand" to="/login">登录</router-link>
         </div>
         <div class="col-lg-12 col-xs-12 header-bar">
           <div class="col-lg-4 col-xs-12 search-div">
@@ -108,20 +108,20 @@
       pickUp() {
         this.has_result = false;
       },
-      getGroupList() {
-        this.$http.get(base_group_url, {
-          headers: {
-            "bid": global_.FUNC.getBid()
-          }
-        }).then((data) => {
-          if (data.status !== 200) {
-            console.log(data);
-            alert("数据获取失败!");
-            return;
-          }
-          this.data = data.body.data;
-        });
-      },
+      // getGroupList() {
+      //   this.$http.get(base_group_url, {
+      //     headers: {
+      //       "bid": global_.FUNC.getBid()
+      //     }
+      //   }).then((data) => {
+      //     if (data.status !== 200) {
+      //       console.log(data);
+      //       alert("数据获取失败!");
+      //       return;
+      //     }
+      //     this.data = data.body.data;
+      //   });
+      // },
       globalSearch() {
         this.$http.get(global_search_url, {
           params:{

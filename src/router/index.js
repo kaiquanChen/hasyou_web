@@ -19,6 +19,8 @@ import Note from '@/components/note/Note'
 import NoteDetail from '@/components/note/NoteDetail'
 import About from '@/components/About'
 import SearchResult from '@/components/SearchResult'
+import Register from '@/components/user/Register'
+import Login from '@/components/user/Login'
 
 import Test from '@/components/Test'
 
@@ -50,6 +52,9 @@ export const routes = [
   {path: '/about', component: About},
   /* search */
   {path: '/search', component: SearchResult},
+  /* user */
+  {path: '/register', component: Register},
+  {path: '/login', component: Login},
   /* test */
   {path: '/test', component: Test}
 ]
