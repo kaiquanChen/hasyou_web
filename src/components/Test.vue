@@ -1,92 +1,71 @@
 <template>
   <div class="container-fluid">
-    <div v-for="(item, index2) in test">
-    </div>
+    <el-upload
+      class="upload-demo"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      multiple
+      :limit="3"
+      :on-exceed="handleExceed"
+      :file-list="fileList">
+      <el-button size="small" type="primary">点击上传</el-button>
+      <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+    </el-upload>
   </div>
 </template>
 
 <script>
   import global_ from "./config/Global"
     export default {
-        name: "",
       data() {
         return {
-          value:null,
-          result:{},
-          test:[
-            {
-              "id":"1"
-            },
-            {
-              "id":"2"
-            },
-            {
-              "id":"3"
-            }
-          ],
-          index2:2
+          fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
         };
       },
       methods: {
-          test() {
-            axios.post("http://localhost:8028/test3", {
-              body:{
-                name:"hello",
-                age:11
-              },
-            },{headers: {
-                "bid":global_.FUNC.getBid()
-              }}).then( (data) => {
-              console.log(data.body);
-            });
+        handleAvatarSuccess(res, file) {
+          this.imageUrl = URL.createObjectURL(file.raw);
         },
-        test2() {
-          axios.get("http://localhost:8028/test", {
-            params:{
-              name:"david"
-            },
-            headers: {
-              "bid": global_.FUNC.getBid()
-            }
-          },
-          ).then((data) => {
-            console.log(data.body);
-          });
-        },
-        test3() {
-            axios.request({
-              url:'http://localhost:8028/test',
-              method:'get',
-              params:{
-                name:"david"
-              },
-              transformRequest:[
-                function (data, headers) {
-                console.log("david");
-                  return data;
-                }
-              ],
-              transformResponse:[
-                function (data) {
-                  console.log(data);
-                }
-              ],
-              headers:{
-                "bid":global_.FUNC.getBid()
-              }
-            });
-        },
-        test4() {
-            let params = {name:'david'};
-            global_.FUNC.request("http://localhost:8028/test", this.result, params); // 异步
+        beforeAvatarUpload(file) {
+          const isJPG = file.type === 'image/jpeg';
+          const isLt2M = file.size / 1024 / 1024 < 2;
+
+          if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 格式!');
+          }
+          if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!');
+          }
+          return isJPG && isLt2M;
         }
-      },
-      created() {
-          this.test2();
       }
     }
 </script>
 
 <style scoped>
-
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

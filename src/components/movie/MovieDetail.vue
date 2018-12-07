@@ -91,7 +91,7 @@
           <div class="col-lg-12 col-xs-12 list-group-item movie-review" v-for="item in reviews.body" :key="item.id">
             <div>
               <!--<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;-->
-              <span style="float: left">{{item.title}}&nbsp;&nbsp;</span>{{item.published}}
+              <span style="float: left">><a target="_blank" :href="gotoReview(item.id)">{{item.title}}</a>&nbsp;&nbsp;</span>{{item.published}}
               <span class="badge" v-if="item.votes">{{item.votes}}赞</span>
             </div>
             <p>{{item.summary}}</p>
@@ -276,6 +276,9 @@
         let anchor = this.$el.querySelector(query)
         document.documentElement.scrollTop = anchor.offsetTop
       },
+      gotoReview(id) {
+        return "https://movie.douban.com/review/" + id;
+      }
     },
     data() {
       return {
