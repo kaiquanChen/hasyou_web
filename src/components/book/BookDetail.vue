@@ -86,7 +86,7 @@
           <div class="col-lg-12 col-xs-12 list-group-item book-review" v-for="item in reviews.body" :key="item.id">
             <div>
               <!--<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;-->
-              <span style="float: left">{{item.title}}&nbsp;&nbsp;</span>{{item.published}}
+              <span style="float: left"><a target="_blank" :href="gotoReview(item.id)">{{item.title}}</a>&nbsp;&nbsp;</span>{{item.published}}
               <span class="badge">{{item.useless}}无用</span>
               <span class="badge">{{item.votes}}有用</span>
             </div>
@@ -272,7 +272,10 @@
       },
       contentShowToggle() {
         this.content_show = !this.content_show;
-      }
+      },
+      gotoReview(id) {
+        return "https://book.douban.com/review/" + id;
+      },
     },
     data() {
       return {
