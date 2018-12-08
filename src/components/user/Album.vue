@@ -30,7 +30,7 @@
 
 <script>
   import global_ from "../config/Global"
-  import vueImages from 'vue-images'
+  const file_url = global_.URLS.FILE_LIST_URL;
     export default {
       name: "",
       data() {
@@ -45,7 +45,7 @@
       },
       methods: {
         getFileList() {
-          this.$http.get("http://localhost:8028/file/getByTitle/aly", {
+          this.$http.get(file_url + "getByTitle/aly", {
             params:{
               p: this.page.p,
               count: this.page.count

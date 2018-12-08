@@ -53,6 +53,8 @@
   const FILE_URL = "https://image.hasyou.cn:8048/file/";
   // const FILE_URL = "https://localhost:8048/file/";
 
+  const FILE_LIST_URL = "https://www.hasyou.cn:8028/file/";
+
   // note
   const NOTE_URL = COMMON_URL + "note/";
 
@@ -139,6 +141,7 @@
 
     /* file */
     FILE_URL,
+    FILE_LIST_URL,
 
     /* short book */
     SHORT_BOOK_URL,
