@@ -1,16 +1,57 @@
 <template>
     <div class="row">
       <div class="col-xs-12 col-lg-12">
-        <div class="col-xs-6 col-lg-3 image-list" v-for="(item, index) in files">
-          <el-card :body-style="{ padding: '0px' }">
-            <img :src="item.file_url" class="image">
-            <div style="padding: 14px;">
-              <div class="bottom clearfix">
-                <time class="time">真漂亮!</time>
-                <!--<el-button type="text" class="button">操作按钮</el-button>-->
+        <div class="col-xs-6 col-lg-3">
+          <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files1">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="item.file_url" class="image">
+              <div style="padding: 14px;">
+                <div class="bottom clearfix">
+                  <time class="time">真漂亮!</time>
+                  <!--<el-button type="text" class="button">操作按钮</el-button>-->
+                </div>
               </div>
-            </div>
-          </el-card>
+            </el-card>
+          </div>
+        </div>
+        <div class="col-xs-6 col-lg-3">
+          <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files2">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="item.file_url" class="image">
+              <div style="padding: 14px;">
+                <div class="bottom clearfix">
+                  <time class="time">真漂亮!</time>
+                  <!--<el-button type="text" class="button">操作按钮</el-button>-->
+                </div>
+              </div>
+            </el-card>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files3">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="item.file_url" class="image">
+              <div style="padding: 14px;">
+                <div class="bottom clearfix">
+                  <time class="time">真漂亮!</time>
+                  <!--<el-button type="text" class="button">操作按钮</el-button>-->
+                </div>
+              </div>
+            </el-card>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files4">
+            <el-card :body-style="{ padding: '0px' }">
+              <img :src="item.file_url" class="image">
+              <div style="padding: 14px;">
+                <div class="bottom clearfix">
+                  <time class="time">真漂亮!</time>
+                  <!--<el-button type="text" class="button">操作按钮</el-button>-->
+                </div>
+              </div>
+            </el-card>
+          </div>
         </div>
       </div>
       <div class="row" style="text-align: center">
@@ -41,7 +82,12 @@
             count: 10,
             total: 0
           },
-          pager_count:10
+          pager_count:10,
+          col: 4,
+          files1:[],
+          files2:[],
+          files3:[],
+          files4:[]
         }
       },
       methods: {
@@ -64,6 +110,8 @@
             this.page.count = data.body.data.count;
             this.page.total = data.body.data.total;
             this.files = data.body.data.body
+
+            this.allocateImage();
           });
         },
         handleCurrentChange(val) {
@@ -73,12 +121,29 @@
         checkMedia() {
           return window.matchMedia('(max-width:415px)').matches;
         },
+        allocateImage() {
+          let i1 = 0, i2 = 0, i3 = 0, i4 = 0;
+          for (let i = 0; i < this.files.length; i++) {
+            let result = i % this.col;
+            if (result === 0) {
+              this.files1[i1++] = this.files[i];
+            } else if (result === 1) {
+              this.files2[i2++] = this.files[i];
+            } else if (result === 2) {
+              this.files3[i3++] = this.files[i];
+            } else if (result === 3) {
+              this.files4[i4++] = this.files[i];
+            }
+          }
+        }
       },
       created() {
         if (this.checkMedia()) {
           this.pager_count = 5;
+          this.col = 2;
         }
         this.getFileList();
+        console.log(this.files1);
       }
     }
 </script>
@@ -115,7 +180,9 @@
   }
 
   .image-list {
-    margin-top: 15px;
+    margin-top: 30px;
+    padding-right: 0;
+    padding-left: 0;
   }
 
 </style>
