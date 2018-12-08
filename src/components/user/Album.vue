@@ -1,7 +1,7 @@
 <template>
     <div class="row">
       <div class="col-xs-12 col-lg-12">
-        <div class="col-xs-4 col-lg-3 image-list" v-for="(item, index) in files">
+        <div class="col-xs-6 col-lg-3 image-list" v-for="(item, index) in files">
           <el-card :body-style="{ padding: '0px' }">
             <img :src="item.file_url" class="image">
             <div style="padding: 14px;">
@@ -40,7 +40,8 @@
             p: 1,
             count: 10,
             total: 0
-          }
+          },
+          pager_count:10
         }
       },
       methods: {
@@ -74,6 +75,9 @@
         },
       },
       created() {
+        if (this.checkMedia()) {
+          this.pager_count = 5;
+        }
         this.getFileList();
       }
     }
