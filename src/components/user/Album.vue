@@ -114,4 +114,8 @@
     clear: both
   }
 
+  .image-list {
+    margin-top: 15px;
+  }
+
 </style>
