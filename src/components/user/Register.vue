@@ -26,7 +26,14 @@
                 class="input-with-select register">
         <template class="register-prefix" slot="prepend">邮&emsp;箱</template>
       </el-input>
-      <el-date-picker type="date" placeholder="生日" class="register" v-model="user.birthday" style="width: 100%;"></el-date-picker>
+      <el-date-picker
+        :editable="false"
+        type="date"
+        placeholder="生日"
+        class="register"
+        v-model="user.birthday"
+        style="width: 100%;">
+      </el-date-picker>
       <div class="col-xs-12 register info">
         <el-radio-group v-model="user.gender" class="register gender">
           <el-radio label="男"></el-radio>
