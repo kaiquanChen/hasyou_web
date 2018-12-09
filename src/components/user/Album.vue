@@ -21,7 +21,6 @@
               <div style="padding: 14px;">
                 <div class="bottom clearfix">
                   <time class="time">真漂亮!</time>
-                  <!--<el-button type="text" class="button">操作按钮</el-button>-->
                 </div>
               </div>
             </el-card>
@@ -54,22 +53,14 @@
           </div>
         </div>
       </div>
-      <div class="row" style="text-align: center">
-        <el-pagination background
-                       class="pagination"
-                       @current-change="handleCurrentChange"
-                       :current-page.sync="page.page"
-                       :page-size="page.count"
-                       :small="checkMedia()"
-                       :pager-count="pager_count"
-                       layout="total, prev, pager, next"
-                       :total="page.total">
-        </el-pagination>
+      <div class="col-lg-12 col-xs-12 notice">
+        <span>{{notice}}</span>
       </div>
     </div>
 </template>
 
 <script>
+  import Vue from "vue"
   import global_ from "../config/Global"
   const file_url = global_.URLS.FILE_LIST_URL;
     export default {
@@ -79,15 +70,15 @@
           files: [],
           page: {
             p: 1,
-            count: 10,
+            count: 20,
             total: 0
           },
-          pager_count:10,
           col: 4,
           files1:[],
           files2:[],
           files3:[],
-          files4:[]
+          files4:[],
+          notice:"上拉加载更多!"
         }
       },
       methods: {
@@ -104,6 +95,10 @@
             if (data.body.data === 200) {
               console.log(data);
               this.$message.error("数据获取失败");
+              return;
+            } else if (data.body.data.body.length === 0) {
+              this.$message("数据已加载完!");
+              this.notice = "没有更多了!";
               return;
             }
             this.page.p = data.body.data.page;
@@ -122,27 +117,29 @@
           return window.matchMedia('(max-width:415px)').matches;
         },
         allocateImage() {
-          let i1 = 0, i2 = 0, i3 = 0, i4 = 0;
           for (let i = 0; i < this.files.length; i++) {
             let result = i % this.col;
             if (result === 0) {
-              this.files1[i1++] = this.files[i];
+              this.files1.push(this.files[i]);
             } else if (result === 1) {
-              this.files2[i2++] = this.files[i];
+              this.files2.push(this.files[i]);
             } else if (result === 2) {
-              this.files3[i3++] = this.files[i];
+              this.files3.push(this.files[i]);
             } else if (result === 3) {
-              this.files4[i4++] = this.files[i];
+              this.files4.push(this.files[i]);
             }
           }
         },
         scrollEvent() {
-
+          let is_bottom = global_.FUNC.isReachBottom();
+          if (is_bottom) {
+            this.page.p = this.page.p + 1;
+            this.getFileList();
+          }
         }
       },
       created() {
         if (this.checkMedia()) {
-          this.pager_count = 5;
           this.col = 2;
         }
         this.getFileList();
@@ -188,6 +185,12 @@
     margin-top: 30px;
     padding-right: 0;
     padding-left: 0;
+  }
+
+  .notice {
+    margin-top: 15px;
+    text-align: center;
+    color: #ccc;
   }
 
 </style>

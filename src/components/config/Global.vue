@@ -8,7 +8,7 @@
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'https://www.hasyou.cn:8028/'
 
-  const COMMON_URL = FLY_URL
+  const COMMON_URL = TEST_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -82,6 +82,27 @@
     return localStorage.getItem(key);
   }
 
+  let getScrollHeight = function() {
+    let bodyScrollHeight = 0
+    let documentScrollHeight = 0
+    if (document.body) {
+      bodyScrollHeight = document.body.scrollHeight
+    }
+    if (document.documentElement) {
+      documentScrollHeight = document.documentElement.scrollHeight
+    }
+    // 当页面内容超出浏览器可视窗口大小时，Html的高度包含body高度+margin+padding+border所以html高度可能会大于body高度
+    return (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight
+  }
+
+  let isReachBottom = function() {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 获取滚动条的高度
+    const winHeight = document.documentElement.clientHeight || document.body.clientHeight; // 一屏的高度
+    const scrollHeight = getScrollHeight() // 获取文档总高度
+    let result = scrollTop >= parseInt(scrollHeight) - winHeight;
+    return result;
+  }
+
   let request = function (reqUrl, result, params, method, headers) {
     if (!reqUrl) {
       alert("url must not be empty!");
@@ -106,13 +127,6 @@
       headers: {"bid":headers},
       params:params,
       transformResponse:[function (data) {
-        // if (data.code !== 200) {
-        //   alert("数据获取失败!");
-        //   console.log(data);
-        //   alert(2);
-        //   return;
-        // }
-        alert(1);
         result = data;
       }]
      });
@@ -161,6 +175,7 @@
   const FUNC = {
     getUuid,
     getBid,
+    isReachBottom,
     request
   }
 

@@ -1,27 +1,9 @@
 <template>
   <div class="container-fluid">
-    <!--<el-upload-->
-      <!--class="avatar-uploader"-->
-      <!--action="https://jsonplaceholder.typicode.com/posts/"-->
-      <!--:show-file-list="false"-->
-      <!--:on-success="handleAvatarSuccess"-->
-      <!--:before-upload="beforeAvatarUpload">-->
-      <!--<img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-      <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-    <!--</el-upload>-->
-    <el-upload
-      class="upload-demo"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :on-preview="handlePreview"
-      :on-remove="handleRemove"
-      :before-remove="beforeRemove"
-      multiple
-      :limit="3"
-      :on-exceed="handleExceed"
-      :file-list="fileList">
-      <el-button size="small" type="primary">点击上传</el-button>
-      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-    </el-upload>
+    <div class="col-lg-12 col-xs-12" v-for="(item, index) in param">
+      {{item}}
+    </div>
+    <el-button @click="add()">添加</el-button>
   </div>
 </template>
 
@@ -30,10 +12,16 @@
     export default {
       data() {
         return {
-          imageUrl: ''
+          imageUrl: '',
+          param:[
+            "1", "2", "3", "4"
+          ]
         };
       },
       methods: {
+        add() {
+          this.param.push("a");
+        },
         handleAvatarSuccess(res, file) {
           this.imageUrl = URL.createObjectURL(file.raw);
         },
@@ -48,8 +36,19 @@
             this.$message.error('上传头像图片大小不能超过 2MB!');
           }
           return isJPG && isLt2M;
-        }
-      }
+        },
+        handleScroll() {
+          // let top = global_.FUNC.getScrollTop();
+          // console.log(top);
+          let height = global_.FUNC.isReachBottom();
+          console.log(height);
+        },
+      },
+      created() {
+      },
+      mounted () {
+        window.addEventListener('scroll', this.handleScroll)
+      },
     }
 </script>
 
