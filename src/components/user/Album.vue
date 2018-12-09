@@ -1,7 +1,7 @@
 <template>
     <div class="row">
       <div class="col-xs-12 col-lg-12">
-        <div class="col-xs-6 col-lg-3">
+        <div ref="element1" class="col-xs-6 col-lg-3">
           <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files1">
             <el-card :body-style="{ padding: '0px' }">
               <img :src="item.file_url" class="image">
@@ -14,7 +14,7 @@
             </el-card>
           </div>
         </div>
-        <div class="col-xs-6 col-lg-3">
+        <div ref="element2" class="col-xs-6 col-lg-3">
           <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files2">
             <el-card :body-style="{ padding: '0px' }">
               <img :src="item.file_url" class="image">
@@ -26,7 +26,7 @@
             </el-card>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div ref="element3" class="col-lg-3">
           <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files3">
             <el-card :body-style="{ padding: '0px' }">
               <img :src="item.file_url" class="image">
@@ -39,7 +39,7 @@
             </el-card>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div ref="element4" class="col-lg-3">
           <div class="col-xs-12 col-lg-12 image-list" v-for="(item, index) in files4">
             <el-card :body-style="{ padding: '0px' }">
               <img :src="item.file_url" class="image">
@@ -135,6 +135,35 @@
           if (is_bottom) {
             this.page.p = this.page.p + 1;
             this.getFileList();
+          }
+        },
+        minHeightOfDivs() {
+          let $element1_height = this.$refs.element1.offsetHeight;
+          let $element2_height = this.$refs.element2.offsetHeight;
+
+          let index = 1;
+          let min = $element1_height;
+          if (min > $element2_height) {
+            min = $element2_height;
+            index = 2;
+          }
+
+          if (this.col === 2) {
+            return index;
+          } else {
+            let $element3_height = this.$refs.element3.offsetHeight;
+            let $element4_height = this.$refs.element4.offsetHeight;
+
+            if (min > $element3_height) {
+              min = $element3_height;
+              index = 3;
+            }
+
+            if (min > $element4_height) {
+              index = 4;
+            }
+
+            return index;
           }
         }
       },
