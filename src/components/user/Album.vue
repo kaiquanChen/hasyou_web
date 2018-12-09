@@ -135,6 +135,9 @@
               this.files4[i4++] = this.files[i];
             }
           }
+        },
+        scrollEvent() {
+
         }
       },
       created() {
@@ -143,7 +146,9 @@
           this.col = 2;
         }
         this.getFileList();
-        console.log(this.files1);
+      },
+      mounted() {
+        window.addEventListener("scroll", this.scrollEvent);
       }
     }
 </script>

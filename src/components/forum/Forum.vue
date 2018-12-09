@@ -97,6 +97,7 @@
         if (this.activeName === this.label) {
           return;
         }
+        this.posts.page.page = 1;
         this.label = this.activeName;
         this.getPostList(this.label);
       },
