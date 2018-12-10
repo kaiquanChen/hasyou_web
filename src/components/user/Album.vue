@@ -60,7 +60,6 @@
 </template>
 
 <script>
-  import Vue from "vue"
   import global_ from "../config/Global"
   const file_url = global_.URLS.FILE_LIST_URL;
     export default {
