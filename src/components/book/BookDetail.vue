@@ -57,7 +57,7 @@
             <div v-for="(p_item, index) in data.intro">
               <p v-if="index < 3">{{p_item}}</p>
             </div>
-            <span v-show="!summary_show" v-on:click="summaryShowToggle()" class="summary-show" v-if="data.intro.length > 3">(展开全部)</span>
+            <span v-show="!summary_show" v-on:click="summaryShowToggle()" class="summary-show" v-if="data.intro !== undefined && data.intro.length > 3">(展开全部)</span>
           </div>
           <div class="book-summary" v-show="summary_show">
             <div v-for="p_item in data.intro">
@@ -72,7 +72,7 @@
             <div v-for="(p_category, index) in data.category">
               <p v-if="index < 3">{{p_category}}</p>
             </div>
-            <span v-show="!content_show" v-on:click="contentShowToggle()" class="summary-show" v-if="data.category.length > 3">(展开全部)</span>
+            <span v-show="!content_show" v-on:click="contentShowToggle()" class="summary-show" v-if="data.category !== undefined && data.category.length > 3">(展开全部)</span>
           </div>
           <div class="catalog" v-show="content_show">
             <div v-for="category in data.category">

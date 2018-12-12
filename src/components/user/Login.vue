@@ -6,8 +6,7 @@
       <el-input placeholder="邮箱 / 电话 / 昵称"
                 v-model="account"
                 class="input-with-select">
-        <i class="glyphicon glyphicon-user el-input__icon"
-          slot="prefix">
+        <i class="glyphicon glyphicon-user el-input__icon" slot="prefix">
         </i>
       </el-input>
       <el-input type="password"
@@ -18,11 +17,7 @@
           slot="prefix">
         </i>
       </el-input>
-      <el-input placeholder="请输入验证码" v-model="captcha" class="captcha-input">
-        <template slot="prepend" class="captcha-parent">
-          <img class="captcha" alt="验证码" :src="src" @click="refreshCode">
-        </template>
-      </el-input>
+      <captcha class="captcha" v-on:confirmSuccess="getCaptchaResult"></captcha>
       <router-link class="forget-password" to="">忘记密码?</router-link><br/>
       <el-button class="btn-login btn" slot="append" type="primary" @click="login()" >登录</el-button>
       <el-button class="btn-reset btn" slot="append" type="primary" @click="goto()">注册</el-button>
@@ -32,16 +27,19 @@
 </template>
 
 <script>
+  import Captcha from '@/components/captcha/Captcha'
   import global_ from "../config/Global"
   const captcha_url = global_.URLS.CAPTCHA_URL;
     export default {
       name: "",
+      components: {
+        captcha: Captcha
+      },
       data() {
         return {
           account:"",
           password:"",
-          captcha: "",
-          src:"captcha.jpg"
+          confirmSuccess: false
         }
       },
       methods: {
@@ -52,6 +50,17 @@
           this.src = captcha_url + "?t=" + Date.now();
         },
         login() {
+          if (!this.confirmSuccess) {
+            this.$message.error("验证码错误!");
+            return;
+          }
+
+          this.$http.post().then(data => {
+
+          });
+        },
+        getCaptchaResult(val) {
+          this.confirmSuccess = val;
         }
       },
       created() {
@@ -76,14 +85,34 @@
   }
 
   .captcha {
-    height: 40px;
-  }
-
-  .captcha-input {
     margin-top: 10px;
   }
 
   .input-with-select {
     margin-top: 10px;
+  }
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>
