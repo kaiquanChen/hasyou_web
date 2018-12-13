@@ -16,7 +16,7 @@
             <span v-if="item.publish_time">{{item.publish_time}}&nbsp;/&nbsp;</span>
             <span v-if="item.price">{{item.price}}</span><br/><br/>
             <el-rate v-model="item.stars/2" :score-template="item.stars" show-score disabled>&nbsp;{{item.stars}}</el-rate><br/>
-            <p v-if="item.vars.intro">'{{item.vars.intro}}'</p>
+            <p class="quote" v-if="item.vars.intro"><span class="intro">{{item.vars.intro}}</span></p>
           </div>
         </div>
         <div class="col-lg-12 col-xs-12" id="pagination-bottom">
@@ -106,6 +106,23 @@
     float: right;
   }
 
+  .quote {
+    overflow: hidden;
+    background: url(/static/image/quotel.png) no-repeat left 4px;
+    width: auto;
+    word-wrap: break-word;
+    padding: 0 24px 5px 15px;
+  }
+
+  .quote span.intro {
+    color: #666666;
+    display: inline;
+    background: url(/static/image/quoter.png) no-repeat right bottom;
+    padding-right: 15px;
+    display: inline-block;
+    word-break: break-all;
+  }
+
   @media screen and (max-width: 415px) {
     div.list-group-item {
       padding-left: 0;
@@ -113,6 +130,10 @@
     }
     div.list-body {
       padding: 0;
+    }
+
+    p span.intro {
+      font-size: 12px;
     }
   }
 </style>
