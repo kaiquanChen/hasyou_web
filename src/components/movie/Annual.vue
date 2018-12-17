@@ -15,8 +15,8 @@
         <div class="col-xs-6 col-lg-2 annual-movie" v-if="item.subjects" v-for="(movie, index) in item.subjects">
           <el-card class="movie-card" :body-style="{ padding: '0px' }" v-if="movie">
             <a target="_blank" :href="getMovieDetail(movie.id)"><img :src="movie.image_url" class="image"></a>
-            <div style="padding: 14px;" class="info">
-              <span>{{ movie.title }}</span>
+            <div class="info">
+              <span><router-link :to="getMovieDetail(movie.id)">{{ movie.title }}</router-link></span>
               <div class="bottom clearfix">
                 <time class="star">{{ movie.average }}</time>
                 <span class="rank">Top.{{index + 1}}</span>
@@ -129,7 +129,6 @@
   }
 
   div.annual-item {
-    height: 850px;
     margin-top: 50px;
     border-radius: 15px;
   }
@@ -184,6 +183,14 @@
 
   #annual-title {
     text-align: center;
+  }
+
+  div.annual-body {
+    padding: 0 0 30px 30px;
+  }
+
+  div.info {
+    padding: 15px 5px;
   }
 
 </style>

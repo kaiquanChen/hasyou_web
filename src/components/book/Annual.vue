@@ -1,7 +1,7 @@
 <template>
     <div class="row annual">
       <h1 id="annual-title">{{year}}年度图书榜单</h1>
-      <div class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}"  v-for="item in body">
+      <div class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat'}"  v-for="item in body">
         <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
           <div class="col-xs-12 right">
             <div class="title">
@@ -15,8 +15,8 @@
         <div class="col-xs-6 col-lg-2 annual-book" v-if="item.subjects" v-for="(book, index) in item.subjects">
           <el-card class="book-card" :body-style="{ padding: '0px' }" v-if="book">
             <a target="_blank" :href="getBookDetail(book.id)"><img :src="book.image_url" class="image"></a>
-            <div style="padding: 14px;" class="info">
-              <span>{{ book.name }}</span>
+            <div class="info">
+              <span><router-link :to="getBookDetail(book.id)">{{ book.name }}</router-link></span>
               <div class="bottom clearfix">
                 <time class="star">{{ book.stars }}</time>
                 <span class="rank">Top.{{index + 1}}</span>
@@ -129,7 +129,6 @@
   }
 
   div.annual-item {
-    height: 850px;
     margin-top: 50px;
     border-radius: 15px;
   }
@@ -169,7 +168,7 @@
   }
 
   div.title span {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   div.desc {
@@ -184,6 +183,14 @@
 
   #annual-title {
     text-align: center;
+  }
+
+  div.annual-body {
+    padding: 0 0 30px 30px;
+  }
+
+  div.info {
+    padding: 15px 5px;
   }
 
 </style>
