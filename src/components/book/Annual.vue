@@ -16,7 +16,7 @@
           <el-card class="book-card" :body-style="{ padding: '0px' }" v-if="book">
             <a target="_blank" :href="getBookDetail(book.id)"><img :src="book.image_url" class="image"></a>
             <div class="info">
-              <span><router-link :to="getBookDetail(book.id)">{{ book.name }}</router-link></span>
+              <span class="book-link"><router-link :to="getBookDetail(book.id)">{{ book.name }}</router-link></span>
               <div class="bottom clearfix">
                 <time class="star">{{ book.stars }}</time>
                 <span class="rank">Top.{{index + 1}}</span>
@@ -193,4 +193,7 @@
     padding: 15px 5px;
   }
 
+  span.book-link a {
+    text-decoration: none;
+  }
 </style>
