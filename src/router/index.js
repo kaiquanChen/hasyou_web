@@ -4,7 +4,9 @@ import Music from '@/components/music/Music'
 import Book from '@/components/book/Book'
 import Forum from '@/components/forum/Forum'
 import Movie from '@/components/movie/Movie'
+import Kind from '@/components/movie/Kind'
 import Event from '@/components/event/Event'
+import BookAnnual from '@/components/book/Annual'
 import BookTag from '@/components/book/BookTag'
 import BookList from '@/components/book/BookList'
 import BookDetail from '@/components/book/BookDetail'
@@ -15,6 +17,7 @@ import Node from '@/components/forum/Node'
 import MovieDetail from '@/components/movie/MovieDetail'
 import MovieList from '@/components/movie/MovieList'
 import MovieTOP250 from '@/components/movie/MovieTOP250'
+import MovieAnnual from '@/components/movie/Annual'
 import Note from '@/components/note/Note'
 import NoteDetail from '@/components/note/NoteDetail'
 import About from '@/components/About'
@@ -36,12 +39,15 @@ export const routes = [
   {path: '/movie/tag', component: MovieList},
   {path: '/movie/subject/:id', component: MovieDetail},
   {path: '/movie/top250', component: MovieTOP250},
+  {path: '/movie/:type', component: Kind},
+  {path: '/movie/annual/:year', component: MovieAnnual},
   /* book */
   {path: '/book', component: Book},
   {path: '/book/tag', component: BookTag},
   {path: '/book/tag/:tag_id', component: BookList},
   {path: '/book/subject/:id', component: BookDetail},
   {path: '/book/top250', component: BookTOP250},
+  {path: '/book/annual/:year', component: BookAnnual},
   /* forum */
   {path: '/forum', component: Forum},
   {path: '/forum/:id', component: Post},

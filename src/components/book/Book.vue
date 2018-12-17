@@ -1,6 +1,23 @@
 <template>
   <div class="container" style="text-align: center">
     <div class="row">
+      <div class="col-xs-12 col-lg-12 movie-nav">
+        <el-menu
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          text-color="#27a"
+          @select="handleSelect">
+          <!--<el-menu-item index="1"><router-link to="/movie/movie" target="_blank">选电影</router-link></el-menu-item>-->
+          <!--<el-menu-item index="3"><router-link to="/movie/tv" target="_blank">电视剧</router-link></el-menu-item>-->
+          <!--<el-submenu index="2">-->
+            <!--<template slot="title">年度图书榜单</template>-->
+          <!--</el-submenu>-->
+          <el-menu-item index="2-1"><router-link to="/book/annual/2017" target="_blank">2017年度榜单</router-link></el-menu-item>
+          <el-menu-item index="2-2"><router-link to="/book/annual/2016" target="_blank">2016年度榜单</router-link></el-menu-item>
+          <el-menu-item index="2-3"><router-link to="/book/annual/2015" target="_blank">2015年度榜单</router-link></el-menu-item>
+        </el-menu>
+      </div>
       <div class="col-xs-12 col-lg-12 body">
         <div class="col-xs-12 col-lg-8" id="book-express">
           <div class="col-lg-12 col-xs-12 book-title">

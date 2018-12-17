@@ -19,8 +19,9 @@
   const BOOK_URL = COMMON_URL + DOUBAN_BOOK
   // douban short comment
   const BOOK_SHORT_COMMENT_URL = COMMON_URL + DOUBAN_BOOK + 'comment'
-
   const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "review/"
+  const BOOK_ANNUAL_URL = COMMON_URL + 'book/annual/'
+
 
   // group
   const GROUP = COMMON_URL + 'group/'
@@ -33,6 +34,7 @@
   const MOVIE_SHORT_COMMENT_URL = DOUBAN_MOVIE + "comments/"
   const MOVIE_REVIEW_URL = DOUBAN_MOVIE + "reviews/"
   const MOVIE_GENRE_URL = DOUBAN_MOVIE + "tag/genres"
+  const MOVIE_ANNUAL_URL = COMMON_URL + 'movie/annual/'
 
   // v2 post
   const POST_URL = COMMON_URL + 'v2/'
@@ -145,12 +147,14 @@
     BOOK_URL,
     BOOK_SHORT_COMMENT_URL,
     DOUBAN_BOOK_TAG_URL,
+    BOOK_ANNUAL_URL,
     DOUBAN_MOVIE,
     EVENT_URL,
     DOUBAN_MUSIC_URL,
     BOOK_REVIEW_URL,
     MOVIE_REVIEW_URL,
     MOVIE_SHORT_COMMENT_URL,
+    MOVIE_ANNUAL_URL,
 
     /* v2 */
     COMMENT_URL,
