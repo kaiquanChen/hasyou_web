@@ -8,7 +8,7 @@
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'https://www.hasyou.cn:8028/'
 
-  const COMMON_URL = FLY_URL
+  const COMMON_URL = TEST_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -18,8 +18,8 @@
   const DOUBAN_BOOK = 'book/'
   const BOOK_URL = COMMON_URL + DOUBAN_BOOK
   // douban short comment
-  const BOOK_SHORT_COMMENT_URL = COMMON_URL + DOUBAN_BOOK + 'comment'
-  const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "review/"
+  const BOOK_SHORT_COMMENT_URL = COMMON_URL + DOUBAN_BOOK + 'comments'
+  const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "reviews/"
   const BOOK_ANNUAL_URL = COMMON_URL + 'book/annual/'
 
 

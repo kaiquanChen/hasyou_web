@@ -1,79 +1,78 @@
 <template>
-  <div class="container-fluid">
-    <div class="col-lg-12 col-xs-12" v-for="(item, index) in param">
-      {{item}}
-    </div>
-    <el-button @click="add()">添加</el-button>
+  <!-- 制作一个框架包裹slider -->
+  <div style="width:70%;margin:20px auto;height:400px">
+    <!-- 配置slider组件 -->
+    <slider ref="slider" :options="options" @slide='slide' @tap='onTap' @init='onInit'>
+      <!-- 直接使用slideritem slot -->
+      <slideritem v-for="(item,index) in someList" :key="index" :style="item.style">{{item.html}}</slideritem>
+      <!-- 设置loading,可自定义 -->
+      <div slot="loading">loading...</div>
+    </slider>
   </div>
 </template>
-
 <script>
-  import global_ from "./config/Global"
-    export default {
-      data() {
-        return {
-          imageUrl: '',
-          param:[
-            "1", "2", "3", "4"
-          ]
-        };
-      },
-      methods: {
-        add() {
-          this.param.push("a");
-        },
-        handleAvatarSuccess(res, file) {
-          this.imageUrl = URL.createObjectURL(file.raw);
-        },
-        beforeAvatarUpload(file) {
-          const isJPG = file.type === 'image/jpeg';
-          const isLt2M = file.size / 1024 / 1024 < 2;
-
-          if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
+  import { slider, slideritem } from 'vue-concise-slider'// import slider components
+  export default {
+    el: '#app',
+    data () {
+      return {
+        //Image list
+        someList:[],
+        //Sliding configuration [obj]
+        options: {
+          currentPage: 0,
+          thresholdDistance:500,
+          thresholdTime:100,
+          autoplay:1000,
+          loop:true,
+          direction:'vertical',
+          loopedSlides:1,
+          slidesToScroll:1,
+          timingFunction: 'ease',
+          speed: 300
+        }
+      }
+    },
+    components: {
+      slider,
+      slideritem
+    },
+    mounted () {
+      let that = this
+      setTimeout(function () {
+        that.someList = [
+          {
+            html: 'slide1',
+            style: {
+              'background': '#1bbc9b'
+            }
+          },
+          {
+            html: 'slide2',
+            style: {
+              'background': '#4bbfc3'
+            }
+          },
+          {
+            html: 'slide3',
+            style: {
+              'background': '#7baabe'
+            }
           }
-          if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
-          }
-          return isJPG && isLt2M;
-        },
-        handleScroll() {
-          // let top = global_.FUNC.getScrollTop();
-          // console.log(top);
-          let height = global_.FUNC.isReachBottom();
-          console.log(height);
-        },
+        ]
+      }, 2000)
+    },
+    methods: {
+      // Listener event
+      slide (data) {
+        console.log(data)
       },
-      created() {
+      onTap (data) {
+        console.log(data)
       },
-      mounted () {
-        window.addEventListener('scroll', this.handleScroll)
-      },
+      onInit (data) {
+        console.log(data)
+      }
     }
+  }
 </script>
-
-<style scoped>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-</style>

@@ -85,10 +85,8 @@
           <h4 style="color: green">书评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-review" v-for="item in reviews.body" :key="item.id">
             <div>
-              <!--<b>(共{{item.comments}}人评价)</b>&nbsp;&nbsp;&nbsp;-->
               <span style="float: left"><a target="_blank" :href="gotoReview(item.id)">{{item.title}}</a>&nbsp;&nbsp;</span>{{item.published}}
-              <span class="badge">{{item.useless}}无用</span>
-              <span class="badge">{{item.votes}}有用</span>
+              <span class="badge">{{item.votes}}赞</span>
             </div>
             <p>{{item.summary}}</p>
           </div>
@@ -108,14 +106,12 @@
         <div class="col-lg-12 col-xs-12 book-label" id="book-comment">
           <h4 style="color: green">短评  · · · · · ·<span>(共{{data.comments_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-comment" v-for="item in comments.body" :key="item.id">
-            <a>{{item.creator_name}}</a>&nbsp;
-            <b style="color: orange;">
-              <el-rate
-                v-model="item.stars / 2"
-                disabled class="comment-rate">
-              </el-rate></b>&nbsp;&nbsp;&nbsp;{{item.create_time}}
-            <a><span class="badge">{{item.votes}}有用</span></a>
-            <p>{{item.content}}</p>
+            <!--<span style="float: left;margin-right: 10px;"><img alt="loading..." style="width: 24px" :src="item.createor_href"></span>-->
+            <a style="float: left;" target="_blank" href="#">{{item.creator_name}}&emsp;</a>
+            <el-rate style="float: left" v-model="data.stars / 2" disabled></el-rate>&emsp;
+            <span style="float: left;color: #999">&emsp;{{item.create_time}}</span>
+            <a><span class="badge">{{item.votes}}赞</span></a>
+            <p class="comment-sumary">{{item.content}}</p>
           </div>
           <div class="col-lg-12 col-xs-12">
             <el-pagination background
