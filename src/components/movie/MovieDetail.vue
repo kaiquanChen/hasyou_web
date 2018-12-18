@@ -119,7 +119,7 @@
           <div class="col-lg-12 col-xs-12 list-group-item movie-comment" v-for="item in comments.body" :key="item.id">
             <span style="float: left;margin-right: 10px;" v-if="item.author"><img style="width: 24px" :src="item.author.avatar"></span>
             <a style="float: left;" target="_blank" :href="gotoAuthor(item.author.id)" v-if="item.author">{{item.author.name}}&emsp;</a>
-            <a style="float: left;" href="#" v-else>[已注销]</a>&emsp;
+            <a style="float: left;" href="#" v-else>[已注销]&emsp;</a>
             <el-rate style="float: left" v-model="data.average / 2" disabled></el-rate>&emsp;
             <span style="float: left;color: #999">&emsp;{{item.created_at}}</span>
             <a><span class="badge">{{item.useful_count}}赞</span></a>
