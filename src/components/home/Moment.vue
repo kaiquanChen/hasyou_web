@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <h1 id="title-header"><b>最新阅读推荐</b></h1>
-    <div class="col-lg-6 col-xs-12 moment-item" @click="can_load && gotoDetail(moment.id)" v-for="moment in moments">
+    <div class="col-lg-6 col-xs-12 moment-item" @click="gotoDetail(moment.id)" v-for="moment in moments">
       <div class="title">
         <span>{{moment.title}}</span>
       </div>
@@ -19,7 +19,9 @@
         <span>{{moment.recs_count}}回复</span>
       </div>
     </div>
-    <div class="col-lg-12 col-xs-12" id="more" @click="loadMore()">{{more_message}}</div>
+    <div class="col-lg-12 col-xs-12" id="more" @click="load_flag && loadMore()">
+      <el-button class="btn-load" :loading="loading">{{more_message}}</el-button>
+    </div>
   </div>
 </template>
 
@@ -37,11 +39,13 @@
             total: 0
           },
           more_message: "点击加载更多",
-          can_load: true
+          load_flag: true,
+          loadding: false
         }
       },
       methods: {
         getMomentList() {
+          this.loading = true;
           this.$http.get(moment_url, {
             headers: {
               bid: global_.FUNC.getBid()
@@ -62,26 +66,37 @@
             this.page.page = data.body.data.page;
             this.page.count = data.body.data.count;
             this.page.total = data.body.data.total;
+            this.loading = false;
           });
         },
         gotoDetail(id) {
           window.open("https://www.douban.com/note/" + id, "_blank");
         },
         loadMore() {
-          let max_page = Math.ceil(this.page.total / this.page.count);
-          if (max_page === this.page.page) {
-            this.$message.error("没有更多数据了!");
-            this.more_message = "没有更多数据了!";
-            this.can_load = false;
+          this.load_flag = false;
+          this.message = "加载中...";
+          let can_load = this.canLoad();
+          if (!can_load) {
             return;
           }
+
           this.page.page = this.page.page + 1;
           this.getMomentList();
         },
         appendItems(items) {
+          this.load_flag = true;
+          this.message = "点击加载更多!";
           items.map( item => {
             this.moments.push(item);
           });
+        },
+        canLoad() {
+          if (Math.ceil(this.page.total / this.page.count) === this.page.page) {
+            this.$message.error("没有更多数据了!");
+            this.more_message = "没有更多数据了!";
+            return false;
+          }
+          return true;
         }
       },
       created() {
@@ -161,6 +176,11 @@
     line-height: 60px;
     cursor: pointer;
     font-size: 18px
+  }
+
+  .btn-load {
+    background-color: #e8f8f7;
+    border: #e8f8f7;
   }
 
   @media screen and (max-width: 415px) {
