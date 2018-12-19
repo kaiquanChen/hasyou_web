@@ -57,8 +57,13 @@
 
   const FILE_LIST_URL = "https://www.hasyou.cn:8028/file/";
 
-  // note
+  // youni note
   const NOTE_URL = COMMON_URL + "note/";
+
+  // moment
+  const MOMENT_URL = COMMON_URL + "moment/";
+  const MOMENT_SUBJECTS_URL = MOMENT_URL + "subjects";
+  const MOMENT_SUBJECT_URL = MOMENT_URL + "subject";
 
   // global search
   const GLOBAL_SEARCH_URL = COMMON_URL + "search/";
@@ -155,6 +160,8 @@
     MOVIE_REVIEW_URL,
     MOVIE_SHORT_COMMENT_URL,
     MOVIE_ANNUAL_URL,
+    MOMENT_SUBJECTS_URL,
+    MOVIE_GENRE_URL,
 
     /* v2 */
     COMMENT_URL,

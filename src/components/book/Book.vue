@@ -13,9 +13,9 @@
           <!--<el-submenu index="2">-->
             <!--<template slot="title">年度图书榜单</template>-->
           <!--</el-submenu>-->
-          <el-menu-item index="2-1"><router-link to="/book/annual/2017" target="_blank">2017年度榜单</router-link></el-menu-item>
-          <el-menu-item index="2-2"><router-link to="/book/annual/2016" target="_blank">2016年度榜单</router-link></el-menu-item>
-          <el-menu-item index="2-3"><router-link to="/book/annual/2015" target="_blank">2015年度榜单</router-link></el-menu-item>
+          <el-menu-item class="annual-nav" index="2-1"><router-link to="/book/annual/2017" target="_blank">2017年度榜单</router-link></el-menu-item>
+          <el-menu-item class="annual-nav" index="2-2"><router-link to="/book/annual/2016" target="_blank">2016年度榜单</router-link></el-menu-item>
+          <el-menu-item class="annual-nav" index="2-3"><router-link to="/book/annual/2015" target="_blank">2015年度榜单</router-link></el-menu-item>
         </el-menu>
       </div>
       <div class="col-xs-12 col-lg-12 body">
@@ -340,5 +340,10 @@
       white-space:nowrap;
       display:block;
     }
+
+    .annual-nav {
+      font-size: 12px;
+    }
+
   }
 </style>
