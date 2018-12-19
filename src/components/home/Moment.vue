@@ -47,8 +47,8 @@
               bid: global_.FUNC.getBid()
             },
             params: {
-              p: this.p,
-              count: this.count
+              p: this.page.page,
+              count: this.page.count
             }
           }).then(data => {
             if (data.body.code !== 200) {
