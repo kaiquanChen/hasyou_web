@@ -101,6 +101,7 @@
 
   .moment-item {
     padding: 30px 20px;
+    height: 230px;
   }
 
   .title {
