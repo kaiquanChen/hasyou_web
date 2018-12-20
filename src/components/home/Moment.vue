@@ -8,7 +8,10 @@
       <div class="summary">
         <span>{{moment.summary}}</span>
       </div>
-      <br>
+      <div class="img" v-if="moment.image.length > 0">
+        <img style="width: 64px;height: 64px;" :src="image" v-for="image in moment.image" />
+      </div>
+      <div style="width: 64px;height: 64px;" v-else></div>
       <div class="author">
         <span><img style="width: 24px;" :src="moment.user.avatar"></span>
         <span class="author-name">{{moment.user.name}}</span>
@@ -115,8 +118,8 @@
   }
 
   .moment-item {
-    padding: 30px 20px;
-    height: 230px;
+    padding: 30px 15px;
+    height: 290px;
   }
 
   .title {
@@ -150,7 +153,9 @@
   }
 
   .info, .author {
-    margin: 10px 5px;
+    display: block;
+    float: left;
+    margin: 8px 10px;
   }
 
   .info span {
@@ -181,6 +186,16 @@
   .btn-load {
     background-color: #e8f8f7;
     border: #e8f8f7;
+  }
+
+  div.img {
+    /*float: left;*/
+    display: block;
+    margin-top: 5px;
+  }
+
+  div.img img {
+    margin-right: 10px;
   }
 
   @media screen and (max-width: 415px) {
