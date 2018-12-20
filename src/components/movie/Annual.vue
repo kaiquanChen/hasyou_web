@@ -1,7 +1,13 @@
 <template>
     <div class="row annual">
       <h1 id="annual-title">{{year}}年度电影榜单</h1>
-      <div class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}"  v-for="item in body">
+      <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-submenu index="1">
+          <template slot="title">目录</template>
+          <el-menu-item :index="getAnchor(item.id)" :key="item.id" v-for="(item, index) in body">{{item.payload.title}}</el-menu-item>
+        </el-submenu>
+      </el-menu>
+      <div :id="item.id" class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}" v-for="item in body">
         <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
           <div class="col-xs-12 right">
             <div class="title">
@@ -27,7 +33,10 @@
         <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
           <div class="col-xs-12 col-lg-4 left">
           </div>
-          <div class="col-lg-4"></div>
+          <div class="col-lg-4">
+            <!--<div class="annual-comment" v-show="up"></div>-->
+            <!--<span class="trigger-comment" @click="showComment()">共0条讨论</span>-->
+          </div>
           <div class="col-xs-12 col-lg-4 right">
             <div class="title">
               <span>{{item.payload.title}}</span>
@@ -55,7 +64,8 @@
           },
           body:[],
           web: true,
-          year: ""
+          year: "",
+          up: false
         }
       },
       methods: {
@@ -86,6 +96,15 @@
         },
         checkMedia() {
           return window.matchMedia('(max-width:415px)').matches;
+        },
+        handleSelect(index) {
+          window.location.href = "#" + index;
+        },
+        showComment() {
+          this.up = !this.up;
+        },
+        getAnchor(id) {
+          return id + "";
         }
       },
       created() {
@@ -156,6 +175,28 @@
     /*opacity:0.5;*/
     /*-moz-opacity:0.5;*/
     /*-khtml-opacity: 0.5;*/
+  }
+
+  div.annual-comment {
+    float: left;
+    z-index: 1000;
+    position: relative;
+    background-color: white;
+    height: 200px;
+    width: 350px;
+    padding: 20px;
+    bottom: 30px;
+    color: black;
+    filter:alpha(opacity:80);
+    opacity:0.8;
+    -moz-opacity:0.8;
+    -khtml-opacity: 0.8;
+  }
+
+  span.trigger-comment {
+    color: white;
+    position: absolute;
+    top: 180px;
   }
 
   div.title {

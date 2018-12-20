@@ -1,13 +1,8 @@
 <template>
-  <!-- 制作一个框架包裹slider -->
-  <div style="width:70%;margin:20px auto;height:400px">
-    <!-- 配置slider组件 -->
-    <slider ref="slider" :options="options" @slide='slide' @tap='onTap' @init='onInit'>
-      <!-- 直接使用slideritem slot -->
-      <slideritem v-for="(item,index) in someList" :key="index" :style="item.style">{{item.html}}</slideritem>
-      <!-- 设置loading,可自定义 -->
-      <div slot="loading">loading...</div>
-    </slider>
+  <div class="parent">
+    <div class="son-1">
+
+    </div>
   </div>
 </template>
 <script>
@@ -76,3 +71,21 @@
     }
   }
 </script>
+
+<style scoped>
+  .parent {
+    margin: 100px;
+    background-color: black;
+    width: 200px;
+    height: 200px;
+  }
+
+  .son-1 {
+    position: relative;
+    background-color: yellow;
+    width: 50px;
+    height: 100px;
+    left: 20px;
+    top: 30px;
+  }
+</style>

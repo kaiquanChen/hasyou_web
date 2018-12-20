@@ -1,7 +1,13 @@
 <template>
     <div class="row annual">
       <h1 id="annual-title">{{year}}年度图书榜单</h1>
-      <div class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat'}"  v-for="item in body">
+      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-submenu index="1">
+          <template slot="title">目录</template>
+          <el-menu-item :index="item.id" :key="item.id" v-for="(item, index) in body">{{item.payload.title}}</el-menu-item>
+        </el-submenu>
+      </el-menu>
+      <div :id="item.id" class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat'}"  v-for="item in body">
         <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
           <div class="col-xs-12 right">
             <div class="title">
@@ -25,9 +31,10 @@
           </el-card>
         </div>
         <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
-          <div class="col-xs-12 col-lg-4 left">
+          <div class="col-xs-12 col-lg-4 left"></div>
+          <div class="col-lg-4">
+
           </div>
-          <div class="col-lg-4"></div>
           <div class="col-xs-12 col-lg-4 right">
             <div class="title">
               <span>{{item.payload.title}}</span>
@@ -86,6 +93,9 @@
         },
         checkMedia() {
           return window.matchMedia('(max-width:415px)').matches;
+        },
+        handleSelect(index) {
+          window.location.href = "#" + index;
         }
       },
       created() {
