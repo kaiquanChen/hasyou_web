@@ -7,53 +7,45 @@
           <el-menu-item :index="getAnchor(item.id)" :key="item.id" v-for="(item, index) in body">{{item.payload.title}}</el-menu-item>
         </el-submenu>
       </el-menu>
-      <div class="row">
-        <div :id="item.id"
-             class="col-xs-12 col-lg-12 annual-item"
-             :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}"
-             v-for="item in body">
-          <div class="row">
-            <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
-              <div class="col-xs-12 right">
-                <div class="title">
-                  <span>{{item.payload.title}}</span>
-                </div>
-                <div class="desc">
-                  <span>{{item.payload.description}}</span>
-                </div>
-              </div>
+      <div :id="item.id"
+           class="col-xs-12 col-lg-12 annual-item"
+           :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}"
+           v-for="item in body">
+        <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
+          <div class="col-xs-12 right">
+            <div class="title">
+              <span>{{item.payload.title}}</span>
+            </div>
+            <div class="desc">
+              <span>{{item.payload.description}}</span>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xs-6 col-lg-2 annual-movie" v-if="item.subjects" v-for="(movie, index) in item.subjects">
-              <el-card class="movie-card" :body-style="{ padding: '0px' }" v-if="movie">
-                <a target="_blank" :href="getMovieDetail(movie.id)"><img :src="movie.image_url" class="image"></a>
-                <div class="info">
-                  <span class="movie-link"><router-link :to="getMovieDetail(movie.id)">{{ movie.title }}</router-link></span>
-                  <div class="bottom clearfix">
-                    <time class="star">{{ movie.average }}</time>
-                    <span class="rank">Top.{{index + 1}}</span>
-                  </div>
-                </div>
-              </el-card>
+        </div>
+        <div class="col-xs-6 col-lg-2 annual-movie" v-if="item.subjects" v-for="(movie, index) in item.subjects">
+          <el-card class="movie-card" :body-style="{ padding: '0px' }" v-if="movie">
+            <a target="_blank" :href="getMovieDetail(movie.id)"><img :src="movie.image_url" class="image"></a>
+            <div class="info">
+              <span class="movie-link"><router-link :to="getMovieDetail(movie.id)">{{ movie.title }}</router-link></span>
+              <div class="bottom clearfix">
+                <time class="star">{{ movie.average }}</time>
+                <span class="rank">Top.{{index + 1}}</span>
+              </div>
             </div>
+          </el-card>
+        </div>
+        <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
+          <div class="col-xs-12 col-lg-4 left">
           </div>
-          <div class="row">
-            <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
-              <div class="col-xs-12 col-lg-4 left">
-              </div>
-              <div class="col-lg-4">
-                <!--<div class="annual-comment" v-show="up"></div>-->
-                <!--<div class="trigger-comment" @click="showComment()">共0条讨论</div>-->
-              </div>
-              <div class="col-xs-12 col-lg-4 right">
-                <div class="title">
-                  <span>{{item.payload.title}}</span>
-                </div>
-                <div class="desc">
-                  <span>{{item.payload.description}}</span>
-                </div>
-              </div>
+          <div class="col-lg-4">
+            <!--<div class="annual-comment" v-show="up"></div>-->
+            <!--<div class="trigger-comment" @click="showComment()">共0条讨论</div>-->
+          </div>
+          <div class="col-xs-12 col-lg-4 right">
+            <div class="title">
+              <span>{{item.payload.title}}</span>
+            </div>
+            <div class="desc">
+              <span>{{item.payload.description}}</span>
             </div>
           </div>
         </div>
