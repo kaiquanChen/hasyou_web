@@ -12,6 +12,7 @@
           <el-menu-item index="3"><router-link to="/movie/" target="_blank">电视剧</router-link></el-menu-item>
           <el-submenu index="2">
             <template slot="title">年度影视榜单</template>
+            <el-menu-item index="1"><router-link to="/movie/annual/2018" target="_blank">2018年度榜单</router-link></el-menu-item>
             <el-menu-item index="1"><router-link to="/movie/annual/2017" target="_blank">2017年度榜单</router-link></el-menu-item>
             <el-menu-item index="2"><router-link to="/movie/annual/2016" target="_blank">2016年度榜单</router-link></el-menu-item>
             <el-menu-item index="3"><router-link to="/movie/annual/2015" target="_blank">2015年度榜单</router-link></el-menu-item>
