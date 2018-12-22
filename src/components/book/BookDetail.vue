@@ -106,9 +106,10 @@
         <div class="col-lg-12 col-xs-12 book-label" id="book-comment">
           <h4 style="color: green">短评  · · · · · ·<span>(共{{data.comments_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-comment" v-for="item in comments.body" :key="item.id">
-            <!--<span style="float: left;margin-right: 10px;"><img alt="loading..." style="width: 24px" :src="item.createor_href"></span>-->
-            <a style="float: left;" target="_blank" href="#">{{item.creator_name}}&emsp;</a>
-            <el-rate style="float: left" v-model="data.stars / 2" disabled></el-rate>&emsp;
+            <span style="float: left;margin-right: 10px;" v-if="item.user"><img style="width: 24px" :src="item.user.avatar"></span>
+            <a style="float: left;" target="_blank" :href="gotoAuthor(item.user.id)" v-if="item.user">{{item.user.name}}&emsp;</a>
+            <a style="float: left;" href="#" v-else>[已注销]&emsp;</a>
+            <el-rate style="float: left" v-model="data.stars" disabled></el-rate>&emsp;
             <span style="float: left;color: #999">&emsp;{{item.create_time}}</span>
             <a><span class="badge">{{item.votes}}赞</span></a>
             <p class="comment-sumary">{{item.content}}</p>
@@ -187,6 +188,9 @@
       goAnchor(query) {
         var anchor = this.$el.querySelector(query)
         document.documentElement.scrollTop = anchor.offsetTop
+      },
+      gotoAuthor(id) {
+        return "https://www.douban.com/people/" + id;
       },
       updateBook() {
         let book_id = this.$route.params.id;
