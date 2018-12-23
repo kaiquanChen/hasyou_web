@@ -3,7 +3,6 @@
     <div class="row">
       <div class="col-xs-12 col-lg-12 movie-nav">
         <el-menu
-          :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
           text-color="#27a"
@@ -39,7 +38,7 @@
             </div>
             <div class="book-info">
               <span class="book-info-title"><router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span>
-              <span class="book-info-author" >{{item.authors[0]}}</span>
+              <span class="book-info-author" v-if="item.authors !== undefined">{{item.authors[0]}}</span>
             </div>
             <br/>
           </div>
@@ -74,8 +73,8 @@
             </div>
             <div class="book-info">
               <span class="book-info-title"><router-link :to="getBookDetail(item.id)" append>{{item.name}}</router-link></span>
-              <span class="book-info-author" v-if="item.authors.length > 0">{{item.authors[0]}}</span>
-              <span class="book-info-author" v-if="item.authors.length === 0">&nbsp;</span>
+              <span class="book-info-author" v-if="item.authors !== undefined && item.authors.length > 0">{{item.authors[0]}}</span>
+              <span class="book-info-author" v-if="item.authors !== undefined && item.authors.length === 0">&nbsp;</span>
             </div>
             <br/>
           </div>
@@ -196,7 +195,10 @@
           }).then((data) => {
             this.book_top250 = data.body.data.body;
           });
-        }
+        },
+        handleSelect() {
+
+        },
       },
       created() {
         let count = 10;
