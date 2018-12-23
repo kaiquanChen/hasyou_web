@@ -12,12 +12,17 @@
            :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}"
            v-for="item in body">
         <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
-          <div class="col-xs-12 right">
+          <div class="col-xs-12 right" v-if="item.kind_str === 'top10'">
             <div class="title">
               <span>{{item.payload.title}}</span>
             </div>
             <div class="desc">
               <span>{{item.payload.description}}</span>
+            </div>
+          </div>
+          <div class="col-xs-12 right" v-else-if="item.kind_str === 'dialogue'">
+            <div class="title">
+              <span>{{item.payload.text}}</span>
             </div>
           </div>
         </div>
@@ -50,6 +55,9 @@
           </div>
         </div>
       </div>
+      <!--<div class="col-lg-12 col-xs-12" id="more" @click="load_flag && loadMore()">-->
+        <!--<el-button class="btn-load" :loading="loading">{{more_message}}</el-button>-->
+      <!--</div>-->
     </div>
 </template>
 
@@ -68,7 +76,8 @@
           body:[],
           web: true,
           year: "",
-          up: false
+          up: false,
+          more_message: "点击加载更多",
         }
       },
       methods: {
@@ -151,6 +160,7 @@
   }
 
   div.annual-item {
+    height: 834px;
     margin-top: 50px;
     border-radius: 15px;
   }

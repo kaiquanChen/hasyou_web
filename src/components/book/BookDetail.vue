@@ -85,7 +85,12 @@
           <h4 style="color: green">书评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-review" v-for="item in reviews.body" :key="item.id">
             <div>
-              <span style="float: left"><a target="_blank" :href="gotoReview(item.id)">{{item.title}}</a>&nbsp;&nbsp;</span>{{item.published}}
+              <span style="float: left;margin-right: 15px"><img :src="item.user.avatar"/></span>
+              <a style="float: left" :href="gotoAuthor(item.user.id)" target="_blank" v-if="item.user">{{item.user.name}}&emsp;</a>
+              <span style="float: left;color: gray" v-else>[已注销]&emsp;</span>
+              <el-rate style="float: left" v-model="data.stars" disabled></el-rate>
+              <span style="float: left;color: #999">&emsp;{{item.published}}</span><br>
+              <span style="float: left;margin: 10px 0;"><a target="_blank" :href="gotoReview(item.id)">{{item.title}}</a>&nbsp;&nbsp;</span>
               <span class="badge">{{item.votes}}赞</span>
             </div>
             <p>{{item.summary}}</p>
