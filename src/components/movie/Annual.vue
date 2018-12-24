@@ -160,7 +160,7 @@
   }
 
   div.annual-item {
-    height: 834px;
+    /*height: 834px;*/
     margin-top: 50px;
     border-radius: 15px;
   }
