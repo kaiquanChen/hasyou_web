@@ -91,10 +91,11 @@
           <div class="col-lg-12 col-xs-12 list-group-item movie-review" v-for="item in reviews.body" :key="item.id">
             <div>
               <!--<b>(共{{item.comments}}人评价)</b>&nbsp;&glnbsp;&nbsp;-->
-              <span style="float: left;margin-right: 15px"><img :src="item.author.avatar"/></span>
+              <span style="float: left;margin-right: 15px" v-if="item.author"><img :src="item.author.avatar"/></span>
+              <span style="float: left;margin-right: 10px;" v-else><img style="width: 48px;" src="/static/image/user_anon.jpeg"/></span>
               <a style="float: left" :href="gotoAuthor(item.author.id)" target="_blank" v-if="item.author">{{item.author.name}}&emsp;</a>
               <span style="float: left;color: gray" v-else>[已注销]&emsp;</span>
-              <el-rate style="float: left" v-model="data.average / 2" disabled></el-rate>
+              <el-rate style="float: left" v-model="item.stars" disabled></el-rate>
               <span style="float: left;color: #999">&emsp;{{item.created_at}}</span><br>
               <span style="float: left;margin: 10px 0;"><a target="_blank" :href="gotoReview(item.id)">{{item.title}}</a>&nbsp;&nbsp;</span>
               <span class="badge" v-if="item.useful_count">{{item.useful_count}}赞</span>
@@ -118,9 +119,10 @@
           <h4 style="color: green">{{data.title}}的短评  · · · · · ·<span>(共{{comments.page.total}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item movie-comment" v-for="item in comments.body" :key="item.id">
             <span style="float: left;margin-right: 10px;" v-if="item.author"><img style="width: 24px" :src="item.author.avatar"></span>
+            <span style="float: left;margin-right: 10px;" v-else><img style="width: 24px" src="/static/image/user_anon.jpeg"/></span>
             <a style="float: left;" target="_blank" :href="gotoAuthor(item.author.id)" v-if="item.author">{{item.author.name}}&emsp;</a>
             <a style="float: left;" href="#" v-else>[已注销]&emsp;</a>
-            <el-rate style="float: left" v-model="data.average / 2" disabled></el-rate>&emsp;
+            <el-rate style="float: left" v-model="item.stars" disabled></el-rate>&emsp;
             <span style="float: left;color: #999">&emsp;{{item.created_at}}</span>
             <a><span class="badge">{{item.useful_count}}赞</span></a>
             <p class="comment-sumary">{{item.content}}</p>
