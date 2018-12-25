@@ -12,9 +12,13 @@
         <img style="width: 64px;height: 64px;" :src="image" v-for="image in moment.image" />
       </div>
       <div style="width: 64px;height: 64px;" v-else></div>
-      <div class="author">
-        <span><img style="width: 24px;" :src="moment.user.avatar"></span>
+      <div class="author" v-if="moment.user">
+        <span ><img style="width: 24px;" :src="moment.user.avatar"></span>
         <span class="author-name">{{moment.user.name}}</span>
+      </div>
+      <div style="width: 64px;height: 64px;" v-else>
+        <span ><img style="width: 24px;" src="/static/image/user_anon.jpeg"></span>
+        <span style="color: gray;" class="author-name">[已注销]</span>
       </div>
       <div class="info">
         <span>{{moment.publish_time}}发布</span>
