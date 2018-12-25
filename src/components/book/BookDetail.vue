@@ -89,7 +89,7 @@
               <span style="float: left;margin-right: 15px" v-else><img style="width: 24px;" src="/static/image/user_anon.jpeg"/></span>
               <a style="float: left" :href="gotoAuthor(item.user.id)" target="_blank" v-if="item.user">{{item.user.name}}&nbsp;</a>
               <span style="float: left;color: gray" v-else>[已注销]&nbsp;</span>
-              <el-rate style="float: left" v-model="data.stars" disabled></el-rate>
+              <el-rate style="float: left" v-model="item.stars" disabled></el-rate>
               <span style="float: left;color: #999">&emsp;{{item.published}}</span>
               <span class="badge">{{item.votes}}赞</span><br><br>
               <span style="float: left;margin: 0 0 10px 0;"><a target="_blank" :href="gotoReview(item.id)">{{item.title}}</a>&nbsp;&nbsp;</span>
@@ -112,12 +112,15 @@
         <div class="col-lg-12 col-xs-12 book-label" id="book-comment">
           <h4 style="color: green">短评  · · · · · ·<span>(共{{data.comments_count}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item book-comment" v-for="item in comments.body" :key="item.id">
-            <span style="float: left;margin-right: 10px;" v-if="item.user"><img style="width: 24px" :src="item.user.avatar"></span>
-            <a style="float: left;" target="_blank" :href="gotoAuthor(item.user.id)" v-if="item.user">{{item.user.name}}&emsp;</a>
-            <a style="float: left;" href="#" v-else>[已注销]&emsp;</a>
-            <el-rate style="float: left" v-model="data.stars" disabled></el-rate>&emsp;
-            <span style="float: left;color: #999">&emsp;{{item.create_time}}</span>
-            <a><span class="badge">{{item.votes}}赞</span></a>
+            <div class="comment-info">
+              <span style="float: left;margin-right: 10px;" v-if="item.user"><img style="width: 24px" :src="item.user.avatar"></span>
+              <span style="float: left;margin-right: 10px;" v-else><img style="width: 24px" src="/static/image/user_anon.jpeg"></span>
+              <a style="float: left;" target="_blank" :href="gotoAuthor(item.user.id)" v-if="item.user">{{item.user.name}}&emsp;</a>
+              <a style="float: left;" href="#" v-else>[已注销]&emsp;</a>
+              <el-rate style="float: left" v-model="item.stars" disabled></el-rate>&emsp;
+              <span style="float: left;color: #999">&emsp;{{item.create_time}}</span>
+              <a><span class="badge">{{item.votes}}赞</span></a>
+            </div>
             <p class="comment-sumary">{{item.content}}</p>
           </div>
           <div class="col-lg-12 col-xs-12">
@@ -252,7 +255,7 @@
         this.$http.get(url, {
           params:{
             p: this.reviews.page.page,
-            count: this.reviews.page.cout
+            count: this.reviews.page.count
           },
           headers: {
             "bid": global_.FUNC.getBid()
@@ -380,10 +383,6 @@
     margin: 5px 0 5px 0;
   }
 
-  .comment-rate {
-    display: inline-block;
-  }
-
   .book-review {
     color: #3377aa;
   }
@@ -424,6 +423,10 @@
   .btn-update {
     font-size: 12px;
     margin-top: 10px;
+  }
+
+  .comment-info {
+    margin: 5px 0 10px 0;
   }
 
   @media screen and (max-width: 415px) {
