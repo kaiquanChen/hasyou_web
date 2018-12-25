@@ -16,7 +16,7 @@
         <span ><img style="width: 24px;" :src="moment.user.avatar"></span>
         <span class="author-name">{{moment.user.name}}</span>
       </div>
-      <div style="width: 64px;height: 64px;" v-else>
+      <div class="author"  v-else>
         <span ><img style="width: 24px;" src="/static/image/user_anon.jpeg"></span>
         <span style="color: gray;" class="author-name">[已注销]</span>
       </div>

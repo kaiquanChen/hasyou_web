@@ -10,8 +10,8 @@
           <div class="col-lg-10 col-xs-9 top250-book-info">
             <router-link :to="getBookDetail(item.id)">{{item.name}}</router-link><br>
             <span>{{item.origin_work_name}}</span><br><br>
-            <span>{{item.authors[0]}}</span>&nbsp;/&nbsp;
-            <span v-if="item.translators[0]">{{item.translators[0]}}&nbsp;/&nbsp;</span>
+            <span v-if="item.authors && item.authors.length > 0">{{item.authors[0]}}</span>&nbsp;/&nbsp;
+            <span v-if="item.translators[0] && item.translators.length > 0">{{item.translators[0]}}&nbsp;/&nbsp;</span>
             <span v-if="item.publisher">{{item.publisher}}&nbsp;/&nbsp;</span>
             <span v-if="item.publish_time">{{item.publish_time}}&nbsp;/&nbsp;</span>
             <span v-if="item.price">{{item.price}}</span><br/><br/>
