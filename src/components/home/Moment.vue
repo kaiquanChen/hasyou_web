@@ -21,7 +21,7 @@
         <span style="color: gray;" class="author-name">[已注销]</span>
       </div>
       <div class="info">
-        <span>{{moment.publish_time}}发布</span>
+        <span>{{moment.publish_time}}</span>
         <span>{{moment.liked_count}}赞</span>
         <span>{{moment.recs_count}}回复</span>
       </div>
