@@ -6,9 +6,9 @@
         <h2>搜索<span class="keywords">{{keywords}}</span>共<span class="keywords">{{page.total}}</span>个结果</h2>
       </div>
       <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in items">
-        <div class="col-lg-10 col-xs-10 info">
-          <span class="title" v-if="item.type === 'book'">[图书]&nbsp;<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span>
-          <span class="title" v-if="item.type === 'movie'">[电影]&nbsp;<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span><br>
+        <div class="col-lg-11 col-xs-11 info">
+          <span style="float: left" class="title" v-if="item.type === 'book'">[图书]&nbsp;<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span>
+          <span style="float: left" class="title" v-if="item.type === 'movie'">[电影]&nbsp;<router-link target="_blank" tag="a" :to="getDetail(item)">{{item.name}}</router-link></span>
           <el-rate
             class="book-list-rate"
             v-model="item.stars / 2"
@@ -16,7 +16,7 @@
             show-score
             text-color="#ff9900"
             :score-template="item.stars">
-          </el-rate>
+          </el-rate> <br>
           <span v-if="item.origin_title">原名: {{item.origin_title}} /</span>
           <span v-if="item.type === 'book' && item.vars.authors && index < 1" v-for="(author, index) in item.vars.authors">作者: {{author}} / </span>
           <span v-if="item.type === 'book' && item.vars.translators && index < 1" v-for="(translator, index) in item.vars.translators">译者: {{translator}} / </span>
@@ -24,7 +24,7 @@
           <span v-if="item.type === 'movie' && item.vars.countries && index < 1" v-for="(country, index) in item.vars.countries">国家: {{country}} / </span>
           <span class="intro text-info">{{item.intro}}</span>
         </div>
-        <div class="col-lg-2 col-xs-2 img">
+        <div class="col-lg-1 col-xs-1 img">
           <a target="_blank" :href="item.image_url"><img :src="item.image_url" :alt="item.name" /></a>
         </div>
       </div>
@@ -56,7 +56,7 @@
           page: {
             total: 0,
             p: 1,
-            count: 5
+            count: 10
           },
           pager_count: 7
         }
@@ -106,7 +106,7 @@
   }
 
   div.img img {
-    width: 100%;
+    width: 45px;
   }
 
   span.intro {
@@ -116,6 +116,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     color: #999;
+    margin: 5px 0;
   }
 
   div.info {
@@ -127,7 +128,8 @@
   }
 
   .book-list-rate {
-    margin: 5px 0;
+    margin-left: 15px;
+    float: left;
   }
 
   div#pagination {
