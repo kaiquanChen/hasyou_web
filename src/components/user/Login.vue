@@ -17,9 +17,15 @@
           slot="prefix">
         </i>
       </el-input>
-      <captcha class="captcha" v-on:confirmSuccess="getCaptchaResult"></captcha>
+      <!--<kaptcha class="kaptcha" v-on:confirmSuccess="getkaptchaResult"></kaptcha>-->
+      <el-input placeholder="请输入验证码"
+                class="input-with-select"
+                v-model="kaptcha">
+        <template slot="prepend"><img :src="src" @click="refreshCode()"></template>
+      </el-input>
+      <router-link id="login-error" v-if="error_message" to="">{{error_message}}</router-link>
       <router-link class="forget-password" to="">忘记密码?</router-link><br/>
-      <el-button class="btn-login btn" slot="append" type="primary" @click="login()" >登录</el-button>
+      <el-button class="btn-login btn" slot="append" type="primary" @click="login()">登录</el-button>
       <el-button class="btn-reset btn" slot="append" type="primary" @click="goto()">注册</el-button>
     </div>
     <div class="col-lg-4"></div>
@@ -27,19 +33,24 @@
 </template>
 
 <script>
-  import Captcha from '@/components/captcha/Captcha'
+  // import kaptcha from '@/components/kaptcha/kaptcha'
   import global_ from "../config/Global"
-  const captcha_url = global_.URLS.CAPTCHA_URL;
+  import Bus from "../../js/bus"
+
+  const kaptcha_url = global_.URLS.KAPTCHA_URL;
+  const login_url = global_.URLS.LOGIN_URL;
     export default {
       name: "",
-      components: {
-        captcha: Captcha
-      },
+      // components: {
+      //   kaptcha: kaptcha
+      // },
       data() {
         return {
           account:"",
           password:"",
-          confirmSuccess: false
+          kaptcha:"",
+          error_message:"",
+          src:kaptcha_url
         }
       },
       methods: {
@@ -47,20 +58,65 @@
           this.$router.push("/register");
         },
         refreshCode() {
-          this.src = captcha_url + "?t=" + Date.now();
+          let signature = global_.FUNC.getUuid();
+          this.src = kaptcha_url + "?t=" + signature;
+          sessionStorage.setItem("signature", signature);
         },
         login() {
-          if (!this.confirmSuccess) {
-            this.$message.error("验证码错误!");
+          this.error_message = "";
+          if (!this.validateParam()) {
             return;
           }
+          this.$http.post(login_url, {
+            body: {
+              account: this.account,
+              password: this.password,
+              signature: sessionStorage.getItem("signature"),
+              kaptcha: this.kaptcha
+            }
+          }, {
+            headers: {
+              "bid":global_.FUNC.getBid()
+            }
+          }).then(data => {
+            let res = data.body;
+            if (res.code === 5003) {
+              this.error_message = "验证码错误!";
+              return;
+            }
 
-          this.$http.post().then(data => {
+            if (res.code === 5006) {
+              this.error_message = "账号或密码错误!";
+              return;
+            }
 
+            if (res.code === 5001) {
+              this.$router.push({path:"/register"});
+              return;
+            }
+
+            let token = res.data.access_token;
+            sessionStorage.setItem("access_token", token);
+            Bus.$emit('login-status', token);
+            this.$router.push({path:"/"});
           });
         },
-        getCaptchaResult(val) {
-          this.confirmSuccess = val;
+        validateParam() {
+          if (!this.account) {
+            this.error_message = "账号不能为空!";
+            return false;
+          }
+
+          if (!this.password) {
+            this.error_message = "密码不能为空!";
+            return false;
+          }
+
+          if (!this.kaptcha) {
+            this.error_message = "验证码不能为空!";
+            return false;
+          }
+          return true;
         }
       },
       created() {
@@ -84,8 +140,8 @@
     float: right;
   }
 
-  .captcha {
-    margin-top: 10px;
+  #login-error {
+    color: red;
   }
 
   .input-with-select {

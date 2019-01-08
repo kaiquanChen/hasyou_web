@@ -8,7 +8,7 @@
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'https://backend.hasyou.cn/'
 
-  const COMMON_URL = FLY_URL
+  const COMMON_URL = TEST_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -69,8 +69,11 @@
   const GLOBAL_SEARCH_URL = COMMON_URL + "search/";
 
   // user
-  const CAPTCHA_URL = COMMON_URL + "user/captcha.jpg";
+  const KAPTCHA_URL = COMMON_URL + "user/kaptcha";
+  const LOGIN_URL = COMMON_URL + "user/login";
+  const LOGOUT_URL = COMMON_URL + "user/logout";
   const REGISTER_URL = COMMON_URL + "user/register";
+  const USER_INFO_URL = COMMON_URL + "user/info";
 
   // global variable
   let GLOBAL_VARIABLE = {};
@@ -87,6 +90,24 @@
       localStorage.setItem("bid", bid);
     }
     return bid;
+  }
+
+  let getToken = function () {
+    return sessionStorage.getItem("access_token");
+  }
+
+  let setToken = function (token) {
+    sessionStorage.setItem("access_token", token);
+  }
+
+  let setUserInfo = function (user_info) {
+    let user_json = JSON.stringify(user_info);
+    sessionStorage.setItem("user_info", user_info);
+  }
+
+  let getUserInfo = function () {
+    let user_json = sessionStorage.getItem("user_info");
+    return JSON.parse(user_json);
   }
 
   let getValue = function (key) {
@@ -182,8 +203,11 @@
     GROUP,
 
     /* user */
-    CAPTCHA_URL,
+    KAPTCHA_URL,
+    LOGIN_URL,
     REGISTER_URL,
+    USER_INFO_URL,
+    LOGOUT_URL,
 
     /* global search*/
     GLOBAL_SEARCH_URL,
@@ -195,7 +219,11 @@
     getUuid,
     getBid,
     isReachBottom,
-    request
+    request,
+    getToken,
+    setToken,
+    getUserInfo,
+    setUserInfo
   }
 
   export default {

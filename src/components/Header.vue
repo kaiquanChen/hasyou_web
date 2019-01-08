@@ -21,7 +21,11 @@
             <el-button slot="append" icon="el-icon-search" @click="submitSearch()" ></el-button>
           </el-input>
         </div>
-        <div class="col-lg-4 col-xs-4 right">
+        <div class="col-lg-4 col-xs-4 right" v-if="user">
+          <el-button style="float: right" @click="logout()">退出</el-button>
+          <router-link class="navbar-brand" :to="gotoPersonalCenter(user.id)">{{user.nickname}}</router-link>
+        </div>
+        <div class="col-lg-4 col-xs-4 right" v-else>
           <router-link class="navbar-brand" to="/register">注册</router-link>
           <router-link class="navbar-brand" to="/login">登录</router-link>
         </div>
@@ -65,6 +69,8 @@
 
   let base_group_url = global_.URLS.GROUP + "subjects";
   let global_search_url = global_.URLS.GLOBAL_SEARCH_URL;
+  let user_info_url = global_.URLS.USER_INFO_URL;
+  let logout_url = global_.URLS.LOGOUT_URL;
 
   export default {
     components: {
@@ -80,6 +86,7 @@
           p: 1,
           count: 5
         },
+        user:null,
         music_list:[
           {
             title: '永夜',
@@ -97,6 +104,11 @@
       }
     },
     methods: {
+      getLoginStatus() {
+        Bus.$on("login-status", response => {
+          this.getUserInfo();
+        });
+      },
       showResult() {
         this.globalSearch();
         this.has_result = true;
@@ -172,11 +184,45 @@
       },
       checkMedia() {
         return window.matchMedia('(max-width:415px)').matches;
+      },
+      getUserInfo() {
+        let token = global_.FUNC.getToken();
+        if (token) {
+          this.$http.get(user_info_url, {
+            headers:{
+              bid: global_.FUNC.getBid(),
+              "X-HASYOU-TOKEN": token
+            }
+          }).then((data) => {
+            let res = data.body;
+            if (res.code === 200) {
+              this.user = res.data;
+              global_.FUNC.setUserInfo(this.user);
+            }
+          });
+        }
+      },
+      gotoPersonalCenter(id) {
+        return "/user/" + id;
+      },
+      logout() {
+        this.$http.get(logout_url, {
+          headers:{
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN": sessionStorage.getItem("access_token")
+          }
+        }).then((data) => {
+          sessionStorage.removeItem("access_token");
+          this.user = null;
+          this.$router.push({path:"/"});
+        });
       }
     },
     created() {
       this.initKeywords();
       this.getMessage();
+      this.getUserInfo();
+      this.getLoginStatus();
     }
   }
 </script>

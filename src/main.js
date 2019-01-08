@@ -9,6 +9,9 @@ import '../static/css/forum.css'
 import {routes} from './router/index.js'
 // 引用API文件
 import api from './api/index.js'
+import axios from 'axios';
+
+axios.defaults.withCredentials=true;
 // 将API方法绑定到全局
 Vue.prototype.$api = api
 
