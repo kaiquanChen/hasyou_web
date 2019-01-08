@@ -46,6 +46,10 @@ export default {
 </script>
 
 <style scoped>
+  #app_body {
+    margin-top: 50px;
+  }
+
   @media screen and (max-width: 415px) {
     #app_body {
       padding: 0;
