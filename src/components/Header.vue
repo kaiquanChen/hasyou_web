@@ -1,64 +1,65 @@
 <template>
-  <header class="header">
-    <div class="row">
-      <nav class="navbar navbar-light bg-light justify-content-between">
-        <div class="col-lg-4 col-xs-8 left">
-          <router-link class="navbar-brand" to="/">
-            <img src="../../static/image/header.png" width="30" height="30" class="d-inline-block align-top img-rounded" alt="有你LOGO">
-          </router-link>
-          <router-link class="navbar-brand" to="/movie">电影</router-link>
-          <router-link class="navbar-brand" to="/book">书库</router-link>
-          <router-link class="navbar-brand" to="/read">阅读</router-link>
-          <router-link class="navbar-brand" to="/music">音乐</router-link>
-          <router-link class="navbar-brand" to="/event">同城</router-link>
-          <router-link class="navbar-brand" to="/forum">论坛</router-link>
-        </div>
-        <div class="col-lg-4 blank web-search">
-          <el-input placeholder="书籍、电影、音乐"
-                    v-model="keywords"
-                    @keyup.enter.native="submitSearch()"
-                    class="input-with-select">
-            <el-button slot="append" icon="el-icon-search" @click="submitSearch()" ></el-button>
-          </el-input>
-        </div>
-        <div class="col-lg-4 col-xs-4 right" v-if="user">
-          <el-button style="float: right" @click="logout()">退出</el-button>
-          <router-link class="navbar-brand" :to="gotoPersonalCenter(user.id)">{{user.nickname}}</router-link>
-        </div>
-        <div class="col-lg-4 col-xs-4 right" v-else>
-          <router-link class="navbar-brand" to="/register">注册</router-link>
-          <router-link class="navbar-brand" to="/login">登录</router-link>
-        </div>
-        <div class="col-lg-12 col-xs-12 header-bar">
-          <div class="col-lg-4 col-xs-12 search-div">
-            <el-input placeholder="书籍、电影、音乐"
-                      v-model="keywords"
-                      v-show="checkMedia()"
-                      @keyup.enter.native="submitSearch()"
-                      class="input-with-select">
-              <el-button slot="append" icon="el-icon-search" @click="submitSearch()" ></el-button>
-            </el-input>
-            <!--<div class="row result" v-show="has_result">-->
-            <!--<router-link class="result-item" v-for="item in items" :key="result.id" to="getDetail(result)" tag="div">-->
-            <!--<span v-if="item.name">{{item.name}}</span>-->
-            <!--<span v-else-if="item.title">{{item.title}}</span>-->
-            <!--</router-link>-->
-            <!--<div class="search-result-footer">-->
-            <!--<span class="pick-up" @click="pickUp()">收起</span>-->
-            <!--</div>-->
-            <!--</div>-->
+  <header class="site-header" id="top">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="row" style="margin: 0">
+          <div class="col-lg-4 music">
+            <!--<aplayer-->
+            <!--id="input-search"-->
+            <!--listFolded-->
+            <!--mini: true,-->
+            <!--:music="music_list[0]"-->
+            <!--:list="music_list">-->
+            <!--</aplayer>-->
           </div>
-          <div class="col-lg-4 col-xs-12 music">
-            <aplayer
-              id="input-search"
-              listFolded
-              :music="music_list[0]"
-              :list="music_list"></aplayer>
+          <div class="col-lg-6">
+            <div class="navbar-header">
+              <button type="button" @click="showNav()" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <i class="fa fa-bars"></i>
+              </button>
+              <div class="logo-wrapper">
+                <a class="navbar-brand" href="/">
+                  <p>W<em>ithyou</em></p>
+                </a>
+              </div>
+            </div>
+            <div class="collapse navbar-collapse" id="main-menu">
+              <ul class="nav navbar-nav navbar-right">
+                <li><span></span><a href="/" class="home">首页</a></li>
+                <li><span></span><a href="/book" class="home">读书</a></li>
+                <li><span></span><a href="/movie" class="about">影视</a></li>
+                <li><span></span><a href="/music" class="portfolio">音乐</a></li>
+                <li><span></span><a href="/forum" class="map">论坛</a></li>
+                <li><span></span><a href="/blog" class="contact">博客</a></li>
+              </ul>
+            </div>
           </div>
-          <div class="col-lg-4"></div>
+          <div id="mobile-home-nav" class="col-xs-12" v-show="mobile_nav_show">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/book" class="home">读书</a></li>
+              <li><a href="/movie" class="home">影视</a></li>
+              <li><a href="/music" class="home">音乐</a></li>
+              <li><a href="/forum" class="home">论坛</a></li>
+              <li><a href="/blog" class="home">博客</a></li>
+              <li><a :href="gotoPersonalCenter(user.id)" class="home" v-if="user">{{user.nickname}}</a></li>
+              <li><a href="#" class="home" v-if="user" @click="logout">退出</a></li>
+              <li><a href="/login" class="home" v-if="!user">登录</a></li>
+              <li><a href="/register" class="home" v-if="!user">注册</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2">
+            <div class="collapse navbar-collapse" id="main-menu2">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a :href="gotoPersonalCenter(user.id)" class="home" v-if="user">{{user.nickname}}</a></li>
+                <li><a href="#" class="home" v-if="user" @click="logout">退出</a></li>
+                <li><a href="/login" class="home" v-if="!user">登录</a></li>
+                <li><a href="/register" class="home" v-if="!user">注册</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   </header>
 </template>
 
@@ -78,6 +79,7 @@
     },
     data() {
       return {
+        mobile_nav_show: false,
         keywords: '',
         has_result: false,
         items:[],
@@ -104,6 +106,9 @@
       }
     },
     methods: {
+      showNav() {
+        this.mobile_nav_show = !this.mobile_nav_show;
+      },
       getLoginStatus() {
         Bus.$on("login-status", response => {
           this.getUserInfo();
@@ -120,20 +125,6 @@
       pickUp() {
         this.has_result = false;
       },
-      // getGroupList() {
-      //   this.$http.get(base_group_url, {
-      //     headers: {
-      //       "bid": global_.FUNC.getBid()
-      //     }
-      //   }).then((data) => {
-      //     if (data.status !== 200) {
-      //       console.log(data);
-      //       alert("数据获取失败!");
-      //       return;
-      //     }
-      //     this.data = data.body.data;
-      //   });
-      // },
       globalSearch() {
         this.$http.get(global_search_url, {
           params:{
@@ -239,9 +230,9 @@
     padding: 0;
   }
 
-  nav {
-    background-color: grey;
-  }
+  /*nav {*/
+    /*background-color: grey;*/
+  /*}*/
 
   nav a  {
     color: white;
@@ -365,5 +356,4 @@
     }
 
   }
-
 </style>

@@ -6,12 +6,12 @@
     </div>
 
     <!-- body -->
-    <div :class="checkMedia()" id="app_body">
+    <div :class="checkMedia()" id="app-body">
       <router-view></router-view>
     </div>
 
     <!-- footer -->
-    <div class="row" id="app_footer">
+    <div class="row" id="app-footer">
       <youni-footer></youni-footer>
     </div>
   </div>
@@ -22,7 +22,7 @@
   import Footer from '@/components/Footer'
   import Home from '@/components/home/Home'
 
-export default {
+  export default {
   name: 'app',
   components: {
     youniHeader: Header,
@@ -46,9 +46,16 @@ export default {
 </script>
 
 <style scoped>
+  #app-body {
+    margin-top: 60px;
+  }
   @media screen and (max-width: 415px) {
-    #app_body {
+    #app-body {
       padding: 0;
     }
+  }
+
+  #app-footer {
+    background-color: #e7e7e7;
   }
 </style>

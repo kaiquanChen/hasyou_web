@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer id="footer">
     <div class="row">
       <div class="col-xs-6 col-lg-6 left">
         <router-link tag="span" to="/note">留言板</router-link>
@@ -22,11 +22,10 @@ export default {
     margin: 10px 0 0 0;
     padding: 0;
     text-align: center;
-    background-color: grey;
   }
 
   .left span, .right span {
-    color: white;
+    color: #333;
     text-align: center;
     font-size: 18px;
   }
