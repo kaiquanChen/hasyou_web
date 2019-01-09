@@ -129,8 +129,7 @@ s<template>
               address: [
                 { required: false, message: '', trigger: 'blur' }
               ]
-            }
-          }
+            }}
         },
         methods: {
           fileUploadSuccess() {
