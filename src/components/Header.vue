@@ -23,28 +23,89 @@
                 </a>
               </div>
             </div>
+            <el-input v-show="!checkMedia()"
+                      style="float: left;width: 50%;margin: 5px 5px 5px 35px;"
+                      placeholder="图书、电影、音乐、博客"
+                      v-model="keywords"
+                      class="input-with-select"
+                      @keyup.enter.native="submitSearch()">
+              <el-select style="width: 100px" v-model="type" slot="prepend">
+                <el-option label="图书" value="BOOK"></el-option>
+                <el-option label="影视" value="VEDIO"></el-option>
+                <el-option label="音乐" value="MUSIC"></el-option>
+                <el-option label="博客" value="BLOG"></el-option>
+              </el-select>
+              <el-button slot="append" icon="el-icon-search" @click="submitSearch()"></el-button>
+            </el-input>
             <div class="collapse navbar-collapse" id="main-menu">
               <ul class="nav navbar-nav navbar-right">
-                <li><span></span><a href="/" class="home">首页</a></li>
-                <li><span></span><a href="/book" class="home">读书</a></li>
-                <li><span></span><a href="/movie" class="about">影视</a></li>
-                <li><span></span><a href="/music" class="portfolio">音乐</a></li>
-                <li><span></span><a href="/forum" class="map">论坛</a></li>
-                <li><span></span><a href="/blog" class="contact">博客</a></li>
+                <li><a href="/" class="home">首页</a></li>
+                <li><a href="/book" class="home">读书</a></li>
+                <li><a href="/movie" class="about">影视</a></li>
+                <li><a href="/music" class="portfolio">音乐</a></li>
+                <li><a href="/forum" class="map">论坛</a></li>
+                <li><a href="/blog" class="contact">博客</a></li>
               </ul>
             </div>
           </div>
           <div id="mobile-home-nav" class="col-xs-12" v-show="mobile_nav_show">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="/book" class="home">读书</a></li>
-              <li><a href="/movie" class="home">影视</a></li>
-              <li><a href="/music" class="home">音乐</a></li>
-              <li><a href="/forum" class="home">论坛</a></li>
-              <li><a href="/blog" class="home">博客</a></li>
-              <li><a :href="gotoPersonalCenter(user.id)" class="home" v-if="user">{{user.nickname}}</a></li>
+              <li>
+                <a href="/book" class="home">
+                  <img class="icon-header-phone" src="../assets/header/icon/header-book-icon.png">
+                  &emsp;读书
+                </a>
+              </li>
+              <li>
+                <a href="/movie" class="home"><img class="icon-header-phone" src="../assets/header/icon/header-movie-icon.png">
+                &emsp;影视</a>
+              </li>
+              <li>
+                <a href="/music" class="home"><img class="icon-header-phone" src="../assets/header/icon/header-music-icon.png">
+                &emsp;音乐</a>
+              </li>
+              <li>
+                <a href="/forum" class="home"><img class="icon-header-phone" src="../assets/header/icon/header-forum-icon.png">
+                  &emsp;论坛
+                </a>
+              </li>
+              <li>
+                <a href="/blog" class="home"><img class="icon-header-phone" src="../assets/header/icon/header-blog-icon.png">
+                  &emsp;博客
+                </a>
+              </li>
+              <li>
+                <a :href="gotoPersonalCenter(user.id)" class="home" v-if="user">
+                  <img class="icon-header-phone" src="../assets/header/icon/header-login-icon.png" />
+                  &emsp;{{user.nickname}}
+                </a>
+              </li>
               <li><a href="#" class="home" v-if="user" @click="logout">退出</a></li>
-              <li><a href="/login" class="home" v-if="!user">登录</a></li>
-              <li><a href="/register" class="home" v-if="!user">注册</a></li>
+              <li>
+                <a href="/login" class="home" v-if="!user">
+                  <img class="icon-header-phone" src="../assets/header/icon/header-login-icon.png" />
+                    &emsp;登录
+                </a>
+              </li>
+              <li><a href="/register" class="home" v-if="!user">
+                <img class="icon-header-phone" src="../assets/header/icon/header-login-icon.png" />
+                &emsp;注册</a></li>
+              <el-input
+                v-show="checkMedia()"
+                @keyup.enter.native="submitSearch()"
+                size="mini"
+                style="float: left;width: 100%;height: 50%;"
+                placeholder="图书、电影、音乐、博客"
+                v-model="keywords"
+                class="input-with-select">
+                <el-select style="width: 100px" v-model="type" slot="prepend">
+                  <el-option label="图书" value="BOOK"></el-option>
+                  <el-option label="影视" value="VEDIO"></el-option>
+                  <el-option label="音乐" value="MUSIC"></el-option>
+                  <el-option label="博客" value="BLOG"></el-option>
+                </el-select>
+                <el-button slot="append" icon="el-icon-search" @click="submitSearch()"></el-button>
+              </el-input>
             </ul>
           </div>
           <div class="col-lg-2">
@@ -79,6 +140,7 @@
     },
     data() {
       return {
+        type:"全部",
         mobile_nav_show: false,
         keywords: '',
         has_result: false,
@@ -125,12 +187,16 @@
       pickUp() {
         this.has_result = false;
       },
+      test() {
+        alert("test!");
+      },
       globalSearch() {
         this.$http.get(global_search_url, {
           params:{
             "keywords": this.keywords,
             "p": this.page.p,
-            "count": this.page.count
+            "count": this.page.count,
+            "type": this.type
           },
           headers:{
             "bid":global_.FUNC.getBid()
@@ -147,6 +213,10 @@
           Bus.$emit('search-on', res);
 
           sessionStorage.setItem("search_record", this.keywords);
+
+          if (this.checkMedia()) {
+            this.mobile_nav_show = false;
+          }
         })
       },
       initKeywords() {
@@ -292,6 +362,18 @@
     padding-top: 3px;
   }
 
+  .header-search {
+    cursor: pointer;
+  }
+
+  .icon-header-phone {
+    height: 20px;
+  }
+
+  #mobile-home-nav {
+    border-top: #7d7980 1px solid;
+  }
+
   @media screen and (max-width: 415px) {
     div.header-bar {
       background-color: #e9e9e2;
@@ -328,6 +410,10 @@
     div.result {
       width: 92%;
     }
+
+    ul li {
+      text-align: center;
+    }
   }
 
   /* 超小屏 */
@@ -356,4 +442,10 @@
     }
 
   }
+
+  /* new */
+  .el-select .el-input {
+    width: 130px;
+  }
+
 </style>

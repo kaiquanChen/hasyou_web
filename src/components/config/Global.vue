@@ -71,6 +71,7 @@
   // user
   const KAPTCHA_URL = COMMON_URL + "user/kaptcha";
   const LOGIN_URL = COMMON_URL + "user/login";
+  const VERIFY_ACCOUNT_URL = COMMON_URL + "user/verify/account";
   const LOGOUT_URL = COMMON_URL + "user/logout";
   const REGISTER_URL = COMMON_URL + "user/register";
   const USER_INFO_URL = COMMON_URL + "user/info";
@@ -205,6 +206,7 @@
     /* user */
     KAPTCHA_URL,
     LOGIN_URL,
+    VERIFY_ACCOUNT_URL,
     REGISTER_URL,
     USER_INFO_URL,
     LOGOUT_URL,

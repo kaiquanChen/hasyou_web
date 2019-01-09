@@ -45,9 +45,9 @@
 </template>
 
 <script>
-  import global_ from "./config/Global"
   import Bus from '../js/bus'
-    export default {
+
+  export default {
       name: "",
       data() {
         return {

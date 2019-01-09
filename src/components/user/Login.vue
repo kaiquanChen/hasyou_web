@@ -20,6 +20,7 @@
       <!--<kaptcha class="kaptcha" v-on:confirmSuccess="getkaptchaResult"></kaptcha>-->
       <el-input placeholder="请输入验证码"
                 class="input-with-select"
+                @keyup.enter.native="login()"
                 v-model="kaptcha">
         <template slot="prepend"><img :src="src" @click="refreshCode()"></template>
       </el-input>

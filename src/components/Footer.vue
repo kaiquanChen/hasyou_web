@@ -18,6 +18,9 @@ export default {
 </script>
 
 <style scoped>
+  #footer {
+    background-color: #e7e7e7;
+  }
   .row {
     margin: 10px 0 0 0;
     padding: 0;

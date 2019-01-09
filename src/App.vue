@@ -49,13 +49,10 @@
   #app-body {
     margin-top: 60px;
   }
+
   @media screen and (max-width: 415px) {
     #app-body {
       padding: 0;
     }
-  }
-
-  #app-footer {
-    background-color: #e7e7e7;
   }
 </style>

@@ -73,6 +73,7 @@
 
 <script>
   import global_ from "../config/Global"
+
   const post_url = global_.URLS.POST_URL;
   const node_url = global_.URLS.NODE_URL;
   export default {

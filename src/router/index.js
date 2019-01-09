@@ -27,6 +27,8 @@ import Register from '@/components/user/Register'
 import Login from '@/components/user/Login'
 import Album from '@/components/user/Album'
 import User from '@/components/user/User'
+// blog
+import Blog from '@/components/blog/Blog'
 
 import Test from '@/components/Test'
 
@@ -66,6 +68,8 @@ export const routes = [
   {path: '/login', component: Login},
   {path: '/album', component: Album},
   {path: '/user/:id', component: User},
+  /* blog */
+  {path: '/blog', component: Blog},
   /* test */
   {path: '/test', component: Test}
 ]
