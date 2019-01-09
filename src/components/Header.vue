@@ -100,7 +100,7 @@
                 class="input-with-select">
                 <el-select style="width: 100px" v-model="type" slot="prepend">
                   <el-option label="图书" value="BOOK"></el-option>
-                  <el-option label="影视" value="VEDIO"></el-option>
+                  <el-option label="影视" value="MOVIE"></el-option>
                   <el-option label="音乐" value="MUSIC"></el-option>
                   <el-option label="博客" value="BLOG"></el-option>
                 </el-select>
