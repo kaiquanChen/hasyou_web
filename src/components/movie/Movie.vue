@@ -1,9 +1,9 @@
 <template>
-  <div class="container" style="text-align: center">
-    <div class="row">
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
       <div class="col-xs-12 col-lg-12 movie-nav">
         <el-menu
-          :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
           text-color="#27a"
@@ -130,11 +130,13 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const MOVIE_URL = global_.URLS.DOUBAN_MOVIE;
   export default {
     name: "movie",
@@ -287,8 +289,8 @@
   }
 
   div.movie-img img {
-    width: 115px;
-    height: 172px;
+    width: 100px;
+    height: 162px;
   }
 
   div.new-movie {
@@ -318,6 +320,7 @@
 
   div.movie-info {
     margin-top: 5px;
+    font-size: 12px;
   }
 
   div.movie-info span {

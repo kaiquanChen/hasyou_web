@@ -1,6 +1,7 @@
 <template>
-  <div id="v2">
-    <div class="row">
+  <div class="row" id="v2">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
       <div class="col-lg-1" id="v2-body-left"></div>
       <div class="col-lg-8 col-xs-12" id="v2-body">
         <div class="v2-title col-xs-12 col-lg-12"><h3>
@@ -16,9 +17,9 @@
               <!-- post info-->
               <span class="badge">{{post.comment_count}}</span>
               <div class="col-xs-10 item-post">
-              <span class="item-post-title">
-                <router-link :to="getPostRoutes(post.id)">{{post.title}}</router-link>
-              </span>
+            <span class="item-post-title">
+              <router-link :to="getPostRoutes(post.id)">{{post.title}}</router-link>
+            </span>
                 <div class="item-post-node">
                   <router-link class="item-node" :to="getNodeRoutes(post.node.id)">
                     <span>{{post.node.title}}</span>
@@ -59,11 +60,13 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const post_url = global_.URLS.POST_URL;
   const node_url = global_.URLS.NODE_URL;
   export default {

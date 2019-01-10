@@ -1,39 +1,44 @@
 <template>
   <div class="row">
-    <h1 id="title-header"><b>最新阅读推荐</b></h1>
-    <div class="col-lg-6 col-xs-12 moment-item" @click="gotoDetail(moment.id)" v-for="moment in moments">
-      <div class="title">
-        <span>{{moment.title}}</span>
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 col-xs-12">
+      <h1 id="title-header"><b>最新阅读推荐</b></h1>
+      <div class="col-lg-6 col-xs-12 moment-item" @click="gotoDetail(moment.id)" v-for="moment in moments">
+        <div class="title">
+          <span>{{moment.title}}</span>
+        </div>
+        <div class="summary">
+          <span>{{moment.summary}}</span>
+        </div>
+        <div class="img" v-if="moment.image.length > 0">
+          <img style="width: 64px;height: 64px;" :src="image" v-for="image in moment.image" />
+        </div>
+        <div style="width: 64px;height: 64px;" v-else></div>
+        <div class="author" v-if="moment.user">
+          <span ><img style="width: 24px;" :src="moment.user.avatar"></span>
+          <span class="author-name">{{moment.user.name}}</span>
+        </div>
+        <div class="author"  v-else>
+          <span ><img style="width: 24px;" src="/static/image/user_anon.jpeg"></span>
+          <span style="color: gray;" class="author-name">[已注销]</span>
+        </div>
+        <div class="info">
+          <span>{{moment.publish_time}}</span>
+          <span>{{moment.liked_count}}赞</span>
+          <span>{{moment.recs_count}}回复</span>
+        </div>
       </div>
-      <div class="summary">
-        <span>{{moment.summary}}</span>
-      </div>
-      <div class="img" v-if="moment.image.length > 0">
-        <img style="width: 64px;height: 64px;" :src="image" v-for="image in moment.image" />
-      </div>
-      <div style="width: 64px;height: 64px;" v-else></div>
-      <div class="author" v-if="moment.user">
-        <span ><img style="width: 24px;" :src="moment.user.avatar"></span>
-        <span class="author-name">{{moment.user.name}}</span>
-      </div>
-      <div class="author"  v-else>
-        <span ><img style="width: 24px;" src="/static/image/user_anon.jpeg"></span>
-        <span style="color: gray;" class="author-name">[已注销]</span>
-      </div>
-      <div class="info">
-        <span>{{moment.publish_time}}发布</span>
-        <span>{{moment.liked_count}}赞</span>
-        <span>{{moment.recs_count}}回复</span>
+      <div class="col-lg-12 col-xs-12" id="more" @click="load_flag && loadMore()">
+        <el-button class="btn-load" :loading="loading">{{more_message}}</el-button>
       </div>
     </div>
-    <div class="col-lg-12 col-xs-12" id="more" @click="load_flag && loadMore()">
-      <el-button class="btn-load" :loading="loading">{{more_message}}</el-button>
-    </div>
+    <div class="col-lg-4"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const moment_url = global_.URLS.MOMENT_SUBJECTS_URL;
     export default {
       name: "moment",
@@ -158,6 +163,7 @@
 
   .info, .author {
     display: block;
+    font-size: 12px;
     float: left;
     margin: 8px 10px;
   }

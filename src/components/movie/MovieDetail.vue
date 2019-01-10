@@ -1,6 +1,7 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="row">
-    <div class="col-lg-12 col-xs-12" id="movie-detail">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
       <div class="col-lg-1"></div>
       <div class="col-lg-8 col-xs-12" id ="movie-body">
         <h3 class="movie-title"><b>{{data.title}}</b></h3>
@@ -142,11 +143,13 @@
       </div>
       <div class="col-lg-3"></div>
     </div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const movie_url = global_.URLS.DOUBAN_MOVIE;
   const comment_url = global_.URLS.MOVIE_SHORT_COMMENT_URL;
   const review_url = global_.URLS.MOVIE_REVIEW_URL;

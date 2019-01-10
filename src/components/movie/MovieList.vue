@@ -1,11 +1,7 @@
 <template>
-  <el-row>
-    <el-col :span="3">
-      <div class="col-xs-12" id="left">
-        nothing!
-      </div>
-    </el-col>
-    <el-col :span="15">
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-lg-12">
       <h2><b>选影视</b></h2>
       <div class="col-xs-12 genres-header">
         <span class="genre-index">全部形式</span>&nbsp;&nbsp;&nbsp;
@@ -27,13 +23,14 @@
         <span class="genre-index">全部特色</span>&nbsp;&nbsp;&nbsp;
         <router-link tag="span" to="#" v-for="level in level5" :key="level.id">{{ level.name }}&nbsp;&nbsp;&nbsp;</router-link>
       </div>
-    </el-col>
-    <el-col :span="6"></el-col>
-  </el-row>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const movie_genre_url = global_.URLS.DOUBAN_MOVIE + "tag/genres";
   export default {
     name: "MovieDetail",

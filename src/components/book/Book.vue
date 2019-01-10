@@ -1,6 +1,7 @@
 <template>
-  <div class="container" style="text-align: center">
-    <div class="row">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 col-xs-12">
       <div class="col-xs-12 col-lg-12 movie-nav">
         <el-menu
           class="el-menu-demo"
@@ -88,6 +89,7 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-2"></div>
   </div>
 </template>
 

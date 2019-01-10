@@ -1,19 +1,24 @@
 <template>
-  <div class="row" id="book_tag">
-    <div class="col-lg-12 col-xs-12 title"><h2>有你图书标签</h2></div>
-    <div id="tag_bother" class="col-lg-12 col-xs-12" style='border-bottom-left: 2px;background: white;' v-for="parent in data">
-      <div class="col-lg-12 col-xs-12 tag-item-p"><span class="tag">{{parent.tag_name}} · · · · · ·</span></div><br/><br/>
-      <div class="col-lg-3 col-xs-3 tag-item" v-for="child in parent.children">
+  <div class="row" id="book-tag">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
+      <div class="col-lg-12 col-xs-12 title"><h2>有你图书标签</h2></div>
+      <div id="tag_bother" class="col-lg-12 col-xs-12" style='border-bottom-left: 2px;background: white;' v-for="parent in data">
+        <div class="col-lg-12 col-xs-12 tag-item-p"><span class="tag">{{parent.tag_name}} · · · · · ·</span></div><br/><br/>
+        <div class="col-lg-3 col-xs-3 tag-item" v-for="child in parent.children">
           <router-link :to="child.id" append>{{child.tag_name}}</router-link>
           <b>({{child.subject_count}})</b>
+        </div>
+        <div class="col-lg-12"><hr noshade="noshade"/></div>
       </div>
-      <div class="col-lg-12"><hr noshade="noshade"/></div>
     </div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const book_tag_url = global_.URLS.DOUBAN_BOOK_TAG_URL + "subjects/DOUBAN_BOOK";
   export default {
     name: "BookTag",

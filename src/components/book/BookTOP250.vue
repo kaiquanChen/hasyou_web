@@ -1,33 +1,36 @@
 <template>
     <div class="row">
-      <div class="col-lg-12 col-xs-12"><h1>图书 Top 250</h1></div>
-      <div class="col-lg-9 col-xs-12 list-body">
-        <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in books">
-          <div class="col-lg-2 col-xs-3 top250-img">
-            <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
-            <router-link :to="getBookDetail(item.id)" append v-else><img :src="item.image.medium"></router-link>
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6 col-xs-12">
+        <div class="col-lg-12 col-xs-12"><h1>图书 Top 250</h1></div>
+        <div class="col-lg-9 col-xs-12 list-body">
+          <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in books">
+            <div class="col-lg-2 col-xs-3 top250-img">
+              <router-link :to="getBookDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
+              <router-link :to="getBookDetail(item.id)" append v-else><img :src="item.image.medium"></router-link>
+            </div>
+            <div class="col-lg-10 col-xs-9 top250-book-info">
+              <router-link :to="getBookDetail(item.id)">{{item.name}}</router-link><br>
+              <span>{{item.origin_work_name}}</span><br><br>
+              <span v-if="item.authors && item.authors.length > 0">{{item.authors[0]}}</span>&nbsp;/&nbsp;
+              <span v-if="item.translators && item.translators.length > 0">{{item.translators[0]}}&nbsp;/&nbsp;</span>
+              <span v-if="item.publisher">{{item.publisher}}&nbsp;/&nbsp;</span>
+              <span v-if="item.publish_time">{{item.publish_time}}&nbsp;/&nbsp;</span>
+              <span v-if="item.price">{{item.price}}</span><br/><br/>
+              <el-rate v-model="item.stars/2" :score-template="item.stars" show-score disabled>&nbsp;{{item.stars}}</el-rate><br/>
+              <p class="quote" v-if="item.vars.intro"><span class="intro">{{item.vars.intro}}</span></p>
+            </div>
           </div>
-          <div class="col-lg-10 col-xs-9 top250-book-info">
-            <router-link :to="getBookDetail(item.id)">{{item.name}}</router-link><br>
-            <span>{{item.origin_work_name}}</span><br><br>
-            <span v-if="item.authors && item.authors.length > 0">{{item.authors[0]}}</span>&nbsp;/&nbsp;
-            <span v-if="item.translators && item.translators.length > 0">{{item.translators[0]}}&nbsp;/&nbsp;</span>
-            <span v-if="item.publisher">{{item.publisher}}&nbsp;/&nbsp;</span>
-            <span v-if="item.publish_time">{{item.publish_time}}&nbsp;/&nbsp;</span>
-            <span v-if="item.price">{{item.price}}</span><br/><br/>
-            <el-rate v-model="item.stars/2" :score-template="item.stars" show-score disabled>&nbsp;{{item.stars}}</el-rate><br/>
-            <p class="quote" v-if="item.vars.intro"><span class="intro">{{item.vars.intro}}</span></p>
+          <div class="col-lg-12 col-xs-12" id="pagination-bottom">
+            <el-pagination background
+                           @current-change="handleCurrentChange"
+                           :current-page.sync="page.page"
+                           :page-size="page.count"
+                           :small="checkMedia()"
+                           layout="total, prev, pager, next"
+                           :total="page.total">
+            </el-pagination>
           </div>
-        </div>
-        <div class="col-lg-12 col-xs-12" id="pagination-bottom">
-          <el-pagination background
-                         @current-change="handleCurrentChange"
-                         :current-page.sync="page.page"
-                         :page-size="page.count"
-                         :small="checkMedia()"
-                         layout="total, prev, pager, next"
-                         :total="page.total">
-          </el-pagination>
         </div>
       </div>
       <div class="col-lg-3"></div>
@@ -36,6 +39,7 @@
 
 <script>
   import global_ from "../config/Global"
+
   const BOOK_URL = global_.URLS.BOOK_URL;
     export default {
       name: "",

@@ -1,7 +1,7 @@
 <template>
   <div class="row body">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8 col-xs-12">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
       <div class="col-lg-12 col-xs-12 note-item">
         <span class="note-title">{{note.title}}</span><br>
         <span class="info" v-if="note.type === 'FLY'" style="color: #8cc5ff;">站长</span>
@@ -44,12 +44,13 @@
         </form>
       </div>
     </div>
-    <div class="col-lg-2"></div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   let note_detail_url = global_.URLS.NOTE_URL + "subject/";
   let create_comment_url = global_.URLS.NOTE_URL + "comment/create";
   let list_comment_url = global_.URLS.NOTE_URL + "comment/";

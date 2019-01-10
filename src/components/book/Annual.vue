@@ -1,46 +1,50 @@
 <template>
     <div class="row annual">
-      <h1 id="annual-title">{{year}}年度图书榜单</h1>
-      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-submenu index="1">
-          <template slot="title">目录</template>
-          <el-menu-item :index="item.id" :key="item.id" v-for="(item, index) in body">{{item.payload.title}}</el-menu-item>
-        </el-submenu>
-      </el-menu>
-      <div :id="item.id" class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat'}"  v-for="item in body">
-        <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
-          <div class="col-xs-12 right">
-            <div class="title">
-              <span>{{item.payload.title}}</span>
-            </div>
-            <div class="desc">
-              <span>{{item.payload.description}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-lg-2 annual-book" v-if="item.subjects" v-for="(book, index) in item.subjects">
-          <el-card class="book-card" :body-style="{ padding: '0px' }" v-if="book">
-            <a target="_blank" :href="getBookDetail(book.id)"><img :src="book.image_url" class="image"></a>
-            <div class="info">
-              <span class="book-link"><router-link :to="getBookDetail(book.id)">{{ book.name }}</router-link></span>
-              <div class="bottom clearfix">
-                <time class="star">{{ book.stars }}</time>
-                <span class="rank">Top.{{index + 1}}</span>
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6 col-xs-12">
+        <div class="col-lg-3"></div>
+        <h1 id="annual-title">{{year}}年度图书榜单</h1>
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+          <el-submenu index="1">
+            <template slot="title">目录</template>
+            <el-menu-item :index="item.id" :key="item.id" v-for="(item, index) in body">{{item.payload.title}}</el-menu-item>
+          </el-submenu>
+        </el-menu>
+        <div :id="item.id" class="col-xs-12 col-lg-12 annual-item" :style="{'background': 'url('+item.payload.background_img+') no-repeat'}"  v-for="item in body">
+          <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
+            <div class="col-xs-12 right">
+              <div class="title">
+                <span>{{item.payload.title}}</span>
+              </div>
+              <div class="desc">
+                <span>{{item.payload.description}}</span>
               </div>
             </div>
-          </el-card>
-        </div>
-        <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
-          <div class="col-xs-12 col-lg-4 left"></div>
-          <div class="col-lg-4">
-
           </div>
-          <div class="col-xs-12 col-lg-4 right">
-            <div class="title">
-              <span>{{item.payload.title}}</span>
+          <div class="col-xs-6 col-lg-2 annual-book" v-if="item.subjects" v-for="(book, index) in item.subjects">
+            <el-card class="book-card" :body-style="{ padding: '0px' }" v-if="book">
+              <a target="_blank" :href="getBookDetail(book.id)"><img :src="book.image_url" class="image"></a>
+              <div class="info">
+                <span class="book-link"><router-link :to="getBookDetail(book.id)">{{ book.name }}</router-link></span>
+                <div class="bottom clearfix">
+                  <time class="star">{{ book.stars }}</time>
+                  <span class="rank">Top.{{index + 1}}</span>
+                </div>
+              </div>
+            </el-card>
+          </div>
+          <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
+            <div class="col-xs-12 col-lg-4 left"></div>
+            <div class="col-lg-4">
+
             </div>
-            <div class="desc">
-              <span>{{item.payload.description}}</span>
+            <div class="col-xs-12 col-lg-4 right">
+              <div class="title">
+                <span>{{item.payload.title}}</span>
+              </div>
+              <div class="desc">
+                <span>{{item.payload.description}}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -50,6 +54,7 @@
 
 <script>
   import global_ from "../config/Global"
+
   const BOOK_ANNUAL_URL = global_.URLS.BOOK_ANNUAL_URL;
     export default {
       name: "",

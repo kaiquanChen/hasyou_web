@@ -1,95 +1,100 @@
 <template>
   <div class="row" id="post-index">
-    <div class="col-xs-12 col-lg-12">
-      <h1 style="text-align: center">有你论坛</h1>
-    </div>
-    <div class="col-lg-2" id="post-left"></div>
-    <div class="col-xs-12 col-lg-8" id="post-body">
-      <div class="col-lg-12 col-xs-12 post-header">
-        <div class="col-lg-10 col-xs-9 post-header-title">
-          <!-- nav -->
-          <div class="nav">
-            <router-link to="/forum"><b>论坛首页</b></router-link>&nbsp;&nbsp;>&nbsp;
-            <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}</b></router-link>
-          </div>
-          <span class="post-title">{{post.title}}</span><br>
-          <span class="post-author">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
+      <div class="col-xs-12 col-lg-12">
+        <h1 style="text-align: center">有你论坛</h1>
+      </div>
+      <div class="col-lg-2" id="post-left"></div>
+      <div class="col-xs-12 col-lg-8" id="post-body">
+        <div class="col-lg-12 col-xs-12 post-header">
+          <div class="col-lg-10 col-xs-9 post-header-title">
+            <!-- nav -->
+            <div class="nav">
+              <router-link to="/forum"><b>论坛首页</b></router-link>&nbsp;&nbsp;>&nbsp;
+              <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}</b></router-link>
+            </div>
+            <span class="post-title">{{post.title}}</span><br>
+            <span class="post-author">
             <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{post.create_time}}&nbsp; · &nbsp;
             <a :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
           </b></span>
+          </div>
+          <div class="col-lg-2 col-xs-3 img-div">
+            <!-- member avatar-->
+            <a href="#"><img class="img-rounded" :src="member.avatar_large"></a>
+          </div>
         </div>
-        <div class="col-lg-2 col-xs-3 img-div">
-          <!-- member avatar-->
-          <a href="#"><img class="img-rounded" :src="member.avatar_large"></a>
+        <div class="col-lg-12 col-xs-12 post-content">
+          <div class="col-lg-12 col-xs-12">
+            <div class="markdown" v-html="content"></div>
+          </div>
+          <div class="col-lg-12 col-xs-12 post-content-bottom">
+            <a>加入收藏</a>
+            <a>忽略主题</a>
+          </div>
         </div>
-      </div>
-      <div class="col-lg-12 col-xs-12 post-content">
-        <div class="col-lg-12 col-xs-12">
-          <div class="markdown" v-html="content"></div>
-        </div>
-        <div class="col-lg-12 col-xs-12 post-content-bottom">
-          <a>加入收藏</a>
-          <a>忽略主题</a>
-        </div>
-      </div>
-      <div class="col-lg-12 col-xs-12 post-comment">
-        <div class="col-lg-12 col-xs-12 post-comment-header">
+        <div class="col-lg-12 col-xs-12 post-comment">
+          <div class="col-lg-12 col-xs-12 post-comment-header">
           <span>
             {{post.comment_count}}&nbsp;&nbsp;回复&nbsp;&nbsp;<strong>|</strong>&nbsp;&nbsp;直到&nbsp;&nbsp;{{post.active_time}}
           </span>
-          <span class="post-comment-node">
+            <span class="post-comment-node">
             <router-link :to="getNodeRoutes(node.id)"><b>{{node.title}}</b></router-link>
           </span>
+          </div>
+          <div class="col-lg-12 col-xs-12" id="pagination-top">
+            <el-pagination background
+                           @current-change="handleCurrentChange"
+                           :current-page.sync="comment.page.page"
+                           :page-size="comment.page.count"
+                           :small="checkMedia()"
+                           layout="prev, pager, next"
+                           :total="comment.page.total">
+            </el-pagination>
+          </div>
+          <div id="comment-start" class="col-lg-12 col-xs-12 list-group-item post-comment-body" v-for="comment in comment.body">
+            <div class="col-lg-1 col-xs-1 post-comment-body-img" v-if="comment.member">
+              <a><img class="img-rounded" :src="comment.member.avatar_large" :id="comment.member.id"></a>
+            </div>
+            <div class="col-lg-1 col-xs-1 col-xs-1 post-comment-body-img" v-else>
+              <a><img class="img-rounded" src="/static/image/user_anon.jpeg"></a>
+            </div>
+            <div class="col-lg-11 col-xs-11 post-comment-body-info">
+              <span class="comment-foor-number badge">{{comment.floor_number}}</span>
+              <strong class="comment-username">{{comment.author}}</strong>&nbsp;&nbsp;
+              <span class="comment-time">{{comment.create_time}}</span>&nbsp;&nbsp;
+              <span class="comment-device" v-if="isWeb(comment.device)">via &nbsp;&nbsp;{{comment.device}}</span>
+              <div class="comment-content">
+                <span>{{comment.content}}</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-12 col-xs-12" id="pagination-top">
+        <div class="col-lg-12 col-xs-12 post-comment-bottom">
+          <a href="#"><strong>↑</strong>&nbsp;回到顶部</a>
+        </div>
+        <div class="col-lg-12 col-xs-12" id="pagination-bottom">
           <el-pagination background
                          @current-change="handleCurrentChange"
                          :current-page.sync="comment.page.page"
                          :page-size="comment.page.count"
                          :small="checkMedia()"
-                         layout="prev, pager, next"
+                         layout="total, prev, pager, next"
                          :total="comment.page.total">
           </el-pagination>
         </div>
-        <div id="comment-start" class="col-lg-12 col-xs-12 list-group-item post-comment-body" v-for="comment in comment.body">
-          <div class="col-lg-1 col-xs-1 post-comment-body-img" v-if="comment.member">
-            <a><img class="img-rounded" :src="comment.member.avatar_large" :id="comment.member.id"></a>
-          </div>
-          <div class="col-lg-1 col-xs-1 col-xs-1 post-comment-body-img" v-else>
-            <a><img class="img-rounded" src="/static/image/user_anon.jpeg"></a>
-          </div>
-          <div class="col-lg-11 col-xs-11 post-comment-body-info">
-            <span class="comment-foor-number badge">{{comment.floor_number}}</span>
-            <strong class="comment-username">{{comment.author}}</strong>&nbsp;&nbsp;
-            <span class="comment-time">{{comment.create_time}}</span>&nbsp;&nbsp;
-            <span class="comment-device" v-if="isWeb(comment.device)">via &nbsp;&nbsp;{{comment.device}}</span>
-            <div class="comment-content">
-              <span>{{comment.content}}</span>
-            </div>
-          </div>
-        </div>
       </div>
-      <div class="col-lg-12 col-xs-12 post-comment-bottom">
-        <a href="#"><strong>↑</strong>&nbsp;回到顶部</a>
-      </div>
-      <div class="col-lg-12 col-xs-12" id="pagination-bottom">
-        <el-pagination background
-                       @current-change="handleCurrentChange"
-                       :current-page.sync="comment.page.page"
-                       :page-size="comment.page.count"
-                       :small="checkMedia()"
-                       layout="total, prev, pager, next"
-                       :total="comment.page.total">
-        </el-pagination>
-      </div>
+      <div class="col-lg-2" id="post-right"></div>
     </div>
-    <div class="col-lg-2" id="post-right"></div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   let marked = require('marked');
   import global_ from "../config/Global"
+
   const post_url = global_.URLS.POST_URL;
   const comment_url = global_.URLS.COMMENT_URL;
   export default {

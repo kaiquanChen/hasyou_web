@@ -20,6 +20,8 @@ export default {
 <style scoped>
   #footer {
     background-color: #e7e7e7;
+    clear: both;
+    bottom: 0;
   }
   .row {
     margin: 10px 0 0 0;

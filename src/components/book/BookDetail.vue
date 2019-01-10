@@ -1,6 +1,7 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="row">
-    <div class="col-lg-12 col-xs-12" id="book-detail">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12" id="book-detail">
       <div class="col-lg-1"></div>
       <div class="col-lg-8 col-xs-12" id ="book-body">
         <h3 class="book-title"><b>{{data.name}}</b></h3>
@@ -139,11 +140,13 @@
       </div>
       <div class="col-lg-3"></div>
     </div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const book_url = global_.URLS.BOOK_URL;
   const comment_url = global_.URLS.BOOK_SHORT_COMMENT_URL;
   const review_url = global_.URLS.BOOK_REVIEW_URL;
@@ -429,6 +432,12 @@
     margin: 5px 0 10px 0;
   }
 
+  div#book-info {
+    font-size: 12px;
+    padding-left: 35px;
+    padding-right: 5px;
+  }
+
   @media screen and (max-width: 415px) {
     div.book-img img{
       width: 100px;
@@ -446,7 +455,7 @@
 
     div#book-info {
       font-size: 12px;
-      padding-left: 7px;
+      padding-left: 12px;
       padding-right: 5px;
     }
 

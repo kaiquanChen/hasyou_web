@@ -6,7 +6,8 @@
     </div>
 
     <!-- body -->
-    <div :class="checkMedia()" id="app-body">
+    <!--<div :class="checkMedia()" id="app-body">-->
+    <div class="container-fluid" id="app-body">
       <router-view></router-view>
     </div>
 
@@ -47,6 +48,7 @@
 
 <style scoped>
   #app-body {
+    padding: 0;
     margin-top: 60px;
   }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="row">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8 col-xs-12 body">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 col-xs-12 body">
       <div class="col-lg-12 col-xs-12 search-header">
         <h2>搜索<span class="keywords">{{keywords}}</span>共<span class="keywords">{{page.total}}</span>个结果</h2>
       </div>
@@ -40,7 +40,7 @@
         </el-pagination>
       </div>
     </div>
-    <div class="col-lg-2"></div>
+    <div class="col-lg-4"></div>
   </div>
 </template>
 

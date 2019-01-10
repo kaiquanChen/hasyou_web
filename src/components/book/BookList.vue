@@ -1,45 +1,50 @@
 <template>
-  <div id="book_list" class="row">
-    <div class="col-lg-12 col-xs-12 book-list-title"><h1>图书列表</h1></div>
-    <div class="col-lg-12 col-xs-12">
-      <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in data">
-        <div class="col-lg-1 col-xs-2 img_div">
-          <router-link :to="getRoutes(item.id)" v-if="item.image_url"><img :src="item.image_url" /></router-link>
-          <router-link :to="getRoutes(item.id)" v-else><img :src="item.image.medium" /></router-link>
-        </div>
-        <div class="col-lg-11 col-xs-10 book-list-info">
-          <div><router-link :to="getRoutes(item.id)">{{item.name}}</router-link></div>
-          <div>
-            <span class="text-info">{{getBookInfo(item)}}</span>&nbsp;&nbsp;&nbsp;
-            <el-rate
-              class="book-list-rate"
-              v-model="item.stars / 2"
-              disabled
-              show-score
-              text-color="#ff9900"
-              :score-template="item.stars">
-            </el-rate>
+  <div class="row" id="book-list">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
+      <div class="col-lg-12 col-xs-12 book-list-title"><h1>图书列表</h1></div>
+      <div class="col-lg-12 col-xs-12">
+        <div class="col-lg-12 col-xs-12 list-group-item" v-for="item in data">
+          <div class="col-lg-1 col-xs-2 img_div">
+            <router-link :to="getRoutes(item.id)" v-if="item.image_url"><img :src="item.image_url" /></router-link>
+            <router-link :to="getRoutes(item.id)" v-else><img :src="item.image.medium" /></router-link>
           </div>
-          <div class="book-intro"><span class="text-info">{{getBookIntro(item.intro)}}</span></div>
+          <div class="col-lg-11 col-xs-10 book-list-info">
+            <div><router-link :to="getRoutes(item.id)">{{item.name}}</router-link></div>
+            <div>
+              <span class="text-info">{{getBookInfo(item)}}</span>&nbsp;&nbsp;&nbsp;
+              <el-rate
+                class="book-list-rate"
+                v-model="item.stars / 2"
+                disabled
+                show-score
+                text-color="#ff9900"
+                :score-template="item.stars">
+              </el-rate>
+            </div>
+            <div class="book-intro"><span class="text-info">{{getBookIntro(item.intro)}}</span></div>
+          </div>
         </div>
       </div>
+      <div class="col-lg-12 col-xs-12" id="pagination">
+        <el-pagination background
+                       @current-change="handleCurrentChange"
+                       :current-page.sync="page"
+                       :page-size="count"
+                       :pager-count="pager_count"
+                       :small="checkMedia()"
+                       layout="total, prev, pager, next"
+                       :total="total">
+        </el-pagination>
+      </div>
     </div>
-    <div class="col-lg-12 col-xs-12" id="pagination">
-      <el-pagination background
-                     @current-change="handleCurrentChange"
-                     :current-page.sync="page"
-                     :page-size="count"
-                     :pager-count="pager_count"
-                     :small="checkMedia()"
-                     layout="total, prev, pager, next"
-                     :total="total">
-      </el-pagination>
-    </div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const book_url = global_.URLS.BOOK_URL;
   export default {
     name: "BookList",

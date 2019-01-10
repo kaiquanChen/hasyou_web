@@ -1,68 +1,71 @@
 <template>
     <div class="row annual">
-      <h1 id="annual-title">{{year}}年度电影榜单</h1>
-      <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-submenu index="1">
-          <template slot="title">目录</template>
-          <el-menu-item :index="getAnchor(item.id)" :key="item.id" v-for="(item, index) in body">{{item.payload.title}}</el-menu-item>
-        </el-submenu>
-      </el-menu>
-      <div :id="item.id"
-           class="col-xs-12 col-lg-12 annual-item"
-           :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}"
-           v-for="item in body">
-        <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
-          <div class="col-xs-12 right" v-if="item.kind_str === 'top10'">
-            <div class="title">
-              <span>{{item.payload.title}}</span>
-            </div>
-            <div class="desc">
-              <span>{{item.payload.description}}</span>
-            </div>
-          </div>
-          <div class="col-xs-12 right" v-else-if="item.kind_str === 'dialogue'">
-            <div class="title">
-              <span>{{item.payload.text}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-lg-2 annual-movie" v-if="item.subjects" v-for="(movie, index) in item.subjects">
-          <el-card class="movie-card" :body-style="{ padding: '0px' }" v-if="movie">
-            <a target="_blank" :href="getMovieDetail(movie.id)"><img :src="movie.image_url" class="image"></a>
-            <div class="info">
-              <span class="movie-link"><router-link :to="getMovieDetail(movie.id)">{{ movie.title }}</router-link></span>
-              <div class="bottom clearfix">
-                <time class="star">{{ movie.average }}</time>
-                <span class="rank">Top.{{index + 1}}</span>
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6 col-xs-12">
+        <div class="col-lg-3"></div>
+        <h1 id="annual-title">{{year}}年度电影榜单</h1>
+        <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect">
+          <el-submenu index="1">
+            <template slot="title">目录</template>
+            <el-menu-item :index="getAnchor(item.id)" :key="item.id" v-for="(item, index) in body">{{item.payload.title}}</el-menu-item>
+          </el-submenu>
+        </el-menu>
+        <div :id="item.id"
+             class="col-xs-12 col-lg-12 annual-item"
+             :style="{'background': 'url('+item.payload.background_img+') no-repeat center center'}"
+             v-for="item in body">
+          <div class="col-xs-12 col-lg-12 annual-body" v-show="!web">
+            <div class="col-xs-12 right" v-if="item.kind_str === 'top10'">
+              <div class="title">
+                <span>{{item.payload.title}}</span>
+              </div>
+              <div class="desc">
+                <span>{{item.payload.description}}</span>
               </div>
             </div>
-          </el-card>
-        </div>
-        <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
-          <div class="col-xs-12 col-lg-4 left">
-          </div>
-          <div class="col-lg-4">
-            <!--<div class="annual-comment" v-show="up"></div>-->
-            <!--<div class="trigger-comment" @click="showComment()">共0条讨论</div>-->
-          </div>
-          <div class="col-xs-12 col-lg-4 right">
-            <div class="title">
-              <span>{{item.payload.title}}</span>
+            <div class="col-xs-12 right" v-else-if="item.kind_str === 'dialogue'">
+              <div class="title">
+                <span>{{item.payload.text}}</span>
+              </div>
             </div>
-            <div class="desc">
-              <span>{{item.payload.description}}</span>
+          </div>
+          <div class="col-xs-6 col-lg-2 annual-movie" v-if="item.subjects" v-for="(movie, index) in item.subjects">
+            <el-card class="movie-card" :body-style="{ padding: '0px' }" v-if="movie">
+              <a target="_blank" :href="getMovieDetail(movie.id)"><img :src="movie.image_url" class="image"></a>
+              <div class="info">
+                <span class="movie-link"><router-link :to="getMovieDetail(movie.id)">{{ movie.title }}</router-link></span>
+                <div class="bottom clearfix">
+                  <time class="star">{{ movie.average }}</time>
+                  <span class="rank">Top.{{index + 1}}</span>
+                </div>
+              </div>
+            </el-card>
+          </div>
+          <div class="col-xs-12 col-lg-12 annual-body" v-show="web">
+            <div class="col-xs-12 col-lg-4 left">
+            </div>
+            <div class="col-lg-4">
+              <!--<div class="annual-comment" v-show="up"></div>-->
+              <!--<div class="trigger-comment" @click="showComment()">共0条讨论</div>-->
+            </div>
+            <div class="col-xs-12 col-lg-4 right">
+              <div class="title">
+                <span>{{item.payload.title}}</span>
+              </div>
+              <div class="desc">
+                <span>{{item.payload.description}}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!--<div class="col-lg-12 col-xs-12" id="more" @click="load_flag && loadMore()">-->
-        <!--<el-button class="btn-load" :loading="loading">{{more_message}}</el-button>-->
-      <!--</div>-->
+      <div class="col-lg-3"></div>
     </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const MOVIE_ANNUAL_URL = global_.URLS.MOVIE_ANNUAL_URL;
     export default {
       name: "",
@@ -151,7 +154,7 @@
 
   img.image {
     width: 100%;
-    height: 222px;
+    height: 180px;
   }
 
   div.annual-movie {

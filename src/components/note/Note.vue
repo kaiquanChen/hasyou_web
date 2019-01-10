@@ -1,53 +1,58 @@
 <template>
   <div class="row">
-    <div class="col-lg-8 col-xs-12 note-list">
-      <h3 class="header-title">留言墙</h3>
-      <div class="col-xs-12 col-lg-12 list-group-item" v-for="item in notes">
-        <router-link class="title" :to="getNoteRoute(item.id)" v-if="item.type === 'FLY'" style="color: red;">{{item.title}}</router-link>
-        <router-link class="title" :to="getNoteRoute(item.id)" v-else>{{item.title}}</router-link><br>
-        <span class="info" v-if="item.cookies.bid === hostBid" style="color: #8cc5ff">站长</span>
-        <span class="info" v-else>游客</span>&emsp;
-        <span class="info">{{item.create_time}}</span>&emsp;<br/>
-        <span class="content">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12">
+      <div class="col-lg-8 col-xs-12 note-list">
+        <h3 class="header-title">留言墙</h3>
+        <div class="col-xs-12 col-lg-12 list-group-item" v-for="item in notes">
+          <router-link class="title" :to="getNoteRoute(item.id)" v-if="item.type === 'FLY'" style="color: red;">{{item.title}}</router-link>
+          <router-link class="title" :to="getNoteRoute(item.id)" v-else>{{item.title}}</router-link><br>
+          <span class="info" v-if="item.cookies.bid === hostBid" style="color: #8cc5ff">站长</span>
+          <span class="info" v-else>游客</span>&emsp;
+          <span class="info">{{item.create_time}}</span>&emsp;<br/>
+          <span class="content">
           {{item.content}}
         </span>
+        </div>
+        <div class="col-lg-12 col-xs-12" id="pagination">
+          <el-pagination background
+                         @current-change="handleCurrentChange"
+                         :current-page.sync="page.page"
+                         :page-size="page.count"
+                         :small="checkMedia()"
+                         layout="total, prev, pager, next"
+                         :total="page.total">
+          </el-pagination>
+        </div>
       </div>
-      <div class="col-lg-12 col-xs-12" id="pagination">
-        <el-pagination background
-                       @current-change="handleCurrentChange"
-                       :current-page.sync="page.page"
-                       :page-size="page.count"
-                       :small="checkMedia()"
-                       layout="total, prev, pager, next"
-                       :total="page.total">
-        </el-pagination>
+      <div class="col-lg-4 col-xs-12 note-submit">
+        <h3 class="header-title">信纸</h3>
+        <div class="col-lg-12 col-xs-12 note-form">
+          <!--提交表单-->
+          <form method="post" enctype="multipart/form-data">
+            <input class="note-title" type="text" name="title" ref="title" placeholder="请输入标题"><br/>
+            <textarea class="note-content" rows="6" name="content" ref="content" placeholder="请输入内容"></textarea><br/>
+            <input type="file" name="file" ref="file" @change="uploadFile">
+            <el-button type="primary" :loading="loading" @click="submitForm()">提交</el-button>
+          </form>
+        </div>
+        <div class="col-lg-12 col-xs-12 statement">
+          <p>
+            Hi,认识的,不认识的:(虽然目测并没有多少人..!)<br>
+            欢迎提BUG!;<br>
+            欢迎大家尽情吐槽 (反正我也不听..!),<br>
+            欢迎提出设计,数据等方面的建议(这个可以听..!).
+          </p>
+        </div>
       </div>
     </div>
-    <div class="col-lg-4 col-xs-12 note-submit">
-      <h3 class="header-title">信纸</h3>
-      <div class="col-lg-12 col-xs-12 note-form">
-        <!--提交表单-->
-        <form method="post" enctype="multipart/form-data">
-          <input class="note-title" type="text" name="title" ref="title" placeholder="请输入标题"><br/>
-          <textarea class="note-content" rows="6" name="content" ref="content" placeholder="请输入内容"></textarea><br/>
-          <input type="file" name="file" ref="file" @change="uploadFile">
-          <el-button type="primary" :loading="loading" @click="submitForm()">提交</el-button>
-        </form>
-      </div>
-      <div class="col-lg-12 col-xs-12 statement">
-        <p>
-          Hi,认识的,不认识的:(虽然目测并没有多少人..!)<br>
-          欢迎提BUG!;<br>
-          欢迎大家尽情吐槽 (反正我也不听..!),<br>
-          欢迎提出设计,数据等方面的建议(这个可以听..!).
-        </p>
-      </div>
-    </div>
+    <div class="col-lg-3"></div>
   </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   let note_create_url = global_.URLS.NOTE_URL + "create";
   let note_list_url = global_.URLS.NOTE_URL + "subjects";
   let file_upload_url = global_.URLS.FILE_URL + "save";

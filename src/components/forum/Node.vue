@@ -1,25 +1,21 @@
 <template>
-    <el-row class="node">
-      <el-col :span="3" class="node-left">
-        <div class="node-left-child">nothing!
-        </div>
-      </el-col>
-      <el-col :span="18" class="node-body">
-        <div class="col-sm-12 node-body-header">
-          <h3>共<b>{{nodes.length}}</b>个节点</h3>
-        </div>
-        <div class="node-list">
-          <router-link :to="getNodeRoutes(node.id)" :key="node.id" v-for="node in nodes"><b class="item-node">{{node.title}}</b></router-link>
-        </div>
-      </el-col>
-      <el-col :span="3" class="node-right">
-        <!--nothing-->
-      </el-col>
-    </el-row>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 col-xs-12 node">
+      <div class="col-sm-12 node-body-header">
+        <h3>共<b>{{nodes.length}}</b>个节点</h3>
+      </div>
+      <div class="node-list">
+        <router-link :to="getNodeRoutes(node.id)" :key="node.id" v-for="node in nodes"><b class="item-node">{{node.title}}</b></router-link>
+      </div>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
 </template>
 
 <script>
   import global_ from "../config/Global"
+
   const node_url = global_.URLS.NODE_URL;
   export default {
     data() {
