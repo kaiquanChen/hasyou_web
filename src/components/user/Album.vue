@@ -164,9 +164,23 @@
 
             return index;
           }
+        },
+        checkUser() {
+          let json = sessionStorage.getItem("user_info");
+          let user = JSON.parse(json);
+          let id = this.$route.params.id;
+          if (user.id != id) {
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("user_info");
+            this.$message.error("请先登录!");
+            this.$router.push({
+              path: '/login'
+            });
+          }
         }
       },
       created() {
+        this.checkUser();
         if (this.checkMedia()) {
           this.col = 2;
         }

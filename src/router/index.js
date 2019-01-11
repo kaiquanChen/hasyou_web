@@ -22,11 +22,14 @@ import Note from '@/components/note/Note'
 import NoteDetail from '@/components/note/NoteDetail'
 import About from '@/components/About'
 import SearchResult from '@/components/SearchResult'
+
 // user
 import Register from '@/components/user/Register'
 import Login from '@/components/user/Login'
 import Album from '@/components/user/Album'
 import User from '@/components/user/User'
+import UserNote from '@/components/user/Note'
+
 // blog
 import Blog from '@/components/blog/Blog'
 
@@ -66,8 +69,7 @@ export const routes = [
   /* user */
   {path: '/register', component: Register},
   {path: '/login', component: Login},
-  {path: '/album', component: Album},
-  {path: '/user/:id', component: User},
+  {path: '/user/:id', component: User, children: [{path: 'note', component: UserNote}, {path: 'album', component: Album}]},
   /* blog */
   {path: '/blog', component: Blog},
   /* test */
