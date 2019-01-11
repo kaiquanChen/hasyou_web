@@ -24,7 +24,7 @@
               </div>
             </div>
             <el-input v-show="!checkMedia()"
-                      style="float: left;width: 50%;margin: 5px 5px 5px 35px;"
+                      style="float: left;width: 45%;margin: 5px 5px 5px 35px;"
                       placeholder="图书、电影、音乐、博客"
                       v-model="keywords"
                       class="input-with-select"
@@ -74,22 +74,25 @@
                   &emsp;博客
                 </a>
               </li>
-              <li>
-                <a :href="gotoPersonalCenter(user.id)" class="home" v-if="user">
+              <li class="avatar" v-if="user">
+                <a :href="gotoPersonalCenter(user.id)" class="home">
                   <img class="icon-header-phone" src="../assets/header/icon/header-login-icon.png" />
                   &emsp;{{user.nickname}}
                 </a>
+                <a target="_blank" :href="user.avatar"><img class="img-circle" :src="user.avatar"/></a>
               </li>
-              <li><a href="#" class="home" v-if="user" @click="logout">退出</a></li>
-              <li>
-                <a href="/login" class="home" v-if="!user">
+              <li v-if="user"><a href="#" class="home" @click="logout">退出</a></li>
+              <li v-if="!user">
+                <a href="/login" class="home">
                   <img class="icon-header-phone" src="../assets/header/icon/header-login-icon.png" />
                     &emsp;登录
                 </a>
               </li>
-              <li><a href="/register" class="home" v-if="!user">
-                <img class="icon-header-phone" src="../assets/header/icon/header-login-icon.png" />
-                &emsp;注册</a></li>
+              <li v-if="!user">
+                <a href="/register" class="home">
+                  <img class="icon-header-phone" src="../assets/header/icon/header-login-icon.png" />
+                  &emsp;注册</a>
+              </li>
               <el-input
                 v-show="checkMedia()"
                 @keyup.enter.native="submitSearch()"
@@ -111,10 +114,13 @@
           <div class="col-lg-2">
             <div class="collapse navbar-collapse" id="main-menu2">
               <ul class="nav navbar-nav navbar-right">
-                <li><a :href="gotoPersonalCenter(user.id)" class="home" v-if="user">{{user.nickname}}</a></li>
-                <li><a href="#" class="home" v-if="user" @click="logout">退出</a></li>
-                <li><a href="/login" class="home" v-if="!user">登录</a></li>
-                <li><a href="/register" class="home" v-if="!user">注册</a></li>
+                <li class="avatar" v-if="user">
+                  <a target="_blank" :href="user.avatar"><img class="img-circle" :src="user.avatar"/></a>
+                  <a :href="gotoPersonalCenter(user.id)" class="home">{{user.nickname}}</a>
+                </li>
+                <li v-if="user"><a href="#" class="home" @click="logout">退出</a></li>
+                <li v-if="!user"><a href="/login" class="home">登录</a></li>
+                <li v-if="!user"><a href="/register" class="home">注册</a></li>
               </ul>
             </div>
           </div>
@@ -374,7 +380,25 @@
     border-top: #7d7980 1px solid;
   }
 
+  .avatar a {
+    display: inline-block;
+    padding: 12px 1px;
+  }
+
+  .avatar img {
+    width: 30px;
+  }
+
   @media screen and (max-width: 415px) {
+    .avatar img {
+      width: 25px;
+    }
+
+    .avatar a {
+      display: inline-block;
+      padding: 15px 11px;
+    }
+
     div.header-bar {
       background-color: #e9e9e2;
     }
@@ -412,7 +436,7 @@
     }
 
     ul li {
-      text-align: center;
+      text-align: left;
     }
   }
 
