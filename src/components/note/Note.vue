@@ -76,6 +76,7 @@
         this.$http.post(note_create_url,
           {
             "body":{
+              "type":"leave_message",
               "title": this.$refs.title.value,
               "content": this.$refs.content.value,
               "file_ids": this.file_ids
@@ -127,6 +128,7 @@
       getNoteList() {
         this.$http.get(note_list_url, {
           params: {
+            type: "leave_message",
             p: this.page.page,
             count: this.page.count
           },
