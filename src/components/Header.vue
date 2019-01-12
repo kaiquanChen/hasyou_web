@@ -264,7 +264,7 @@
             let res = data.body;
             if (res.code === 200) {
               this.user = res.data;
-              global_.FUNC.setUserInfo(this.user);
+              sessionStorage.setItem("user_info", JSON.stringify(this.user));
             }
           });
         }

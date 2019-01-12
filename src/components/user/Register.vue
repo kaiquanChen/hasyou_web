@@ -3,54 +3,58 @@ s<template>
     <h1>欢迎注册-有你</h1>
     <div class="col-lg-3"></div>
     <div class="col-lg-6 col-xs-12">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="头像" class="avatar-upload">
-          <el-upload
-            class="upload-avatar"
-            :action="file_upload_url"
-            :data="file"
-            :on-success="fileUploadSuccess()"
-            :on-progress="fileProgress()"
-            :file-list="avatar"
-            :limit="1"
-            list-type="picture">
-            <el-button size="small" type="primary">点击上传</el-button>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="昵称" prop="nickname">
-          <el-input @blur="checkAccount(ruleForm.nickname, '该昵称')" v-model="ruleForm.nickname"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="ruleForm.password"></el-input>
-        </el-form-item>
-        <el-form-item label="电话" prop="mobile">
-          <el-input @blur="checkAccount(ruleForm.mobile, '该号码')" v-model="ruleForm.mobile"></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input @blur="checkAccount(ruleForm.email, '该邮箱')" v-model="ruleForm.email"></el-input>
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-form-item prop="birthday">
-            <el-date-picker type="date" :editable="false" placeholder="选择日期" v-model="ruleForm.birthday" style="width: 100%;"></el-date-picker>
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6 col-xs-12">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="头像" class="avatar-upload">
+            <el-upload
+              class="upload-avatar"
+              :action="file_upload_url"
+              :data="file"
+              :on-success="fileUploadSuccess()"
+              :on-progress="fileProgress()"
+              :file-list="avatar"
+              :limit="1"
+              list-type="picture">
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
           </el-form-item>
-        </el-form-item>
-        <el-form-item label="性别" class="form-itetm-gender" prop="gender">
-          <el-radio-group v-model="ruleForm.gender">
-            <el-radio :label="0">男</el-radio>
-            <el-radio :label="1">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item class="form-item-address" label="地址" prop="address">
-          <el-input v-model="ruleForm.address"></el-input>
-        </el-form-item>
-        <el-form-item label="个性签名" prop="desc">
-          <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="register()">立即注册</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
+          <el-form-item label="昵称" prop="nickname">
+            <el-input @blur="checkAccount(ruleForm.nickname, '该昵称')" v-model="ruleForm.nickname"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input type="password" v-model="ruleForm.password"></el-input>
+          </el-form-item>
+          <el-form-item label="电话" prop="mobile">
+            <el-input @blur="checkAccount(ruleForm.mobile, '该号码')" v-model="ruleForm.mobile"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+            <el-input @blur="checkAccount(ruleForm.email, '该邮箱')" v-model="ruleForm.email"></el-input>
+          </el-form-item>
+          <el-form-item label="生日">
+            <el-form-item prop="birthday">
+              <el-date-picker type="date" :editable="false" placeholder="选择日期" v-model="ruleForm.birthday" style="width: 100%;"></el-date-picker>
+            </el-form-item>
+          </el-form-item>
+          <el-form-item label="性别" class="form-itetm-gender" prop="gender">
+            <el-radio-group v-model="ruleForm.gender">
+              <el-radio :label="0">男</el-radio>
+              <el-radio :label="1">女</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item class="form-item-address" label="地址" prop="address">
+            <el-input v-model="ruleForm.address"></el-input>
+          </el-form-item>
+          <el-form-item label="个性签名" prop="desc">
+            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="register()">立即注册</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="col-lg-3"></div>
     </div>
     <div class="col-lg-3"></div>
   </div>
