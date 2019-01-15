@@ -1,7 +1,7 @@
 <template>
   <header class="site-header" id="top">
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding: 0">
         <div class="row" style="margin: 0">
           <div class="col-lg-4 music">
             <!--<aplayer-->
@@ -12,7 +12,7 @@
             <!--:list="music_list">-->
             <!--</aplayer>-->
           </div>
-          <div class="col-lg-6">
+          <div class="col-lg-6 col-xs-12">
             <div class="navbar-header">
               <button type="button" @click="showNav()" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <i class="fa fa-bars"></i>

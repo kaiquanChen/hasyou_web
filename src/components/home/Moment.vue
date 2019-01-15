@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-lg-4"></div>
-    <div class="col-lg-4 col-xs-12">
+    <div class="col-lg-4 col-xs-12" id="moment-body">
       <h1 id="title-header"><b>最新阅读推荐</b></h1>
       <div class="col-lg-6 col-xs-12 moment-item" @click="gotoDetail(moment.id)" v-for="moment in moments">
         <div class="title">
@@ -226,6 +226,7 @@
     .info span {
       margin-right: 18px;
     }
+
   }
 
 </style>

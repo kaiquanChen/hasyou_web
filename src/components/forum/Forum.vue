@@ -1,7 +1,7 @@
 <template>
   <div class="row" id="v2">
     <div class="col-lg-3"></div>
-    <div class="col-lg-6 col-xs-12">
+    <div class="col-lg-6 col-xs-12 v2-body">
       <div class="col-lg-1" id="v2-body-left"></div>
       <div class="col-lg-8 col-xs-12" id="v2-body">
         <div class="v2-title col-xs-12 col-lg-12"><h1>有你论坛</h1></div>
@@ -197,6 +197,10 @@
     .img-rounded {
       width: 45px;
       margin-top: 10px;
+    }
+
+    .v2-body {
+      padding: 0;
     }
 
     #v2-body-right,#v2-body-left {
