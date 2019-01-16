@@ -61,6 +61,7 @@
 
 <script>
   import global_ from "../config/Global"
+
   const file_url = global_.URLS.FILE_LIST_URL;
     export default {
       name: "",
@@ -82,13 +83,14 @@
       },
       methods: {
         getFileList() {
-          this.$http.get(file_url + "getByTitle/aly", {
+          this.$http.get(file_url + "photos", {
             params:{
               p: this.page.p,
               count: this.page.count
             },
             headers: {
-              "bid": global_.FUNC.getBid()
+              "bid": global_.FUNC.getBid(),
+              "X-HASYOU-TOKEN": sessionStorage.getItem("access_token")
             }
           }).then( data => {
             if (data.body.data === 200) {

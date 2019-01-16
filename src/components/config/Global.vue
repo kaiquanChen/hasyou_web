@@ -56,7 +56,7 @@
   const FILE_URL = "https://image.hasyou.cn:8048/file/";
   // const FILE_URL = "https://localhost:8048/file/";
 
-  const FILE_LIST_URL = "https://www.hasyou.cn:8028/file/";
+  const FILE_LIST_URL = COMMON_URL + "/file/";
 
   // youni note
   const NOTE_URL = COMMON_URL + "note/";
