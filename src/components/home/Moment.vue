@@ -208,6 +208,10 @@
     margin-right: 10px;
   }
 
+  #moment-body {
+    padding: 0;
+  }
+
   @media screen and (max-width: 415px) {
     .title {
       font-size: 16px;
