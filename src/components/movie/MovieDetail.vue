@@ -1,9 +1,8 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="row">
     <div class="col-lg-3"></div>
-    <div class="col-lg-6 col-xs-12">
-      <div class="col-lg-1"></div>
-      <div class="col-lg-8 col-xs-12" id ="movie-body">
+    <div class="col-lg-6 col-xs-12" id="movie-body">
+      <div class="col-lg-8 col-xs-12" id ="movie-body-left">
         <h3 class="movie-title"><b>{{data.title}}</b></h3>
         <div class="col-lg-2 col-xs-3 movie-img">
           <a :href="getImage(data)" v-if="data.image_url"><img :src="data.image_url"></a>
@@ -13,19 +12,16 @@
         </div>
         <div class="col-lg-6 col-xs-6" id="movie-info">
           <div class="info" v-if="!isEmpty(data.directors)">
-            导演:
-            <span v-for="director in data.directors">
+            导演:<span v-for="director in data.directors">
                   <a>{{ director.name }}</a>&nbsp;
                 </span><br/>
           </div>
           <div class="info" v-if="!isEmpty(data.writers)">
-            编剧:
-            <span v-for="writer in data.writers"><a><font>{{ writer.name }}</font></a>&nbsp;</span><br/>
+            编剧:<span v-for="writer in data.writers"><a><font>{{ writer.name }}</font></a>&nbsp;</span><br/>
           </div>
           <div class="info" v-if="!isEmpty(data.casts)">
-            主演:
-            <span v-for="(cast, index) in data.casts" :key="cast.id">
-              <a>{{ cast.name }}</a>&nbsp;
+            主演:<span v-for="(cast, index) in data.casts" :key="cast.id">
+              <a v-if="index < 3">{{ cast.name }}</a>&nbsp;
             </span><br/>
           </div>
           <div class="info" v-if="!isEmpty(data.genres)">
@@ -87,6 +83,22 @@
             <span v-on:click="summaryShowToggle()" class="summary-show">(收起)</span>
           </div>
         </div>
+        <div class="col-lg-12 col-xs-12 movie-label" id="movie-celebrity">
+          <h4 style="color: green">{{data.title}}的演员阵容  · · · · · ·<a href="#" v-if="data.celebrities && data.celebrities.length > 6">(全部 {{data.celebrities.length}})</a></h4>
+          <div class="celebrity-item" v-for="(celebrity, index) in data.celebrities" v-if="index < 6">
+            <a :href="celebrity.image.small" target="_blank"><img :src="celebrity.image.small"/></a>
+            <span class="celebrity-name">{{celebrity.name}}</span>
+            <span class="celebrity-roles">
+              <span class="celebrity-roles-item" v-for="role in celebrity.roles">{{role}}&nbsp;</span>
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xs-12 movie-label" id="movie-stage-photo">
+          <h4 style="color: green">{{data.title}}的剧照  · · · · · ·<a href="#" v-if="data.photos && data.photos.length > 6">(全部 {{data.photos.length}})</a></h4>
+          <div class="movie-photo-item">
+            <a :href="photo.image" target="_blank"  v-for="(photo, index) in data.photos" v-if="index < 6"><img :src="photo.image" /></a>
+          </div>
+        </div>
         <div class="col-lg-12 col-xs-12 movie-label"  id="movie-review-anchor">
           <h4 style="color: green">{{data.title}}的影评  · · · · · ·<span>(共{{reviews.page.total}}条)</span></h4>
           <div class="col-lg-12 col-xs-12 list-group-item movie-review" v-for="item in reviews.body" :key="item.id">
@@ -141,7 +153,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3"></div>
+      <div class="col-lg-4"></div>
     </div>
     <div class="col-lg-3"></div>
   </div>
@@ -431,7 +443,58 @@
     margin-top: 15px;
   }
 
+  #movie-body-left {
+    padding: 0;
+  }
+
+  .celebrity-item {
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .celebrity-item img {
+    width: 90px;
+    /*height: 133px;*/
+  }
+
+  .celebrity-item .celebrity-name, .celebrity-roles {
+    display: block;
+    text-align: center;
+    width: 90px;
+    margin-top: 5px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+  }
+
+  .celebrity-roles {
+    color: #9b9b9b;
+  }
+
+  .celebrity-roles-item {
+    display: inline;
+  }
+
+  #movie-celebrity h4 a {
+    font-size: 12px;
+  }
+
+  .movie-photo-item {
+    display: inline-block;
+  }
+
+  .movie-photo-item img {
+    width: 30%;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+
+  .movie-body {
+    padding: 0;
+  }
+
   @media screen and (max-width: 415px) {
+
     div#movie-detail {
       padding-left: 0;
       padding-right: 0;
