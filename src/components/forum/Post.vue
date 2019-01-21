@@ -16,9 +16,10 @@
             </div>
             <span class="post-title">{{post.title}}</span><br>
             <span class="post-author">
-            <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{post.create_time}}&nbsp; · &nbsp;
-            <a :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
-          </b></span>
+              <a href="#"><b>{{member.username}}</b></a>&nbsp;<b> · &nbsp;{{post.create_time}}&nbsp; · &nbsp;
+              <a :href="getOriginRoutes(post.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
+              </b>
+            </span>
           </div>
           <div class="col-lg-2 col-xs-3 img-div">
             <!-- member avatar-->
@@ -67,7 +68,7 @@
               <span class="comment-time">{{comment.create_time}}</span>&nbsp;&nbsp;
               <span class="comment-device" v-if="isWeb(comment.device)">via &nbsp;&nbsp;{{comment.device}}</span>
               <div class="comment-content">
-                <span>{{comment.content}}</span>
+                <span class="markdown" v-html="comment.content"></span>
               </div>
             </div>
           </div>
@@ -137,7 +138,6 @@
           this.member = this.post.member;
           this.node = this.post.node;
           this.content = marked(this.post.content, { sanitize: true });
-          console.log(this.post);
         });
       },
       getComments() {
@@ -158,7 +158,12 @@
             return;
           }
 
-          this.comment.body = data.body.data.body;
+          let comments = data.body.data.body;
+          let res = comments.map((item, index) => {
+            item["content"] = marked(item["content"]);
+            return item;
+          });
+          this.comment.body = res;
           this.comment.page.page = data.body.data.page;
           this.comment.page.count = data.body.data.count;
           this.comment.page.total = data.body.data.total;

@@ -68,6 +68,9 @@
       onInit (data) {
         console.log(data)
       }
+    },
+    created() {
+      
     }
   }
 </script>

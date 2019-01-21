@@ -5,10 +5,11 @@
 <script>
   const uuidV4 = require("uuid/v4");
 
+  // todo
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'https://backend.hasyou.cn/'
 
-  const COMMON_URL = TEST_URL
+  const COMMON_URL = FLY_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -21,6 +22,8 @@
   const BOOK_SHORT_COMMENT_URL = COMMON_URL + DOUBAN_BOOK + 'comments'
   const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "reviews/"
   const BOOK_ANNUAL_URL = COMMON_URL + 'book/annual/'
+  const BOOK_READ_URL = BOOK_URL + "read";
+  const BOOK_WANT_URL = BOOK_URL + "want";
 
   // group
   const GROUP = COMMON_URL + 'group/'
@@ -34,6 +37,8 @@
   const MOVIE_REVIEW_URL = DOUBAN_MOVIE + "reviews/"
   const MOVIE_GENRE_URL = DOUBAN_MOVIE + "tag/genres"
   const MOVIE_ANNUAL_URL = COMMON_URL + 'movie/annual/'
+  const MOVIE_WATCH_URL = DOUBAN_MOVIE + "watched";
+  const MOVIE_WANT_URL = DOUBAN_MOVIE + "want";
 
   // v2 post
   const POST_URL = COMMON_URL + 'v2/'
@@ -184,6 +189,11 @@
     MOVIE_ANNUAL_URL,
     MOMENT_SUBJECTS_URL,
     MOVIE_GENRE_URL,
+    MOVIE_WATCH_URL,
+    MOVIE_WANT_URL,
+    BOOK_READ_URL,
+    BOOK_WANT_URL,
+
 
     /* v2 */
     COMMENT_URL,

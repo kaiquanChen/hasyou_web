@@ -8,6 +8,15 @@
           <a :href="getImage(data)" v-if="data.image_url"><img :src="data.image_url"></a>
           <a :href="getImage(data)" v-else-if="data.image"><img :src="data.image.medium"></a>
           <a :href="getImage(data)" v-else><img src="/static/image/movie_anon.jpg"></a>
+          <div class="operation-div" v-if="data.operations && data.operations.length > 0">
+            <span class="operate"
+                  v-for="operate in data.operations"
+                  v-if="operate.operation === 'WATCHED_MOVIE'">已看过</span>
+          </div>
+          <div v-else>
+            <span @click="watchMovie()" class="operate read">读过</span>
+            <span @click="wantMovieBook()" class="operate read">想看</span>
+          </div>
           <el-button class="btn-update" v-on:click="updateMovie()">实时更新</el-button>
         </div>
         <div class="col-lg-6 col-xs-6" id="movie-info">
@@ -165,9 +174,64 @@
   const movie_url = global_.URLS.DOUBAN_MOVIE;
   const comment_url = global_.URLS.MOVIE_SHORT_COMMENT_URL;
   const review_url = global_.URLS.MOVIE_REVIEW_URL;
+  const watch_url = global_.URLS.MOVIE_WATCH_URL;
+  const want_url = global_.FUNC.MOVIE_WANT_URL;
+  const token = sessionStorage.getItem("access_token");
   export default {
     name: "MovieDetail",
     methods: {
+      watchMovie() {
+        if (token) {
+          this.$http.post(watch_url, {
+            body: {
+              movie_id: this.$route.params.id
+            }
+          }, {
+            headers: {
+              bid: global_.FUNC.getBid(),
+              "X-HASYOU-TOKEN":token
+            }
+          }).then((data) => {
+            if (data.body.code === 200) {
+              this.data.operations.push(data.body.data);
+            } else if (data.body.code === 5006) {
+              this.$message({
+                message: '请先登录!',
+                type: 'warning'
+              });
+              this.$router.push({path: "/login"});
+            }
+          });
+        } else {
+          this.$router.push({path: "/login"});
+        }
+      },
+      wantMovieBook() {
+        if (token) {
+          this.$http.post(want_url, {
+            body: {
+              movie_id: this.$route.params.id
+            }
+          }, {
+            headers: {
+              bid: global_.FUNC.getBid(),
+              "X-HASYOU-TOKEN":token
+            }
+          }).then((data) => {
+            if (data.body.code === 200) {
+              this.data.operations.push(data.body.data);
+            } else if (data.body.code === 5006) {
+              this.$message({
+                message: '请先登录!',
+                type: 'warning'
+              });
+              this.$router.push({path: "/login"});
+            }
+          });
+        } else {
+          this.$router.push({path: "/login"});
+        }
+      },
       getImage(data) {
         if (data.image_url) {
           return data.image_url;
@@ -194,7 +258,8 @@
         const movie_detail_url = movie_url + "subject/" + movie_id;
         this.$http.get(movie_detail_url, {
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -212,7 +277,8 @@
         let update_movie_url = movie_url + "update/" + movie_id;
         this.$http.get(update_movie_url, {
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -237,7 +303,8 @@
             count:this.comments.page.count
           },
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -267,7 +334,8 @@
             count:this.reviews.page.count
           },
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -292,7 +360,7 @@
         this.summary_show = !this.summary_show;
       },
       goAnchor(query) {
-        let anchor = this.$el.querySelector(query)
+        let anchor = this.$el.querySelector(query);
         document.documentElement.scrollTop = anchor.offsetTop
       },
       gotoReview(id) {
@@ -344,6 +412,21 @@
 
   div.movie-img img {
     width: 105%;
+  }
+
+  .operate {
+    display: block;
+    margin-top: 5px;
+    text-align: center;
+    width: 100%;
+    height: 22px;
+    background-color: #ffd099;
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .operate:hover {
+    cursor: pointer;
   }
 
   .intro h4 {

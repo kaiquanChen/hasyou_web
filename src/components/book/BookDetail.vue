@@ -9,6 +9,15 @@
           <a target="_blank" v-if="data.image_url" :href="getImage(data)"><img :src="data.image_url"></a>
           <a target="_blank" v-else-if="data.image" :href="getImage(data)" ><img :src="data.image.medium"></a>
           <a target="_blank" v-else :href="getImage(data)"><img src=""></a>
+          <div class="operation-div" v-if="data.operations && data.operations.length > 0">
+            <span class="operate"
+                  v-for="operate in data.operations"
+                  v-if="operate.operation === 'READ_BOOK'">已读过</span>
+          </div>
+          <div v-else>
+            <span @click="readBook()" class="operate read">读过</span>
+            <span @click="wantReadBook()" class="operate read">想看</span>
+          </div>
           <el-button class="btn-update" v-on:click="updateBook()">实时更新</el-button>
         </div>
         <div class="col-lg-6 col-xs-6" id="book-info">
@@ -150,6 +159,9 @@
   const book_url = global_.URLS.BOOK_URL;
   const comment_url = global_.URLS.BOOK_SHORT_COMMENT_URL;
   const review_url = global_.URLS.BOOK_REVIEW_URL;
+  const read_url = global_.URLS.BOOK_READ_URL;
+  const want_url = global_.URLS.BOOK_WANT_URL;
+  const token = sessionStorage.getItem("access_token");
   export default {
     name: "BookList",
     methods: {
@@ -185,7 +197,8 @@
         const book_detail_url = book_url + "subject/" + book_id;
         this.$http.get(book_detail_url, {
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -198,7 +211,7 @@
         });
       },
       goAnchor(query) {
-        var anchor = this.$el.querySelector(query)
+        let anchor = this.$el.querySelector(query)
         document.documentElement.scrollTop = anchor.offsetTop
       },
       gotoAuthor(id) {
@@ -209,7 +222,8 @@
         const update_book_url = book_url + "update/" + book_id;
         this.$http.get(update_book_url, {
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -234,7 +248,8 @@
             count: this.comments.page.cout
           },
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -249,9 +264,6 @@
           this.comments.page.count = data.body.data.count;
         });
       },
-      getBookDetail(id) {
-        return "subject/" + id;
-      },
       getBookReview() {
         let book_id = this.$route.params.id;
         const url = review_url + book_id;
@@ -261,7 +273,8 @@
             count: this.reviews.page.count
           },
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN":token
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -276,6 +289,59 @@
           this.reviews.page.count = data.body.data.count;
         });
       },
+      readBook() {
+        if (token) {
+          this.$http.post(read_url, {
+            body: {
+              book_id: this.$route.params.id
+            }
+          }, {
+            headers: {
+              bid: global_.FUNC.getBid(),
+              "X-HASYOU-TOKEN":token
+            }
+          }).then((data) => {
+            if (data.body.code === 200) {
+              this.data.operations.push(data.body.data);
+            } else if (data.body.code === 5006) {
+              this.$message({
+                message: '请先登录!',
+                type: 'warning'
+              });
+              this.$router.push({path: "/login"});
+            }
+          });
+        } else {
+          this.$router.push({path: "/login"});
+        }
+      },
+      wantReadBook() {
+        let token = sessionStorage.getItem("access_token");
+        if (token) {
+          this.$http.post(want_url, {
+            body: {
+              book_id: this.$route.params.id
+            }
+          }, {
+            headers: {
+              bid: global_.FUNC.getBid(),
+              "X-HASYOU-TOKEN":token
+            }
+          }).then((data) => {
+            if (data.body.code === 200) {
+              this.data.operations.push(data.body.data);
+            } else if (data.body.code === 5006) {
+              this.$message({
+                message: '请先登录!',
+                type: 'warning'
+              });
+              this.$router.push({path: "/login"});
+            }
+          });
+        } else {
+          this.$router.push({path: "/login"});
+        }
+      },
       isEmpty(array) {
         return JSON.stringify(array) !== '[]';
       },
@@ -284,6 +350,9 @@
       },
       contentShowToggle() {
         this.content_show = !this.content_show;
+      },
+      getBookDetail(id) {
+        return "subject/" + id;
       },
       gotoReview(id) {
         return "https://book.douban.com/review/" + id;
@@ -325,6 +394,7 @@
 </script>
 
 <style scoped>
+
   div.book-img {
     padding-right: 0;
     padding-left: 0;
@@ -333,6 +403,21 @@
   div.book-img img {
     width: 130px;
     height: 200px;
+  }
+
+  .operate {
+    display: block;
+    margin-top: 5px;
+    text-align: center;
+    width: 100%;
+    height: 22px;
+    background-color: #ffd099;
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .operate:hover {
+    cursor: pointer;
   }
 
   .intro h4 {
