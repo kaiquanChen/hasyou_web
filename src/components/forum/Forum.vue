@@ -117,7 +117,8 @@
             count:this.posts.page.count
           },
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN": sessionStorage.getItem("access_token")
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -139,7 +140,8 @@
         let node_home_url = node_url + "home";
         this.$http.get(node_home_url, {
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN": sessionStorage.getItem("access_token")
           }
         }).then((data) => {
           if (data.status !== 200) {

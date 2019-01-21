@@ -8,7 +8,7 @@
   const TEST_URL = 'http://localhost:8028/'
   const FLY_URL = 'https://backend.hasyou.cn/'
 
-  const COMMON_URL = FLY_URL
+  const COMMON_URL = TEST_URL
 
   // short book
   const SHORT_BOOK_PREFIX = 'shortbook/'
@@ -21,7 +21,6 @@
   const BOOK_SHORT_COMMENT_URL = COMMON_URL + DOUBAN_BOOK + 'comments'
   const BOOK_REVIEW_URL = COMMON_URL + DOUBAN_BOOK + "reviews/"
   const BOOK_ANNUAL_URL = COMMON_URL + 'book/annual/'
-
 
   // group
   const GROUP = COMMON_URL + 'group/'
@@ -44,6 +43,7 @@
 
   // v2 comment
   const COMMENT_URL = POST_URL + "comment/";
+  const FOLLOW_POST_URL = POST_URL + "follow";
 
   // event
   const EVENT_URL = COMMON_URL + 'event/'
@@ -189,6 +189,7 @@
     COMMENT_URL,
     POST_URL,
     NODE_URL,
+    FOLLOW_POST_URL,
 
     /* file */
     FILE_URL,

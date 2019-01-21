@@ -30,7 +30,8 @@
             <div class="markdown" v-html="content"></div>
           </div>
           <div class="col-lg-12 col-xs-12 post-content-bottom">
-            <a>加入收藏</a>
+            <a @click="addFollow()" class="operation-btn" v-if="!post.is_follow">加入收藏</a>
+            <a @click="addFollow()" class="operation-btn" v-else>取消收藏</a>
             <a>忽略主题</a>
           </div>
         </div>
@@ -97,6 +98,7 @@
 
   const post_url = global_.URLS.POST_URL;
   const comment_url = global_.URLS.COMMENT_URL;
+  const follow_url = global_.URLS.FOLLOW_POST_URL;
   export default {
     data() {
       return {
@@ -121,7 +123,8 @@
         let url = post_url + "subject/" + post_id;
         this.$http.get(url, {
           headers: {
-            "bid": global_.FUNC.getBid()
+            "bid": global_.FUNC.getBid(),
+            "X-HASYOU-TOKEN": sessionStorage.getItem("access_token")
           }
         }).then((data) => {
           if (data.status !== 200) {
@@ -134,6 +137,7 @@
           this.member = this.post.member;
           this.node = this.post.node;
           this.content = marked(this.post.content, { sanitize: true });
+          console.log(this.post);
         });
       },
       getComments() {
@@ -180,8 +184,40 @@
         return window.matchMedia('(max-width:415px)').matches;
       },
       goAnchor(query) {
-        var anchor = this.$el.querySelector(query)
+        let anchor = this.$el.querySelector(query);
         document.documentElement.scrollTop = anchor.offsetTop
+      },
+      addFollow() {
+        let token = sessionStorage.getItem("access_token");
+        if (token) {
+          let post_id = this.$route.params.id;
+          this.$http.post(follow_url, {
+            body: {
+              post_id: post_id
+            }
+          }, {
+            headers: {
+              bid: global_.FUNC.getBid(),
+              "X-HASYOU-TOKEN":token
+            }
+          }).then((data) => {
+            if (data.body.code === 200) {
+              this.post.is_follow = !this.post.is_follow;
+            } else if (data.body.code === 5006) {
+              this.$message({
+                message: '请先登录!',
+                type: 'warning'
+              });
+              this.$router.push({path: "/login"});
+            }
+          });
+        } else {
+          this.$message({
+            message: '请先登录!',
+            type: 'warning'
+          });
+          this.$router.push({path: "/login"});
+        }
       }
     },
     created() {
@@ -326,6 +362,11 @@
   .post-author b {
     color: grey;
     font-size: 15px;
+  }
+
+  .operation-btn:hover {
+    color: #000000;
+    cursor: pointer;
   }
 
   @media screen and (max-width: 415px) {
