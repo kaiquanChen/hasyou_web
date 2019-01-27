@@ -47,6 +47,10 @@
 </script>
 
 <style scoped>
+  #app {
+    overflow: hidden;
+  }
+
   #app-body {
     padding: 0;
     margin-top: 60px;

@@ -22,16 +22,19 @@ import Note from '@/components/note/Note'
 import NoteDetail from '@/components/note/NoteDetail'
 import About from '@/components/About'
 import SearchResult from '@/components/SearchResult'
-
 // user
 import Register from '@/components/user/Register'
 import Login from '@/components/user/Login'
 import Album from '@/components/user/Album'
 import User from '@/components/user/User'
 import UserNote from '@/components/user/Note'
-
 // blog
 import Blog from '@/components/blog/Blog'
+import Blogs from '@/components/blog/Blogs'
+import BlogDetail from '@/components/blog/BlogDetail'
+import BlogTag from '@/components/blog/BlogTag'
+import MyBlog from '@/components/blog/MyBlog'
+import WriteBlog from '@/components/blog/WriteBlog'
 
 import Test from '@/components/Test'
 
@@ -69,9 +72,44 @@ export const routes = [
   /* user */
   {path: '/register', component: Register},
   {path: '/login', component: Login},
-  {path: '/user/:id', component: User, children: [{path: 'note', component: UserNote}, {path: 'album', component: Album}]},
+  {
+    path: '/user/:id',
+    component: User,
+    children: [
+      {
+        path: 'note',
+        component: UserNote
+      },
+      {
+        path: 'album',
+        component: Album}
+    ]
+  },
   /* blog */
-  {path: '/blog', component: Blog},
-  /* test */
+  {
+    path: '/blog',
+    component: Blog,
+    children: [
+      {
+        path: 'latest',
+        component: Blogs
+      },
+      {
+        path: ':name',
+        component: MyBlog
+      },
+      {
+        path: 'tag',
+        component: BlogTag},
+      {
+        path: ':id/subject',
+        component: BlogDetail
+      },
+      {
+        path: ':name/write',
+        component: WriteBlog
+      }
+    ]
+  },
   {path: '/test', component: Test}
 ]

@@ -4,18 +4,13 @@
       <div class="container-fluid" style="padding: 0">
         <div class="row" style="margin: 0">
           <div class="col-lg-4 music">
-            <!--<aplayer-->
-            <!--id="input-search"-->
-            <!--listFolded-->
-            <!--mini: true,-->
-            <!--:music="music_list[0]"-->
-            <!--:list="music_list">-->
-            <!--</aplayer>-->
           </div>
           <div class="col-lg-6 col-xs-12">
             <div class="navbar-header">
-              <button type="button" @click="showNav()" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <i class="fa fa-bars"></i>
+              <button type="button"
+                      @click="showNav()"
+                      class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <img class="btn-img" src="../assets/header/icon/header-menu-phone.png">
               </button>
               <div class="logo-wrapper">
                 <a class="navbar-brand" href="/">
@@ -465,6 +460,10 @@
       font-size: 8px;
     }
 
+  }
+
+  .btn-img {
+    width: 20px;
   }
 
   /* new */
