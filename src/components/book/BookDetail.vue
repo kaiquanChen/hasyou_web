@@ -1,4 +1,4 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml">
+<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6 col-xs-12" id="book-detail">
@@ -50,7 +50,9 @@
             <span>装帧: </span>{{ data.binding }}<br/>
           </div>
           <div class="info">
-            <a target="_blank" style="cursor: pointer" :href="getOriginRoutes(data.id)"><img title="跳转原网页" src="/static/image/go.png" /></a>
+            <a target="_blank" style="cursor: pointer" :href="getOriginRoutes(data.id)">
+              <img title="跳转原网页" src="/static/image/go.png" />
+            </a>
           </div>
         </div>
         <div class="col-lg-4 col-xs-3 rate">
@@ -67,7 +69,9 @@
             <div v-for="(p_item, index) in data.intro">
               <p v-if="index < 3">{{p_item}}</p>
             </div>
-            <span v-show="!summary_show" v-on:click="summaryShowToggle()" class="summary-show" v-if="data.intro !== undefined && data.intro.length > 3">(展开全部)</span>
+            <span v-show="!summary_show" v-on:click="summaryShowToggle()"
+                  class="summary-show"
+                  v-if="data.intro !== undefined && data.intro.length > 3">(展开全部)</span>
           </div>
           <div class="book-summary" v-show="summary_show">
             <div v-for="p_item in data.intro">
@@ -82,7 +86,9 @@
             <div v-for="(p_category, index) in data.category">
               <p v-if="index < 3">{{p_category}}</p>
             </div>
-            <span v-show="!content_show" v-on:click="contentShowToggle()" class="summary-show" v-if="data.category !== undefined && data.category.length > 3">(展开全部)</span>
+            <span v-show="!content_show" v-on:click="contentShowToggle()"
+                  class="summary-show"
+                  v-if="data.category !== undefined && data.category.length > 3">(展开全部)</span>
           </div>
           <div class="catalog" v-show="content_show">
             <div v-for="category in data.category">
@@ -93,11 +99,27 @@
         </div>
         <div class="col-lg-12 col-xs-12 book-label" id="book-review">
           <h4 style="color: green">书评  · · · · · ·<span>(共{{data.reviews_count}}条)</span></h4>
-          <div class="col-lg-12 col-xs-12 list-group-item book-review" v-for="item in reviews.body" :key="item.id">
+          <span id="review-nav-root">
+            <span @click="toggleReviewNav('hot')"
+                  v-bind:style="review_selected ? 'color:black' : 'color:#3377aa'"
+                  class="review-nav">最热&nbsp;</span>
+            <span class="review-nav">\</span>
+            <span @click="toggleReviewNav('latest')"
+                  v-bind:style="!review_selected ? 'color:black' : 'color:#3377aa'"
+                  class="review-nav">&nbsp;最新
+            </span>
+          </span>
+          <div class="col-lg-12 col-xs-12 list-group-item book-review"
+               style="padding-right: 0;padding-left: 0"
+               v-for="item in reviews.body"
+               :key="item.id">
             <div>
-              <span style="float: left;margin-right: 15px" v-if="item.user && item.user.avatar"><img style="width: 24px;" :src="item.user.avatar"/></span>
+              <span style="float: left;margin-right: 15px" v-if="item.user && item.user.avatar">
+                <img style="width: 24px;" :src="item.user.avatar"/></span>
               <span style="float: left;margin-right: 15px" v-else><img style="width: 24px;" src="/static/image/user_anon.jpeg"/></span>
-              <a style="float: left" :href="gotoAuthor(item.user.id)" target="_blank" v-if="item.user">{{item.user.name}}&nbsp;</a>
+              <a style="float: left" :href="gotoAuthor(item.user.id)" target="_blank" v-if="item.user">
+                {{item.user.name}}&nbsp;
+              </a>
               <span style="float: left;color: gray" v-else>[已注销]&nbsp;</span>
               <el-rate style="float: left" v-model="item.stars" disabled></el-rate>
               <span style="float: left;color: #999">&emsp;{{item.published}}</span>
@@ -121,11 +143,26 @@
         </div>
         <div class="col-lg-12 col-xs-12 book-label" id="book-comment">
           <h4 style="color: green">短评  · · · · · ·<span>(共{{data.comments_count}}条)</span></h4>
-          <div class="col-lg-12 col-xs-12 list-group-item book-comment" v-for="item in comments.body" :key="item.id">
+          <span id="comment-nav-root">
+            <span @click="toggleCommentNav('hot')"
+                  v-bind:style="comment_selected ? 'color:black' : 'color:#3377aa'"
+                  class="comment-nav">最热&nbsp;</span>
+            <span class="comment-nav">\</span>
+            <span @click="toggleCommentNav('latest')"
+                  v-bind:style="!comment_selected ? 'color:black' : 'color:#3377aa'"
+                  class="comment-nav">&nbsp;最新
+            </span>
+          </span>
+          <div class="col-lg-12 col-xs-12 list-group-item book-comment"
+               style="padding-left: 0; padding-right: 0"
+               v-for="item in comments.body"
+               :key="item.id">
             <div class="comment-info">
               <span style="float: left;margin-right: 10px;" v-if="item.user"><img style="width: 24px" :src="item.user.avatar"></span>
               <span style="float: left;margin-right: 10px;" v-else><img style="width: 24px" src="/static/image/user_anon.jpeg"></span>
-              <a style="float: left;" target="_blank" :href="gotoAuthor(item.user.id)" v-if="item.user">{{item.user.name}}&emsp;</a>
+              <a style="float: left;" target="_blank" :href="gotoAuthor(item.user.id)" v-if="item.user">
+                {{item.user.name}}&emsp;
+              </a>
               <a style="float: left;" href="#" v-else>[已注销]&emsp;</a>
               <el-rate style="float: left" v-model="item.stars" disabled></el-rate>&emsp;
               <span style="float: left;color: #999">&emsp;{{item.create_time}}</span>
@@ -165,6 +202,22 @@
   export default {
     name: "BookList",
     methods: {
+      toggleReviewNav(review_sort) {
+        if (this.sort === review_sort) {
+          return;
+        }
+        this.review_selected = !this.review_selected;
+        this.review_sort = review_sort;
+        this.getBookReview();
+      },
+      toggleCommentNav(comment_sort) {
+        if (this.sort === comment_sort) {
+          return;
+        }
+        this.comment_selected = !this.comment_selected;
+        this.comment_sort = comment_sort;
+        this.getBookComment();
+      },
       getImage(data) {
         if (data.image_url) {
           return data.image_url;
@@ -244,8 +297,9 @@
         const url = comment_url + "/" + book_id;
         this.$http.get(url, {
           params:{
+            sort: this.comment_sort,
             p: this.comments.page.page,
-            count: this.comments.page.cout
+            count: this.comments.page.count
           },
           headers: {
             "bid": global_.FUNC.getBid(),
@@ -266,9 +320,9 @@
       },
       getBookReview() {
         let book_id = this.$route.params.id;
-        const url = review_url + book_id;
-        this.$http.get(url, {
+        this.$http.get(review_url + book_id, {
           params:{
+            sort: this.review_sort,
             p: this.reviews.page.page,
             count: this.reviews.page.count
           },
@@ -360,6 +414,10 @@
     },
     data() {
       return {
+        review_selected: true,
+        review_sort: 'hot',
+        comment_selected: true,
+        comment_sort: 'hot',
         data: {},
         comments: {
           body:[],
@@ -521,6 +579,16 @@
     font-size: 12px;
     padding-left: 35px;
     padding-right: 5px;
+  }
+
+  #comment-nav-root, #review-nav-root {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .comment-nav, .review-nav {
+    color: #3377aa;
+    cursor: pointer;
   }
 
   @media screen and (max-width: 415px) {

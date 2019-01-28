@@ -6,16 +6,23 @@
         <el-menu
           class="el-menu-demo"
           mode="horizontal"
-          text-color="#27a"
-          @select="handleSelect">
+          text-color="#27a">
           <el-menu-item index="1"><router-link to="/movie/movie" target="_blank">选电影</router-link></el-menu-item>
           <el-menu-item index="3"><router-link to="/movie/" target="_blank">电视剧</router-link></el-menu-item>
           <el-submenu index="2">
             <template slot="title">年度影视榜单</template>
-            <el-menu-item index="1"><router-link to="/movie/annual/2018" target="_blank">2018年度榜单</router-link></el-menu-item>
-            <el-menu-item index="1"><router-link to="/movie/annual/2017" target="_blank">2017年度榜单</router-link></el-menu-item>
-            <el-menu-item index="2"><router-link to="/movie/annual/2016" target="_blank">2016年度榜单</router-link></el-menu-item>
-            <el-menu-item index="3"><router-link to="/movie/annual/2015" target="_blank">2015年度榜单</router-link></el-menu-item>
+            <el-menu-item index="1">
+              <router-link to="/movie/annual/2018" target="_blank">2018年度榜单</router-link>
+            </el-menu-item>
+            <el-menu-item index="1">
+              <router-link to="/movie/annual/2017" target="_blank">2017年度榜单</router-link>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <router-link to="/movie/annual/2016" target="_blank">2016年度榜单</router-link>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <router-link to="/movie/annual/2015" target="_blank">2015年度榜单</router-link>
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -23,7 +30,9 @@
         <div class="col-xs-12 col-lg-12 home-movie" id="in-theaters">
           <div class="col-lg-12 col-xs-12 movie-title">
             <b>正在热映</b>
-            <span class="page-show">({{in_theaters_page.page}} / {{Math.ceil(in_theaters_page.total / in_theaters_page.count)}})</span>
+            <span class="page-show">
+              ({{in_theaters_page.page}} / {{Math.ceil(in_theaters_page.total / in_theaters_page.count)}})
+            </span>
             <el-pagination background
                            @current-change="handleInTheatersChange"
                            :current-page.sync="in_theaters_page.page"
@@ -89,12 +98,18 @@
           </div>
           <div class="col-lg-2 col-xs-4 new-movie" v-for="(item, index) in movie_new">
             <div class="movie-img" :id="item.id">
-              <router-link :to="getMovieDetail(item.id)" append v-if="item.image_url"><img :src="item.image_url"></router-link>
-              <router-link :to="getMovieDetail(item.id)" append v-else-if="item.image"><img :src="item.image.medium"></router-link>
+              <router-link :to="getMovieDetail(item.id)" append v-if="item.image_url">
+                <img :src="item.image_url">
+              </router-link>
+              <router-link :to="getMovieDetail(item.id)" append v-else-if="item.image">
+                <img :src="item.image.medium">
+              </router-link>
               <router-link :to="getMovieDetail(item.id)" append v-else><img src=""></router-link>
             </div>
             <div class="movie-info">
-              <span class="movie-info-title"><router-link :to="getMovieDetail(item.id)" append>{{item.title}}</router-link></span>
+              <span class="movie-info-title">
+                <router-link :to="getMovieDetail(item.id)" append>{{item.title}}</router-link>
+              </span>
               <span class="movie-info-rate" v-if="item.average">豆瓣评分:<b class="average">{{item.average}}</b></span>
               <span class="movie-info-rate" v-else="item.average">暂无评分</span>
             </div>
